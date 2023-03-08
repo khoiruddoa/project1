@@ -6,8 +6,11 @@
   @vite('resources/css/app.css')
 </head>
 <body>
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
+    @include('partials.navbar')
+    <div>
+
+        @yield('container')
+    </div>
+    <script src="asset/flowbite.min.js"></script>
 </body>
 </html>
