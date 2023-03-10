@@ -12,6 +12,7 @@
 
         @yield('container')
     </div>
+    @include('sweetalert::alert')
     <script src="asset/flowbite.min.js"></script>
 </body>
 </html>
