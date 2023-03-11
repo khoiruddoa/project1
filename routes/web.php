@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ScheduleController;
+use App\Models\Schedule;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,4 +34,10 @@ Route::get('/dashboard/contoh', function () {
 
 Route::get('/dashboard/nasabah', [RegisterController::class, 'index'])->name('nasabah');
 Route::post('/dashboard/nasabah', [RegisterController::class, 'store'])->name('nasabahStore');
+
+Route::get('/dashboard/sampah', [CategoryController::class, 'index'])->name('sampah');
+Route::post('/dashboard/sampah', [CategoryController::class, 'store'])->name('sampahStore');
+
+Route::get('/dashboard/jadwal', [ScheduleController::class, 'index'])->name('jadwal');
+Route::post('/dashboard/jadwal', [ScheduleController::class, 'store'])->name('jadwalStore');
   

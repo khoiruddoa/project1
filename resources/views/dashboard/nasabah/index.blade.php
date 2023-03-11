@@ -5,8 +5,8 @@
         <div class="">
             <h1 class="text-3xl text-black pb-6">Tabel Nasabah</h1>
             @error('email')
-            <p class="text-red-500 text-xs italic">{{ $message }}</p>
-          @enderror
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
+            @enderror
         </div>
 
         <div>
@@ -35,67 +35,50 @@
                             </svg>
                             <span class="sr-only">Close</span>
                         </button>
-                        <div class="px-6 py-6 lg:px-8">
+                        <div class="px-6 py-6 lg:px-4">
                             <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Masukkan Data Nasabah</h3>
                             <form class="space-y-6" action="/dashboard/nasabah" method="POST">
                                 @csrf
+                                
                                 <div>
-                                    <label for="name"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
-                                    <input type="text" name="name" id="name"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                        required>
-                                        @error('name')
-      <p class="text-red-500 text-xs italic">{{ $message }}</p>
-    @enderror
+                                    <label for="small-input" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
+                                    <input type="text" name="name" id="small-input" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                                 </div>
                                 <div>
-                                    <label for="phone_number"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No.HP</label>
-                                    <input type="number" name="phone_number" id="phone_number"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                        required>
-                                        @error('phone_number')
-      <p class="text-red-500 text-xs italic">{{ $message }}</p>
-    @enderror
+                                    <label for="small-input" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">No. HP</label>
+                                    <input type="number" name="phone_number" id="small-input" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                                 </div>
                                 <div>
                                     <label for="email"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                        class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                                     <input type="email" name="email" id="email"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         placeholder="name@company.com" required>
-                                        @error('email')
-      <p class="text-red-500 text-xs italic">{{ $message }}</p>
-    @enderror
+                                    @error('email')
+                                        <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div>
                                     <label for="password"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                        class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                                     <input type="password" name="password" id="password" placeholder="••••••••"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required>
                                 </div>
 
                                 <label for="address"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
+                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
                                 <textarea id="address" name="address" rows="4"
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required></textarea>
 
                                 <div class="flex justify-between">
-                                    <div class="flex items-start">
-                                        <div class="flex items-center h-5">
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                   
+                                    
                                 </div>
                                 <button type="submit"
                                     class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Daftarkan</button>
                                 <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                                   
+
                                 </div>
                             </form>
                         </div>
@@ -110,28 +93,28 @@
     <div class="w-full mt-6">
         <div class="overflow-x-auto">
             <table class="w-full bg-white">
-              <thead class="bg-gray-800 text-white w-full">
-                <tr>
-                  <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Nama</th>
-                  <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Saldo</th>
-                  <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Riwayat Transaksi</th>
-                </tr>
-              </thead>
-              <tbody class="text-gray-700"> 
-                @foreach ($users as $user)
-
-                <tr>
-                  <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $user->name}}</td>
-                  <td class="w-1/3 sm:w-auto text-left py-3 px-4">500000</td>
-                  <td class="sm:text-left py-3 px-4">
-                    <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</button>
-                  </td>
-                </tr>
-                @endforeach
-              </tbody>
+                <thead class="bg-gray-800 text-white w-full">
+                    <tr>
+                        <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Nama</th>
+                        <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Saldo</th>
+                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Riwayat Transaksi</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-700">
+                    @foreach ($users as $user)
+                        <tr>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $user->name }}</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">500000</td>
+                            <td class="sm:text-left py-3 px-4">
+                                <button type="button"
+                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
             </table>
-          </div>
-          
+        </div>
+
 
     </div>
 @endsection

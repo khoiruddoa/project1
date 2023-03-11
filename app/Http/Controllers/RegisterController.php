@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class RegisterController extends Controller
 {
@@ -26,6 +27,7 @@ class RegisterController extends Controller
         $validatedData['password'] = Hash::make($validatedData['password']);
         $validatedData['role'] = 1;
         User::create($validatedData);
+        Alert::info('Berhasil', 'Input Nasabah Berhasil');
         return redirect('/dashboard/nasabah');
   
     }
