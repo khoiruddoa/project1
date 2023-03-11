@@ -47,11 +47,7 @@
                         <div> <img src="img/date.png" alt="" class="w-20 h-20"></div>
                         <div>
                         <div class="">
-                            <h5 class="mb-2 text-1xl font-bold font-mono text-gray-900 dark:text-white">Jadwal Pengangkutan
-                                Sampah</h5>
-                        </div>
-                        <div>
-                            <p class="mb-5 text-2xl font-extrabold font-mono">19 Maret 2023</p>
+                            <h5 class="mb-2 text-1xl font-bold font-mono text-gray-900 dark:text-white">Transaksi Penimbangan Sampah Anda</h5>
                         </div>
                         </div>
                     </div>
