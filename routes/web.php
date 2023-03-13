@@ -22,17 +22,27 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/transaction', function () {
+    return view('transaction');
+});
+
+Route::get('/convertion', function () {
+    return view('convertion');
+});
+Route::get('/dashboard', [ScheduleController::class, 'dashboard']);
+
+
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'authenticate']);
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+
     
 Route::get('/dashboard/contoh', function () {
     return view('dashboard/example');
 });
 
 Route::get('/dashboard/nasabah', [RegisterController::class, 'index'])->name('nasabah');
+
+Route::get('/dashboard/nasabah/{user_id}', [RegisterController::class, 'detail'])->name('nasabah_detail');
 Route::post('/dashboard/nasabah', [RegisterController::class, 'store'])->name('nasabahStore');
 
 Route::get('/dashboard/sampah', [CategoryController::class, 'index'])->name('sampah');

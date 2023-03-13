@@ -14,7 +14,13 @@ class ScheduleController extends Controller
             'schedules' => Schedule::all()
         ]);
     }
+    public function dashboard(){
+        $schedule = Schedule::latest()->first();
 
+        return view('dashboard',[
+            'schedule' => $schedule
+        ]);
+    }
     public function store(Request $request){
         $validatedData = $request->validate([
             'date' => 'required'

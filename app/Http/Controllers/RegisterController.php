@@ -14,6 +14,12 @@ class RegisterController extends Controller
             'users' => User::all()
         ]);
     }
+    public function detail($user_id){
+        $user = User::find($user_id);
+        return view('dashboard.nasabah.detail',[
+            'user' => $user
+        ]);
+    }
 
     public function store(Request $request){
         $validatedData = $request->validate([

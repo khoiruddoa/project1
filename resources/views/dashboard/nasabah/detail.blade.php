@@ -1,0 +1,231 @@
+@extends('dashboard.layouts.main')
+
+@section('container')
+    <div class="flex flex-col">
+        <div class="">
+            <h1 class="text-3xl text-black pb-6">Tabel detail Nasabah</h1>
+            @error('email')
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
+            @enderror
+        </div>
+        <div>
+            <button type="button"
+                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Hapus
+                Nasabah</button>
+        </div>
+
+
+        <div>
+
+            <!-- Modal toggle -->
+            <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
+                class="block mb-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                type="button">
+                Edit Nasabah
+            </button>
+
+            <!-- Main modal -->
+            <div id="authentication-modal" tabindex="-1" aria-hidden="true"
+                class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
+                <div class="relative w-full h-full max-w-md md:h-auto">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <button type="button"
+                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                            data-modal-hide="authentication-modal">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <div class="px-6 py-6 lg:px-4">
+                            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit Data Nasabah</h3>
+                            <form class="space-y-6" action="/dashboard/nasabah/update/{{$user->id}}" method="POST">
+                                @csrf
+                                <div class="flex flex-row gap-4">
+                                <div>
+                                    <label for="name" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
+                                    <input type="text" name="name" id="name" value="{{$user->name}}" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                </div>
+                                <div>
+                                    <label for="small-input" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">No. HP</label>
+                                    <input type="number" value="{{$user->phone_number}}" name="phone_number" id="small-input" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                </div>
+                                
+                               
+                            </div>
+                            <div class="flex flex-row gap-4">
+                                <div>
+                                    <label for="email"
+                                        class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                    <input type="email" name="email" id="email" value="{{$user->email}}"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                         required>
+                                </div>
+                                
+                                <div>
+                                    <label for="password"
+                                        class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                    <input type="password" name="password" id="password"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                </div>
+                            </div>
+
+                                <label for="address"
+                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
+                                <textarea id="address" name="address" rows="4" 
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    required>{{$user->address}}</textarea>
+
+                                <div class="flex justify-between">
+                                    
+                                </div>
+                                <button type="submit"
+                                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</button>
+                                <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>  
+
+    </div>
+
+
+    <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <svg class="w-10 h-10 mb-2 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
+            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z"
+                clip-rule="evenodd"></path>
+            <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z"></path>
+        </svg>
+        <a href="#">
+            <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ $user->name }}</h5>
+        </a>
+        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Alamat : {{ $user->address }}</p>
+        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Saldo : 700.000 </p>
+
+
+
+        <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800"
+                id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+                <li class="mr-2">
+                    <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about"
+                        aria-selected="true"
+                        class="inline-block p-4 text-blue-600 rounded-tl-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-blue-500">Riwayat Transaksi</button>
+                </li>
+                <li class="mr-2">
+                    <button id="services-tab" data-tabs-target="#services" type="button" role="tab"
+                        aria-controls="services" aria-selected="false"
+                        class="inline-block p-4 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300">Riwayat Konversi</button>
+                </li>
+                <li class="mr-2">
+                    <button id="statistics-tab" data-tabs-target="#statistics" type="button" role="tab"
+                        aria-controls="statistics" aria-selected="false"
+                        class="inline-block p-4 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300">Facts</button>
+                </li>
+            </ul>
+            <div id="defaultTabContent">
+                <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="about" role="tabpanel"
+                    aria-labelledby="about-tab">
+                    <div class="w-full mt-6">
+                        <div class="overflow-x-auto">
+                            <table class="w-full bg-white">
+                                <thead class="bg-gray-800 text-white w-full">
+                                    <tr>
+                                        <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
+                                            Nama</th>
+                                        <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
+                                            Saldo</th>
+                                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Riwayat
+                                            Transaksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-700">
+
+                                    <tr>
+                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4"></td>
+                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">500000</td>
+                                        <td class="sm:text-left py-3 px-4">
+                                            <a href=""
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="services" role="tabpanel"
+                    aria-labelledby="services-tab">
+                    <div class="w-full mt-6">
+                        <div class="overflow-x-auto">
+                            <table class="w-full bg-white">
+                                <thead class="bg-gray-800 text-white w-full">
+                                    <tr>
+                                        <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
+                                            Nama</th>
+                                        <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
+                                            Saldo</th>
+                                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Riwayat
+                                            Transaksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-700">
+
+                                    <tr>
+                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4"></td>
+                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">500000</td>
+                                        <td class="sm:text-left py-3 px-4">
+                                            <a href=""
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="statistics" role="tabpanel"
+                    aria-labelledby="statistics-tab">
+                    <dl
+                        class="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-6 dark:text-white sm:p-8">
+                        <div class="flex flex-col">
+                            <dt class="mb-2 text-3xl font-extrabold">73M+</dt>
+                            <dd class="font-light text-gray-500 dark:text-gray-400">Developers</dd>
+                        </div>
+                        <div class="flex flex-col">
+                            <dt class="mb-2 text-3xl font-extrabold">100M+</dt>
+                            <dd class="font-light text-gray-500 dark:text-gray-400">Public repositories</dd>
+                        </div>
+                        <div class="flex flex-col">
+                            <dt class="mb-2 text-3xl font-extrabold">1000s</dt>
+                            <dd class="font-light text-gray-500 dark:text-gray-400">Open source projects</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+@endsection

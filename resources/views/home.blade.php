@@ -7,7 +7,7 @@
         Bank Sampah
       </div>
       <div class="font-mono md:text-6xl text-5xl font-extrabold text-white text-center lg:mt-2 mt-2xl   mb-6 ">
-        Faida Cendekia
+        Faida Cendikia
       </div>
      
      <div class="mt-4">

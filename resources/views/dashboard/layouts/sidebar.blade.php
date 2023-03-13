@@ -1,5 +1,5 @@
 
-    <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+    <aside class="relative bg-sidebar w-64 hidden sm:block shadow-xl">
         <div class="p-6">
             <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
             

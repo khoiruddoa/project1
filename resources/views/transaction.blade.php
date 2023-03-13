@@ -4,7 +4,7 @@
     <div class="container mx-auto p-5 sm:p-10 lg:p-20 bg-[#3d68ff] min-h-screen">
         <div class="flex flex-col lg:flex-col justify-end items-center ">
             <div class="font-mono md:text-5xl text-xl font-extrabold text-white text-center lg:mt-6 mt-16 mb-6 ">
-                Bank Sampah Faida Cendekia
+                Bank Sampah Faida Cendikia
             </div>
 
             <div class="flex flex-col gap-10 items-center">
@@ -42,14 +42,26 @@
                 </div>
 
                 <div
-                    class="w-full h-60 mb-0 p-4 text-left bg-white border border-gray-200 rounded-2xl shadow sm:p-8 dark:bg-gray-800 dark:">
+                    class="w-full mb-0 p-4 text-left bg-white border border-gray-200 rounded-2xl shadow sm:p-8 dark:bg-gray-800 flex flex-col gap-4">
                     <div class="flex flex-row gap-2">
-                        <div> <img src="img/date.png" alt="" class="w-20 h-20"></div>
+                        <div> <img src="img/mobile-transaction.png" alt="" class="w-20 h-20"></div>
                         <div>
-                        <div class="">
-                            <h5 class="mb-2 text-1xl font-bold font-mono text-gray-900 dark:text-white">Transaksi Penimbangan Sampah Anda</h5>
+                            <div class="">
+                                <h5 class="mb-2 text-1xl font-bold font-mono text-gray-900 dark:text-white">Transaksi
+                                    Penimbangan Sampah Anda</h5>
+                            </div>
                         </div>
-                        </div>
+
+                    </div>
+                    <div class="flex flex-col gap-2">
+
+                        <div class="bg-[#15C972] hover:bg-[#016b38] font-mono text-md font-bold p-2 w-full text-white rounded-xl">Transaksi Tanggal: 20 Januari 2023 senilai
+                            Rp.100.000,00</div>
+                            <div class="bg-[#15C972] hover:bg-[#016b38] font-mono text-md font-bold p-2 w-full text-white rounded-xl">Transaksi Tanggal: 20 Januari 2023 senilai
+                                Rp.100.000,00</div>  <div class="bg-[#15C972] hover:bg-[#016b38] font-mono text-md font-bold p-2 w-full text-white rounded-xl">Transaksi Tanggal: 20 Januari 2023 senilai
+                                    Rp.100.000,00</div>
+
+
                     </div>
 
 
