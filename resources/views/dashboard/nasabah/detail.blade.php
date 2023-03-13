@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
-    <div class="flex flex-col">
+    <div class="flex flex-col gap-4">
         <div class="">
             <h1 class="text-3xl text-black pb-6">Tabel detail Nasabah</h1>
             @error('email')
@@ -9,9 +9,9 @@
             @enderror
         </div>
         <div>
-            <button type="button"
+            <a href="{{route('nasabah_delete',['id' => $user->id])}}" onclick="return confirm('Apa Anda Yakin Ingin Menghapus data ini?')"
                 class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Hapus
-                Nasabah</button>
+                Nasabah</a>
         </div>
 
 
@@ -43,7 +43,7 @@
                         </button>
                         <div class="px-6 py-6 lg:px-4">
                             <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit Data Nasabah</h3>
-                            <form class="space-y-6" action="/dashboard/nasabah/update/{{$user->id}}" method="POST">
+                            <form class="space-y-6" action="{{route('nasabah_update',['user_id' => $user->id])}}" method="POST">
                                 @csrf
                                 <div class="flex flex-row gap-4">
                                 <div>
@@ -70,8 +70,7 @@
                                     <label for="password"
                                         class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                                     <input type="password" name="password" id="password"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                        required>
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                 </div>
                             </div>
 

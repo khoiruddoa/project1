@@ -41,13 +41,17 @@ Route::get('/dashboard/contoh', function () {
 });
 
 Route::get('/dashboard/nasabah', [RegisterController::class, 'index'])->name('nasabah');
-
 Route::get('/dashboard/nasabah/{user_id}', [RegisterController::class, 'detail'])->name('nasabah_detail');
+Route::post('/dashboard/nasabah/update/{user_id}', [RegisterController::class, 'update'])->name('nasabah_update');
 Route::post('/dashboard/nasabah', [RegisterController::class, 'store'])->name('nasabahStore');
+Route::get('/dashboard/nasabah/delete/{id}', [RegisterController::class, 'destroy'])->name('nasabah_delete');
 
 Route::get('/dashboard/sampah', [CategoryController::class, 'index'])->name('sampah');
 Route::post('/dashboard/sampah', [CategoryController::class, 'store'])->name('sampahStore');
+Route::post('/dashboard/sampah/update/{id}', [CategoryController::class, 'update'])->name('sampah_update');
+Route::get('/dashboard/sampah/delete/{id}', [CategoryController::class, 'destroy'])->name('sampah_delete');
 
 Route::get('/dashboard/jadwal', [ScheduleController::class, 'index'])->name('jadwal');
 Route::post('/dashboard/jadwal', [ScheduleController::class, 'store'])->name('jadwalStore');
+Route::get('/dashboard/jadwal/delete/{id}', [ScheduleController::class, 'destroy'])->name('jadwal_delete');
   

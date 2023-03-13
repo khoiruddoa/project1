@@ -3,7 +3,7 @@
 @section('container')
     <div class="flex flex-col">
         <div class="">
-            <h1 class="text-3xl text-black pb-6">Tabel Jadwal Angkut</h1>
+            <h1 class="text-3xl text-black pb-6">Transaksi Nasabah</h1>
         </div>
 
         <div>
