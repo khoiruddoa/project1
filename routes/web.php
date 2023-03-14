@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\TransactionController;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Route;
 
@@ -54,4 +55,13 @@ Route::get('/dashboard/sampah/delete/{id}', [CategoryController::class, 'destroy
 Route::get('/dashboard/jadwal', [ScheduleController::class, 'index'])->name('jadwal');
 Route::post('/dashboard/jadwal', [ScheduleController::class, 'store'])->name('jadwalStore');
 Route::get('/dashboard/jadwal/delete/{id}', [ScheduleController::class, 'destroy'])->name('jadwal_delete');
+
+
+Route::get('/dashboard/transaksi', [TransactionController::class, 'index'])->name('transaksi');
+Route::post('/dashboard/transaksi', [TransactionController::class, 'store'])->name('transaksi_store');
+Route::get('/dashboard/transaksi/{id}', [TransactionController::class, 'detail'])->name('transaksi_detail');
+Route::post('/dashboard/transaksi/detail', [TransactionController::class, 'storedetail'])->name('store_detail');
+// Route::post('/dashboard/nasabah/update/{user_id}', [RegisterController::class, 'update'])->name('nasabah_update');
+// Route::post('/dashboard/nasabah', [RegisterController::class, 'store'])->name('nasabahStore');
+// Route::get('/dashboard/nasabah/delete/{id}', [RegisterController::class, 'destroy'])->name('nasabah_delete');
   
