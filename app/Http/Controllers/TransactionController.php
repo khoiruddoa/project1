@@ -66,8 +66,31 @@ class TransactionController extends Controller
         ]);
 
 
+        $v = $validatedData['transaction_id'];
+        $transaction = Transaction::find($v);
+        $debet = $validatedData['price'] * $validatedData['qty'];
+        
+
+        $payloadtransaction = ['pay_total' => $transaction['pay_total'] + $debet];
+        $transaction->fill($payloadtransaction);
+        $transaction->save();
         DetailTransaction::create($validatedData);
         Alert::info('Berhasil', 'Transaksi Berhasil');
         return back();
     }
+    public function destroydetail($id){
+        
+        $detail = DetailTransaction::findOrFail($id);
+        $transaction = Transaction::find($detail->transaction_id);
+        $debet = $detail->price * $detail->qty;
+        
+
+        $payloadtransaction = ['pay_total' => $transaction['pay_total'] - $debet];
+        $transaction->fill($payloadtransaction);
+        $transaction->save();
+        $detail->delete();
+        Alert::info('Berhasil', 'Hapus Data Berhasil');
+        return back();
+    }
+
 }

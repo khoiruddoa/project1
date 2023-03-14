@@ -61,7 +61,4 @@ Route::get('/dashboard/transaksi', [TransactionController::class, 'index'])->nam
 Route::post('/dashboard/transaksi', [TransactionController::class, 'store'])->name('transaksi_store');
 Route::get('/dashboard/transaksi/{id}', [TransactionController::class, 'detail'])->name('transaksi_detail');
 Route::post('/dashboard/transaksi/detail', [TransactionController::class, 'storedetail'])->name('store_detail');
-// Route::post('/dashboard/nasabah/update/{user_id}', [RegisterController::class, 'update'])->name('nasabah_update');
-// Route::post('/dashboard/nasabah', [RegisterController::class, 'store'])->name('nasabahStore');
-// Route::get('/dashboard/nasabah/delete/{id}', [RegisterController::class, 'destroy'])->name('nasabah_delete');
-  
+Route::get('/dashboard/transaksi/detail/delete/{id}', [TransactionController::class, 'destroydetail'])->name('delete_detail');

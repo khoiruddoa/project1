@@ -113,22 +113,39 @@
                                 Kategori</th>
                             <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
                                 QTY</th>
+                            <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Harga</th>
+                            <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Jumlah</th>
                             <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm"></th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-700">
-
+                        @php
+$total = 0; 
+@endphp
+@foreach($detail_transactions as $item)
                         <tr>
-                            <td class="w-1/3 sm:w-auto text-left py-3 px-4"></td>
-                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">500000</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{$item->category->category_name}}</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{$item->qty}} {{$item->category->uom}}</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{$item->price}}</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{$item->price * $item->qty}}</td>
                             <td class="sm:text-left py-3 px-4">
-                                <a href=""
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</a>
-                                <a href=""
+                                
+                                <a href="{{route('delete_detail',['id' => $item->id])}}"
                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Hapus</a>
                             </td>
                         </tr>
-
+                        @php
+    $total += $item->price * $item->qty; // tambahkan nilai baru ke total
+    @endphp
+@endforeach
+<tr>
+    <td class="w-1/3 sm:w-auto text-left py-3 px-4"></td>
+    <td class="w-1/3 sm:w-auto text-left py-3 px-4"></td>
+    <td class="w-1/3 sm:w-auto text-left py-3 px-4 font-extrabold">Total</td>
+    <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{$total}}</td>
+    <td class="sm:text-left py-3 px-4">
+    </td>
+</tr>
                     </tbody>
                 </table>
             </div>
