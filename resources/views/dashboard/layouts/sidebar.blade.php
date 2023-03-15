@@ -11,8 +11,9 @@
             </a>
             <a href="{{route('nasabah')}}" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
                 <i class="fas fa-sticky-note mr-3"></i>
-                Data Nasabah
+                Data Pengguna
             </a>
+            
             <a href="{{route('sampah')}}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-table mr-3"></i>
                 Data Kategori Sampah
@@ -25,11 +26,11 @@
                 <i class="fas fa-tablet-alt mr-3"></i>
                 Transaksi Nasabah
             </a>
-            <a href="calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <a href="{{route('transaksipengepul')}}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-calendar mr-3"></i>
                 Transaksi Pengepul
             </a>
-            <a href="calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <a href="" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-calendar mr-3"></i>
                 Pengajuan Konversi
             </a>

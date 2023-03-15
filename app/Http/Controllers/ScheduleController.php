@@ -36,13 +36,13 @@ class ScheduleController extends Controller
         {
             $bulan_ini = date('m', strtotime($tanggal_ini)); //ambil bulan dari tanggal_ini
           
-
+            $tahun_ini = date('y', strtotime($tanggal_ini));
             
                     foreach ($tanggal as $tgl) {
                     
                         $bulan_tgl = date('m', strtotime($tgl->date)); //ambil bulan dari tanggal pada array
-
-                        if ($bulan_tgl == $bulan_ini) { //jika bulannya sama
+                        $tahun_tgl = date('y', strtotime($tgl->date));
+                        if ($bulan_tgl == $bulan_ini && $tahun_tgl == $tahun_ini) { //jika bulannya sama
                             return true; //beri keterangan true
                         }
                        

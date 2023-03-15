@@ -15,7 +15,7 @@ class TransactionController extends Controller
     {
         return view('dashboard.transaksi.index', [
             'categories' => Category::all(),
-            'users' => User::all(),
+            'users' => User::where('role',1)->get(),
             'transactions' => Transaction::all(),
 
         ]);
@@ -69,7 +69,7 @@ class TransactionController extends Controller
         $v = $validatedData['transaction_id'];
         $transaction = Transaction::find($v);
         $debet = $validatedData['price'] * $validatedData['qty'];
-        
+
 
         $payloadtransaction = ['pay_total' => $transaction['pay_total'] + $debet];
         $transaction->fill($payloadtransaction);
@@ -78,12 +78,33 @@ class TransactionController extends Controller
         Alert::info('Berhasil', 'Transaksi Berhasil');
         return back();
     }
-    public function destroydetail($id){
+
+    public function destroy($id)
+    {
+
         
+        $detail = DetailTransaction::where('transaction_id', $id)->get();
+        $transaction = Transaction::find($id);
+
+        if (count($detail) > 0) {
+
+            Alert::warning('Gagal', 'Hapus Data Tidak dapat dilakukan karena masih ada detail transaksi');
+            return back();
+        } else {
+
+            $transaction->delete();
+            Alert::info('Berhasil', 'Hapus Data Berhasil');
+            return redirect('/dashboard/transaksi');
+        }
+    }
+
+    public function destroydetail($id)
+    {
+
         $detail = DetailTransaction::findOrFail($id);
         $transaction = Transaction::find($detail->transaction_id);
         $debet = $detail->price * $detail->qty;
-        
+
 
         $payloadtransaction = ['pay_total' => $transaction['pay_total'] - $debet];
         $transaction->fill($payloadtransaction);
@@ -92,5 +113,4 @@ class TransactionController extends Controller
         Alert::info('Berhasil', 'Hapus Data Berhasil');
         return back();
     }
-
 }

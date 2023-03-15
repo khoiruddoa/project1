@@ -3,7 +3,7 @@
 @section('container')
     <div class="flex flex-col">
         <div class="">
-            <h1 class="text-3xl text-black pb-6">Transaksi Nasabah</h1>
+            <h1 class="text-3xl text-black pb-6">Transaksi Pengepul</h1>
         </div>
 
         <div>
@@ -12,7 +12,7 @@
             <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
                 class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button">
-                Tambah Transaksi
+                Tambah Transaksi Pengepul
             </button>
 
             <!-- Main modal -->
@@ -33,7 +33,7 @@
                             <span class="sr-only">Close</span>
                         </button>
                         <div class="px-6 py-6 lg:px-8">
-                            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Cari Data Nasabah</h3>
+                            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Cari Data Pengepul</h3>
                             <div>
 
                                 <form class="flex items-center">
@@ -86,7 +86,7 @@
                                                         {{ $user->phone_number }}</td>
                                                     <td class="sm:text-left py-3 px-4">
                                                         <div>
-                                                            <form action="{{ route('transaksi_store') }}" method="POST">
+                                                            <form action="{{ route('transaksipengepul_store') }}" method="POST">
                                                                 @csrf
                                                                 <input type="hidden" name="user_id"
                                                                     value="{{ $user->id }}">
@@ -96,7 +96,7 @@
 
                                                                 <button type="submit"
                                                                     class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buat
-                                                                    Transaksi</button>
+                                                                    Transaksi Pengepul</button>
                                                                 <div
                                                                     class="text-sm font-medium text-gray-500 dark:text-gray-300">
 
@@ -133,7 +133,7 @@
                         <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                                    Nama Nasabah
+                                    Nama Pengepul
                                 </th>
                                 <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
                                 
@@ -142,7 +142,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($transactions as $transaction)
+                            @foreach ($collectortransactions as $transaction)
                                 <tr class="border-b border-gray-200 dark:border-gray-700">
                                     
                                     <th scope="row"
@@ -151,8 +151,8 @@
                                     </th>
                                     <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                    <a href="{{ route('transaksi_detail', ['id' => $transaction->id]) }}"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail Transaksi</a>
+                                    <a href="{{ route('transaksipengepul_detail', ['id' => $transaction->id]) }}"
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail Transaksi Pengepul</a>
                                
                                 </th>
                                 </tr>

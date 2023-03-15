@@ -3,10 +3,28 @@
 @section('container')
     <div class="flex flex-col">
         <div class="">
-            <h1 class="text-3xl text-black pb-6">Tabel Nasabah</h1>
-            @error('email')
-                <p class="text-red-500 text-xs italic">{{ $message }}</p>
+            <h1 class="text-3xl text-black pb-6">Tabel Anggota</h1>
+            <div class="m-4">
+            @error('name')
+                <p class="text-red-500 text-lg italic">{{ $message }}</p>
             @enderror
+            @error('email')
+                <p class="text-red-500 text-lg italic">{{ $message }}</p>
+            @enderror
+            @error('phone_number')
+                <p class="text-red-500 text-lg italic">{{ $message }}</p>
+            @enderror
+            @error('address')
+                <p class="text-red-500 text-lg italic">{{ $message }}</p>
+            @enderror
+            @error('password')
+                <p class="text-red-500 text-lg italic">{{ $message }}</p>
+            @enderror
+            @error('role')
+                <p class="text-red-500 text-lg italic">{{ $message }}</p>
+            @enderror
+            </div>
+
         </div>
 
         <div>
@@ -40,37 +58,41 @@
                             <form class="space-y-6" action="/dashboard/nasabah" method="POST">
                                 @csrf
                                 <div class="flex flex-row gap-4">
-                                <div>
-                                    <label for="name" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
-                                    <input type="text" name="name" id="name" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                    <div>
+                                        <label for="name"
+                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
+                                        <input type="text" name="name" id="name"
+                                            class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            required>
+                                    </div>
+                                    <div>
+                                        <label for="small-input"
+                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">No.
+                                            HP</label>
+                                        <input type="number" name="phone_number" id="small-input"
+                                            class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            required>
+                                    </div>
+
+
                                 </div>
-                                <div>
-                                    <label for="small-input" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">No. HP</label>
-                                    <input type="number" name="phone_number" id="small-input" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                <div class="flex flex-row gap-4">
+                                    <div>
+                                        <label for="email"
+                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                        <input type="email" name="email" id="email"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                            placeholder="name@company.com" required>
+                                    </div>
+
+                                    <div>
+                                        <label for="password"
+                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                        <input type="password" name="password" id="password" placeholder="••••••••"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                            required>
+                                    </div>
                                 </div>
-                                
-                               
-                            </div>
-                            <div class="flex flex-row gap-4">
-                                <div>
-                                    <label for="email"
-                                        class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                                    <input type="email" name="email" id="email"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                        placeholder="name@company.com" required>
-                                    @error('email')
-                                        <p class="text-red-500 text-xs italic">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                
-                                <div>
-                                    <label for="password"
-                                        class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                                    <input type="password" name="password" id="password" placeholder="••••••••"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                        required>
-                                </div>
-                            </div>
 
                                 <label for="address"
                                     class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
@@ -78,14 +100,21 @@
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required></textarea>
 
-                                <div class="flex justify-between">
-                                    
-                                </div>
+
+                                <label for="role"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
+                                <select id="role" name="role"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                                    <option value="1">Nasabah</option>
+                                    <option value="2">Pengepul</option>
+                                    <option value="3">Admin</option>
+                                </select>
+
+
                                 <button type="submit"
                                     class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Daftarkan</button>
-                                <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
 
-                                </div>
                             </form>
                         </div>
                     </div>
@@ -95,32 +124,123 @@
         </div>
 
     </div>
+    <div class="w-full mt-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800"
+            id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+            <li class="mr-2">
+                <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about"
+                    aria-selected="true"
+                    class="inline-block p-4 text-blue-600 rounded-tl-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-blue-500">Nasabah</button>
+            </li>
+            <li class="mr-2">
+                <button id="services-tab" data-tabs-target="#services" type="button" role="tab"
+                    aria-controls="services" aria-selected="false"
+                    class="inline-block p-4 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300">Pengepul</button>
+            </li>
+            <li class="mr-2">
+                <button id="statistics-tab" data-tabs-target="#statistics" type="button" role="tab"
+                    aria-controls="statistics" aria-selected="false"
+                    class="inline-block p-4 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300">Admin</button>
+            </li>
+        </ul>
+        <div id="defaultTabContent">
+            <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="about" role="tabpanel"
+                aria-labelledby="about-tab">
+                <div class="w-full mt-6">
+                    <div class="overflow-x-auto">
+                        <table class="w-full bg-white">
+                            <thead class="bg-gray-800 text-white w-full">
+                                <tr>
+                                    <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Nama
+                                    </th>
+                                    <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Saldo
+                                    </th>
+                                    <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Riwayat Transaksi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-700">
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $user->name }}</td>
+                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">500000</td>
+                                        <td class="sm:text-left py-3 px-4">
+                                            <a href="{{ route('nasabah_detail', ['user_id' => $user->id]) }}"
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
 
-    <div class="w-full mt-6">
-        <div class="overflow-x-auto">
-            <table class="w-full bg-white">
-                <thead class="bg-gray-800 text-white w-full">
-                    <tr>
-                        <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Nama</th>
-                        <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Saldo</th>
-                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Riwayat Transaksi</th>
-                    </tr>
-                </thead>
-                <tbody class="text-gray-700">
-                    @foreach ($users as $user)
-                        <tr>
-                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $user->name }}</td>
-                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">500000</td>
-                            <td class="sm:text-left py-3 px-4">
-                                <a href="{{ route('nasabah_detail', ['user_id' => $user->id]) }}"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+
+                </div>
+            </div>
+            <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="services" role="tabpanel"
+                aria-labelledby="services-tab">
+                <div class="w-full mt-6">
+                    <div class="overflow-x-auto">
+                        <table class="w-full bg-white">
+                            <thead class="  w-1/2">
+                                <tr>
+                                    <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
+                                        Nama</th>
+
+                                    <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-700">
+                                @foreach ($collectors as $collector)
+                                    <tr>
+                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $collector->name }}</td>
+
+                                        <td class="sm:text-left py-3 px-4">
+                                            <a href=""
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="statistics" role="tabpanel"
+                aria-labelledby="statistics-tab">
+                <div class="w-full mt-6">
+                    <div class="overflow-x-auto">
+                        <table class="w-full bg-white">
+                            <thead class="  w-1/2">
+                                <tr>
+                                    <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
+                                        Nama</th>
+
+                                    <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-700">
+                                @foreach ($admins as $admin)
+                                    <tr>
+                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $admin->name }}</td>
+
+                                        <td class="sm:text-left py-3 px-4">
+                                            <a href=""
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
         </div>
-
-
     </div>
 @endsection

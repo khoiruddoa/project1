@@ -46,32 +46,33 @@
             integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
         <script src="/js/jquery.js"></script>
         <script type="text/javascript">
-            $('#inputAngka').on('keyup', function() {
-                var angka = $(this).val();
-    
-                var hasilAngka = formatRibuan(angka);
-    
-                $(this).val(hasilAngka);
-            });
-    
-            function formatRibuan(angka) {
-                var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                    split = number_string.split(','),
-                    sisa = split[0].length % 3,
-                    angka_hasil = split[0].substr(0, sisa),
-                    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-    
-    
-    
-                // tambahkan titik jika yang di input sudah menjadi angka ribuan
-                if (ribuan) {
-                    separator = sisa ? '.' : '';
-                    angka_hasil += separator + ribuan.join('.');
-                }
-    
-                angka_hasil = split[1] != undefined ? angka_hasil + ',' + split[1] : angka_hasil;
-                return angka_hasil;
-            }
+        $('#inputAngka').on('keyup', function() {
+    var angka = $(this).val();
+    var hasilAngka = formatRibuan(angka);
+    $(this).val(hasilAngka);
+});
+
+function formatRibuan(angka) {
+    var number_string = angka.replace(/[^,\d]/g, '').toString(),
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        angka_hasil = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{1,3}/gi);
+
+    // tambahkan titik jika yang di input sudah menjadi angka ribuan
+    if (ribuan) {
+        separator = sisa ? '.' : '';
+        angka_hasil += separator + ribuan.join('.');
+    }
+
+    // tambahkan koma jika angka lebih dari 999 juta
+    if (split.length > 1) {
+        angka_hasil += ',' + split[1];
+    }
+
+    return angka_hasil;
+}
+
         </script>
             
     <!-- AlpineJS -->

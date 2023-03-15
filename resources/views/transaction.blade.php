@@ -13,7 +13,7 @@
                     class="lg:w-[500px] w-[300px] p-6 bg-white border border-gray-200 rounded-lg shadow flex md:flex-row flex-row-reverse gap-10">
                     <div>
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 font-mono ">Saldo Anda : </p>
-                        <p class="mb-3 font-extrabold text-gray-700 lg:text-5xl text-xl  font-mono ">Rp. 700.000,00</p>
+                        <p class="mb-3 font-extrabold text-gray-700 lg:text-5xl text-xl  font-mono ">@currency($user->transaction->sum('pay_total'))</p>
                     </div>
                     <div>
                         <img class="w-16 h-16 rounded-full" src="img/dumy.png" alt="user photo">

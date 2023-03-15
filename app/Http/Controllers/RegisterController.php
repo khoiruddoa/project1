@@ -13,7 +13,9 @@ class RegisterController extends Controller
     public function index()
     {
         return view('dashboard.nasabah.index', [
-            'users' => User::all()
+            'users' => User::where('role', 1)->get(),
+            'collectors' =>  User::where('role', 2)->get(),
+            'admins' =>  User::where('role', 3)->get(),
         ]);
     }
     public function detail($user_id)
@@ -32,10 +34,10 @@ class RegisterController extends Controller
             'phone_number' => ['required', 'unique:users'],
             'password' => 'required|min:5|max:255',
             'address' => 'required|max:255',
+            'role' => 'required',
         ]);
 
         $validatedData['password'] = Hash::make($validatedData['password']);
-        $validatedData['role'] = 1;
         User::create($validatedData);
         Alert::info('Berhasil', 'Input Nasabah Berhasil');
         return redirect('/dashboard/nasabah');

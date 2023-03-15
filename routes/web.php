@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CollectorTransactionController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserTransactionController;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Route;
 
@@ -23,9 +25,8 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/transaction', function () {
-    return view('transaction');
-});
+
+Route::get('/transaction', [UserTransactionController::class, 'index'])->name('transaksi');
 
 Route::get('/convertion', function () {
     return view('convertion');
@@ -62,3 +63,12 @@ Route::post('/dashboard/transaksi', [TransactionController::class, 'store'])->na
 Route::get('/dashboard/transaksi/{id}', [TransactionController::class, 'detail'])->name('transaksi_detail');
 Route::post('/dashboard/transaksi/detail', [TransactionController::class, 'storedetail'])->name('store_detail');
 Route::get('/dashboard/transaksi/detail/delete/{id}', [TransactionController::class, 'destroydetail'])->name('delete_detail');
+Route::get('/dashboard/transaksi/delete/{id}', [TransactionController::class, 'destroy'])->name('transaksi_delete');
+
+
+Route::get('/dashboard/transaksipengepul', [CollectorTransactionController::class, 'index'])->name('transaksipengepul');
+Route::post('/dashboard/transaksipengepul', [CollectorTransactionController::class, 'store'])->name('transaksipengepul_store');
+Route::get('/dashboard/transaksipengepul/{id}', [CollectorTransactionController::class, 'detail'])->name('transaksipengepul_detail');
+Route::post('/dashboard/transaksipengepul/detail', [CollectorTransactionController::class, 'storedetail'])->name('storepengepul_detail');
+Route::get('/dashboard/transaksipengepul/detail/delete/{id}', [CollectorTransactionController::class, 'destroydetail'])->name('deletepengepul_detail');
+Route::get('/dashboard/transaksipengepul/delete/{id}', [CollectorTransactionController::class, 'destroy'])->name('transaksipengepul_delete');

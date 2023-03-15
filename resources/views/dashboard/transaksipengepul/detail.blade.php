@@ -41,7 +41,7 @@
                         </button>
                         <div class="px-6 py-6 lg:px-8">
                             <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Masukkan Transaksi</h3>
-                            <form class="space-y-6" action="{{route('store_detail')}}" method="POST">
+                            <form class="space-y-6" action="{{route('storepengepul_detail')}}" method="POST">
                                 @csrf
                                 <div>
                                     <div>
@@ -50,12 +50,16 @@
                                         <select id="category" name="category_id"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+
+                                            @if(($category->detailTransactions->sum('qty')-$category->detailCollectorTransactions->sum('qty'))>0)
+                                                <option value="{{ $category->id }}">{{ $category->category_name }} (Stock : {{$category->detailTransactions->sum('qty')}} {{ $category->uom }})</option>
+                                            
+                                            @endif
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <input type="hidden" name="transaction_id" value="{{$transaction->id}}">
+                                <input type="hidden" name="collector_transaction_id" value="{{$transaction->id}}">
                                 <div class="flex flex-row gap-2">
                                 <div>
                                     <label for="qty"
@@ -67,8 +71,8 @@
                                 <div>
                                     <label for="price"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga
-                                        Beli</label>
-                                        <div x-data="{ number: 0 }">
+                                        Jual</label>
+                                        <div x-data="{ number: null }">
                                             <input type="text" name="price" x-model="number" x-on:input="number = parseFloat($event.target.value)" x-on:blur="$event.target.value = number.toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0})"
                                     
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -134,7 +138,7 @@ $total = 0;
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($item->price * $item->qty)</td>
                             <td class="sm:text-left py-3 px-4">
                                 
-                                <a href="{{route('delete_detail',['id' => $item->id])}}"
+                                <a href="{{route('deletepengepul_detail',['id' => $item->id])}}"
                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Hapus</a>
                             </td>
                         </tr>
