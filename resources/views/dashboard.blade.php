@@ -19,25 +19,7 @@
                     </div>
                 </div>
                 <div>
-                    <div class="flex flex-row lg:gap-10 gap-2 font-mono">
-
-                        <div
-                            class="flex flex-col justify-center items-center hover:shadow-2xl hover:bg-blue-600 border-[2px] xl:px-[65px] xl:py-[44px] lg:px-[45px] lg:py-[24px] px-[20px] py-[10px] bg-white rounded-[35px] shadow-lg">
-                            <div><img src="img/gold.png" alt="" class="w-10 h-10"></div>
-                            <div>Konversi</div>
-                        </div>
-                        <div
-                            class="flex flex-col justify-center items-center hover:shadow-2xl hover:bg-blue-600 border-[2px] xl:px-[65px] xl:py-[44px] lg:px-[45px] lg:py-[24px] px-[20px] py-[10px] bg-white rounded-[35px] shadow-lg">
-                            <div><img src="img/garbage.png" alt="" class="w-10 h-10"></div>
-                            <div>Transaksi</div>
-                        </div>
-                        <div
-                            class="flex flex-col justify-center items-center hover:shadow-2xl hover:bg-blue-600 border-[2px] xl:px-[65px] xl:py-[44px] lg:px-[45px] lg:py-[24px] px-[30px] py-[10px] bg-white rounded-[35px] shadow-lg">
-                            <div><img src="img/schedule.png" alt="" class="w-10 h-10"></div>
-                            <div> Jadwal</div>
-                        </div>
-
-                    </div>
+                    @include('saldo')
                 </div>
 
                 <div

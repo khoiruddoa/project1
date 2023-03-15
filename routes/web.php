@@ -26,12 +26,13 @@ Route::get('/', function () {
 });
 
 
-Route::get('/transaction', [UserTransactionController::class, 'index'])->name('transaksi');
+Route::get('/transaction', [UserTransactionController::class, 'index'])->name('transaction');
+Route::get('/transaction/{id}', [UserTransactionController::class, 'detail'])->name('detail_transaction');
 
 Route::get('/convertion', function () {
     return view('convertion');
-});
-Route::get('/dashboard', [ScheduleController::class, 'dashboard']);
+})->name('konversi');
+Route::get('/dashboard', [ScheduleController::class, 'dashboard'])->name('dashboard');
 
 
 Route::get('/login', [LoginController::class, 'index']);

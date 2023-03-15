@@ -2,12 +2,12 @@
 <nav class="font-mono fixed w-full bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
   <div class="container flex flex-wrap items-center justify-between mx-auto">
   <a href="/" class="flex items-center">
-      <img src="img/logo.png" class="h-6 mr-3 sm:h-16" alt="bank sampah Logo" />
+      <img src="{{ asset('img/logo.png')}}" class="h-6 mr-3 sm:h-16" alt="bank sampah Logo" />
   </a>
   <div class="flex items-center md:order-2">
       <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
         <span class="sr-only">Open user menu</span>
-        <img class="w-8 h-8 rounded-full" src="img/dumy.png" alt="user photo">
+        <img class="w-8 h-8 rounded-full" src="{{ asset('img/dumy.png')}}" alt="user photo">
       </button>
       <!-- Dropdown menu -->
       <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
