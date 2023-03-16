@@ -14,7 +14,7 @@ class ConvertionController extends Controller
     {
         $user = User::find(auth()->user()->id);
         $convertion = Convertion::where('pay_status', 1)->where('user_id', auth()->user()->id)->get();
-        $convertions = Convertion::where('pay_status', 2)->where('user_id', auth()->user()->id)->get();
+        $convertions = Convertion::where('pay_status', 3)->where('user_id', auth()->user()->id)->get();
 
 
         return view(
