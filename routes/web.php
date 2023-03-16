@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminConvertionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectorTransactionController;
 use App\Http\Controllers\ConvertionController;
@@ -76,3 +77,6 @@ Route::get('/dashboard/transaksipengepul/{id}', [CollectorTransactionController:
 Route::post('/dashboard/transaksipengepul/detail', [CollectorTransactionController::class, 'storedetail'])->name('storepengepul_detail');
 Route::get('/dashboard/transaksipengepul/detail/delete/{id}', [CollectorTransactionController::class, 'destroydetail'])->name('deletepengepul_detail');
 Route::get('/dashboard/transaksipengepul/delete/{id}', [CollectorTransactionController::class, 'destroy'])->name('transaksipengepul_delete');
+
+Route::get('/dashboard/konversi', [AdminConvertionController::class, 'index'])->name('pengajuan_konversi');
+Route::post('/dashboard/konversi/update/{id}', [AdminConvertionController::class, 'store'])->name('store_konversi');

@@ -45,6 +45,7 @@ class CategoryController extends Controller
             Alert::warning('Gagal', 'Update Gagal');
             return redirect()->back(); }
     }
+    
     public function destroy($id){
         
         $category = Category::findOrFail($id);
