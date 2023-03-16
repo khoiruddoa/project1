@@ -11,7 +11,13 @@ class AdminConvertionController extends Controller
     public function index()
     {
         $convertions = Convertion::where('user_id', auth()->user()->id)->where('pay_status', 1)->get();
-        return view('dashboard.konversi.index', ['convertions' => $convertions]);
+        $approves = Convertion::where('user_id', auth()->user()->id)->where('pay_status', 2)->get();
+        $success = Convertion::where('user_id', auth()->user()->id)->where('pay_status', 3)->get();
+        return view('dashboard.konversi.index', [
+            'convertions' => $convertions,
+            'approves' => $approves,
+            'success' => $success
+        ]);
     }
     public function store(Request $request, $id)
     {
