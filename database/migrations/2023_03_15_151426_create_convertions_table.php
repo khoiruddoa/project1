@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('convertions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('administrator'); 
+            $table->string('administrator')->nullable(); 
             $table->integer('pay_total')->nullable();
             $table->integer('pay_status');
             $table->text('information')->nullable();
-            $table->timestamps();
             $table->timestamps();
         });
     }

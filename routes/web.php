@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectorTransactionController;
+use App\Http\Controllers\ConvertionController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ScheduleController;
@@ -29,9 +30,11 @@ Route::get('/', function () {
 Route::get('/transaction', [UserTransactionController::class, 'index'])->name('transaction');
 Route::get('/transaction/{id}', [UserTransactionController::class, 'detail'])->name('detail_transaction');
 
-Route::get('/convertion', function () {
-    return view('convertion');
-})->name('konversi');
+
+Route::get('/convertion', [ConvertionController::class, 'index'])->name('konversi');
+Route::post('/convertion', [ConvertionController::class, 'store'])->name('store_convertion');
+
+
 Route::get('/dashboard', [ScheduleController::class, 'dashboard'])->name('dashboard');
 
 

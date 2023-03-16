@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Convertion;
 use App\Models\DetailTransaction;
 use App\Models\Transaction;
 use App\Models\User;
@@ -13,6 +14,7 @@ class UserTransactionController extends Controller
     {
         return view('transaction', [
             'user' => User::find(auth()->user()->id),
+            'convertion' => Convertion::where('pay_status', 1)->where('user_id', auth()->user->id)->get()
 
         ]);
     }
@@ -23,7 +25,9 @@ class UserTransactionController extends Controller
         return view('details', [
             'user' => User::find(auth()->user()->id),
             'details' => DetailTransaction::where('transaction_id', $id)->get(),
-            'transaction' => Transaction::find($id)
+            'transaction' => Transaction::find($id),
+            'convertion' => Convertion::where('pay_status', 1)->where('user_id', auth()->user->id)->get()
+
 
         ]);
     }
