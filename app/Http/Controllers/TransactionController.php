@@ -16,7 +16,9 @@ class TransactionController extends Controller
         return view('dashboard.transaksi.index', [
             'categories' => Category::all(),
             'users' => User::where('role',1)->get(),
-            'transactions' => Transaction::all(),
+            'transactions' => Transaction::where('pay_status', 0)->orderBy('id', 'desc')->get(),
+            'finish' => Transaction::where('pay_status', 1)->orderBy('id', 'desc')->get(),
+            'approved' => Transaction::where('pay_status', 2)->get(),
 
         ]);
     }
@@ -70,12 +72,30 @@ class TransactionController extends Controller
         $transaction = Transaction::find($v);
         $debet = $validatedData['price'] * $validatedData['qty'];
 
-
+if($transaction->pay_status > 0)
+{
+    Alert::warning('Gagal', 'Tidak bisa transaksi karena transaksi sudah selesai');
+    return back();
+}
         $payloadtransaction = ['pay_total' => $transaction['pay_total'] + $debet];
         $transaction->fill($payloadtransaction);
         $transaction->save();
         DetailTransaction::create($validatedData);
         Alert::info('Berhasil', 'Transaksi Berhasil');
+        return back();
+    }
+
+    public function finish(Request $request, $id)
+    {
+        
+
+        
+        $transaction = Transaction::find($id);
+      
+        $transaction->fill($request->all());
+        $transaction->save();
+        
+        Alert::info('Berhasil', 'Transaksi Selesai');
         return back();
     }
 

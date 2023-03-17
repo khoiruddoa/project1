@@ -27,9 +27,14 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/menu', function () {
+    return view('menu');
+});
+
 
 Route::get('/transaction', [UserTransactionController::class, 'index'])->name('transaction');
 Route::get('/transaction/{id}', [UserTransactionController::class, 'detail'])->name('detail_transaction');
+Route::get('/transaction/approved', [UserTransactionController::class, 'approved'])->name('transaction_aproved');
 
 
 Route::get('/convertion', [ConvertionController::class, 'index'])->name('konversi');
@@ -69,6 +74,8 @@ Route::get('/dashboard/transaksi/{id}', [TransactionController::class, 'detail']
 Route::post('/dashboard/transaksi/detail', [TransactionController::class, 'storedetail'])->name('store_detail');
 Route::get('/dashboard/transaksi/detail/delete/{id}', [TransactionController::class, 'destroydetail'])->name('delete_detail');
 Route::get('/dashboard/transaksi/delete/{id}', [TransactionController::class, 'destroy'])->name('transaksi_delete');
+Route::post('/dashboard/transaksi/finish/{id}', [TransactionController::class, 'finish'])->name('finish');
+
 
 
 Route::get('/dashboard/transaksipengepul', [CollectorTransactionController::class, 'index'])->name('transaksipengepul');

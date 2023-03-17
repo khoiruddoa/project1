@@ -19,6 +19,14 @@ class UserTransactionController extends Controller
         ]);
     }
 
+    public function approved()
+    {
+        return view('transactionriview', [
+            'user' => User::all(),
+
+        ]);
+    }
+
     public function detail($id)
     {
        

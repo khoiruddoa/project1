@@ -123,48 +123,173 @@
 
     </div>
 
-    <div class="w-full mt-6">
-        <div class="overflow-x-auto">
-
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                                    Nama Nasabah
-                                </th>
-                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                                
-                                </th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($transactions as $transaction)
-                                <tr class="border-b border-gray-200 dark:border-gray-700">
-                                    
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                        {{ $transaction->user->name }}
-                                    </th>
-                                    <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                    <a href="{{ route('transaksi_detail', ['id' => $transaction->id]) }}"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail Transaksi</a>
-                               
-                                </th>
-                                </tr>
-                                @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
+    <div class="w-full mt-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800"
+            id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+            <li class="mr-2">
+                <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about"
+                    aria-selected="true"
+                    class="inline-block p-4 text-blue-600 rounded-tl-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-blue-500">Proses</button>
+            </li>
+            <li class="mr-2">
+                <button id="services-tab" data-tabs-target="#services" type="button" role="tab"
+                    aria-controls="services" aria-selected="false"
+                    class="inline-block p-4 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300">Selesai</button>
+            </li>
+            <li class="mr-2">
+                <button id="statistics-tab" data-tabs-target="#statistics" type="button" role="tab"
+                    aria-controls="statistics" aria-selected="false"
+                    class="inline-block p-4 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300">Disetujui</button>
+            </li>
+        </ul>
+        <div id="defaultTabContent">
+            <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="about" role="tabpanel"
+                aria-labelledby="about-tab">
+                <div class="w-full mt-6">
+                    <div class="overflow-x-auto">
+                    
+                                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    
+                                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                            <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                                                <tr>
+                                                    <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                                        Nama Nasabah
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                                    
+                                                    </th>
+                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($transactions as $transaction)
+                                                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                                                        
+                                                        <th scope="row"
+                                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                            {{ $transaction->user->name }}
+                                                        </th>
+                                                        <th scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800"><div class="flex flex-row gap-1 items-center justify-center">
+                                                        <div><a href="{{ route('transaksi_detail', ['id' => $transaction->id]) }}"
+                                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a></div>
+                                                            <div>
+                                                   <form action="{{route('finish',['id' => $transaction->id])}}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="pay_status" value="1">
+                                                            <button type="submit" onclick="return confirm('Apakah Transaksi sudah benar? Data Tidak bisa diubah setelah anda klik selesai')" class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900">Selesai</button>
+                                                        </form></div></div>
+                                                        </th>
+                                                    </tr>
+                                                    @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                    
+                                </div>
+                    
+                            </div>
+                    </div>
+    </div>
+    <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="services" role="tabpanel"
+        aria-labelledby="services-tab">
+        
+                             
+        <div class="w-full mt-6">
+            <div class="overflow-x-auto">
+            
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            
+                            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                    <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                                Nama Nasabah
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                            
+                                            </th>
+            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($finish as $transaction)
+                                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                                
+                                                <th scope="row"
+                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                    {{ $transaction->user->name }}
+                                                </th>
+                                                <th scope="row"
+                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                <span
+                        class="inline-flex items-center bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                        <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+                        Menunggu Persetujuan
+                    </span>
+                                           
+                                                   
+                                                </th>
+                                            </tr>
+                                            @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+            
+                        </div>
+            
+                    </div>
             </div>
-
-        </div>
-
+    </div>
+    <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="statistics" role="tabpanel"
+        aria-labelledby="statistics-tab">
+        <div class="w-full mt-6">
+            <div class="overflow-x-auto">
+            
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            
+                            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                    <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                                Nama Nasabah
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                            
+                                            </th>
+            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($approved as $transaction)
+                                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                                
+                                                <th scope="row"
+                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                    {{ $transaction->user->name }}
+                                                </th>
+                                                <th scope="row"
+                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                <span
+                                                class="inline-flex items-center bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                                                <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+                                                Selesai
+                                            </span>
+                                                </th>
+                                            </tr>
+                                            @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+            
+                        </div>
+            
+                    </div>
+            </div>
 
     </div>
 @endsection

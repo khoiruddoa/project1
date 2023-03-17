@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Convertion;
 use App\Models\Schedule;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -13,15 +15,20 @@ class ScheduleController extends Controller
     public function index()
     {
         return view('dashboard.jadwal.index', [
-            'schedules' => Schedule::all()
+            'schedules' => Schedule::all(),
+            'user' => User::all()
         ]);
     }
     public function dashboard()
     {
         $schedule = Schedule::latest()->first();
+        $user = User::find(auth()->user()->id);
+        $convertion = Convertion::where('pay_status', 1)->where('user_id', auth()->user()->id)->get();
 
         return view('dashboard', [
-            'schedule' => $schedule
+            'schedule' => $schedule,
+            'user' => $user,
+            'convertion' => $convertion
         ]);
     }
     public function store(Request $request)
