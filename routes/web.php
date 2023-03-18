@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectorTransactionController;
 use App\Http\Controllers\ConvertionController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OwnerReviewController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TransactionController;
@@ -32,9 +33,13 @@ Route::get('/menu', function () {
 });
 
 
+Route::get('/transaction/review', [OwnerReviewController::class, 'index'])->name('transaction_review');
+Route::post('/transaction/review', [OwnerReviewController::class, 'store'])->name('transaction_review_store');
+Route::get('/convertion/review', [OwnerReviewController::class, 'convert'])->name('convertion_review');
+Route::post('/convertion/review', [OwnerReviewController::class, 'convertion'])->name('convertion_review_store');
+
 Route::get('/transaction', [UserTransactionController::class, 'index'])->name('transaction');
 Route::get('/transaction/{id}', [UserTransactionController::class, 'detail'])->name('detail_transaction');
-Route::get('/transaction/approved', [UserTransactionController::class, 'approved'])->name('transaction_aproved');
 
 
 Route::get('/convertion', [ConvertionController::class, 'index'])->name('konversi');
