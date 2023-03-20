@@ -14,7 +14,7 @@
                     <div>
                         <div class="">
                             <h5 class="mb-2 text-1xl font-bold font-mono text-gray-900 dark:text-white">Transaksi
-                                Penimbangan Sampah Nasabah</h5>
+                                Konversi Nasabah</h5>
                         </div>
                     </div>
 
@@ -32,9 +32,15 @@
 
                                 </div>
                                 <div>
-                                    <button type="submit" id="submit-btn" disabled
+                                    <button type="submit" id="submit-btn" name="action" value="approve" disabled
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                         Setujui
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="submit" name="action" value="reject"
+                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                        Tolak
                                     </button>
                                 </div>
                             </div>
@@ -57,7 +63,7 @@
                                     
                                        
                                         <div class="ml-3 text-gray-700 font-mono text-white">
-                                            test
+                                            Konversi senilai : @currency($item->pay_total)
                                        
                                     </div>
                                         
@@ -82,6 +88,7 @@
                                 submitBtn.disabled = !hasValue;
                             });
                         });
+                        
 
                         function checkAll() {
                             checkedItems.forEach((item, i) => {

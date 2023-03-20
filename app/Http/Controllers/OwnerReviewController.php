@@ -28,63 +28,77 @@ class OwnerReviewController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            
+
             'id.*' => 'required|max:150'
-            
+
         ]);
 
-        if($validatedData == null){
+        if ($validatedData == null) {
             Alert::warning('Gagal', 'Tidak ada data yang dipilih');
             return back();
         }
-      
+
 
         foreach ($validatedData['id'] as $key => $value) {
 
 
-           $data = 2;
+            $data = 2;
 
             $transaction = Transaction::findOrFail($validatedData['id'][$key]);
-            
+
             $transaction->update(['pay_status' => $data]);
 
             Alert::info('Berhasil', 'Sukses disetujui');
-
-            
         }
-        
+
         return back();
     }
 
     public function convertion(Request $request)
     {
         $validatedData = $request->validate([
-            
+
             'id.*' => 'required|max:150'
-            
+
         ]);
 
-        if($validatedData == null){
+        if ($validatedData == null) {
             Alert::warning('Gagal', 'Tidak ada data yang dipilih');
             return back();
         }
-      
 
-        foreach ($validatedData['id'] as $key => $value) {
+        if ($request->has('action')) {
+            if ($request->action == 'approve') {
+
+                foreach ($validatedData['id'] as $key => $value) {
 
 
-           $data = 2;
+                    $data = 2;
 
-            $transaction = Convertion::findOrFail($validatedData['id'][$key]);
-            
-            $transaction->update(['pay_status' => $data]);
+                    $transaction = Convertion::findOrFail($validatedData['id'][$key]);
 
-            Alert::info('Berhasil', 'Sukses disetujui');
+                    $transaction->update(['pay_status' => $data]);
 
-            
+                    Alert::info('Berhasil', 'Sukses disetujui');
+                }
+            }
+            elseif ($request->action == 'reject') {
+
+                foreach ($validatedData['id'] as $key => $value) {
+
+
+                    $data = 4;
+
+                    $transaction = Convertion::findOrFail($validatedData['id'][$key]);
+
+                    $transaction->update(['pay_status' => $data]);
+
+                    Alert::info('Berhasil', 'Sukses ditolak');
+                }
+
+            }
         }
-        
+
         return back();
     }
-
 }

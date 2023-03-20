@@ -3,9 +3,10 @@
                     <div>
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 font-mono ">Saldo Anda : </p>
                         <p class="mb-6 font-extrabold text-gray-700 lg:text-5xl text-xl  font-mono ">@currency($user->transactions->where('pay_status', 2)->sum('pay_total') - $user->convertions->where('pay_status', 3)->sum('pay_total'))</p>
-                        @if(count($convertion) > 0 )
+                        @if(count($convertion->where('pay_status', '1')) > 0 )
                         <div class=" text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:focus:ring-yellow-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Menunggu Konfirmasi</div>
-
+@elseif(count($convertion->where('pay_status', '2')) > 0)
+<div class=" text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:focus:ring-yellow-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Menunggu Pembayaran</div>
 
 @else
 
@@ -13,7 +14,7 @@
                             @csrf
                             <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
                             <input type="hidden" name="pay_status" value="1">
-                            <input type="hidden" name="pay_total" value="{{$user->transactions->sum('pay_total')}}"> 
+                            <input type="hidden" name="pay_total" value="{{$user->transactions->where('pay_status', 2)->sum('pay_total') - $user->convertions->where('pay_status', 3)->sum('pay_total')}}"> 
                         <button type="submit" class=" text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:focus:ring-yellow-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Tukar Emas</button>
                         </form>
                         @endif

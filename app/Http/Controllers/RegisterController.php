@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Convertion;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -21,8 +23,12 @@ class RegisterController extends Controller
     public function detail($user_id)
     {
         $user = User::find($user_id);
+        $transactions = Transaction::where('user_id', $user_id)->orderBy('id', 'desc')->get();
+        $convertions = Convertion::where('user_id', $user_id)->orderBy('id', 'desc')->get();
         return view('dashboard.nasabah.detail', [
-            'user' => $user
+            'user' => $user,
+            'transactions' => $transactions,
+            'convertions' => $convertions
         ]);
     }
 

@@ -29,10 +29,10 @@ class TransactionController extends Controller
 
 
 
-        if (count($transaction) > 0) {
-            Alert::warning('Gagal', 'Nasabah sudah bertransaksi di tanggal yang sama');
-            return redirect('/dashboard/transaksi');
-        }
+        // if (count($transaction) > 0) {
+        //     Alert::warning('Gagal', 'Nasabah sudah bertransaksi di tanggal yang sama');
+        //     return redirect('/dashboard/transaksi');
+        // }
 
             Transaction::create($request->all());
             Alert::info('Berhasil', 'Transaksi Nasabah dibuat');
@@ -96,7 +96,7 @@ if($transaction->pay_status > 0)
         $transaction->save();
         
         Alert::info('Berhasil', 'Transaksi Selesai');
-        return back();
+        return redirect('/dashboard/transaksi');
     }
 
     public function destroy($id)

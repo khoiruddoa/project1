@@ -9,7 +9,8 @@
             @enderror
         </div>
         <div>
-            <a href="{{route('nasabah_delete',['id' => $user->id])}}" onclick="return confirm('Apa Anda Yakin Ingin Menghapus data ini?')"
+            <a href="{{ route('nasabah_delete', ['id' => $user->id]) }}"
+                onclick="return confirm('Apa Anda Yakin Ingin Menghapus data ini?')"
                 class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Hapus
                 Nasabah</a>
         </div>
@@ -43,45 +44,54 @@
                         </button>
                         <div class="px-6 py-6 lg:px-4">
                             <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit Data Nasabah</h3>
-                            <form class="space-y-6" action="{{route('nasabah_update',['user_id' => $user->id])}}" method="POST">
+                            <form class="space-y-6" action="{{ route('nasabah_update', ['user_id' => $user->id]) }}"
+                                method="POST">
                                 @csrf
                                 <div class="flex flex-row gap-4">
-                                <div>
-                                    <label for="name" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
-                                    <input type="text" name="name" id="name" value="{{$user->name}}" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                    <div>
+                                        <label for="name"
+                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
+                                        <input type="text" name="name" id="name" value="{{ $user->name }}"
+                                            class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            required>
+                                    </div>
+                                    <div>
+                                        <label for="small-input"
+                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">No.
+                                            HP</label>
+                                        <input type="number" value="{{ $user->phone_number }}" name="phone_number"
+                                            id="small-input"
+                                            class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            required>
+                                    </div>
+
+
                                 </div>
-                                <div>
-                                    <label for="small-input" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">No. HP</label>
-                                    <input type="number" value="{{$user->phone_number}}" name="phone_number" id="small-input" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                <div class="flex flex-row gap-4">
+                                    <div>
+                                        <label for="email"
+                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                        <input type="email" name="email" id="email" value="{{ $user->email }}"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                            required>
+                                    </div>
+
+                                    <div>
+                                        <label for="password"
+                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                        <input type="password" name="password" id="password"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                                    </div>
                                 </div>
-                                
-                               
-                            </div>
-                            <div class="flex flex-row gap-4">
-                                <div>
-                                    <label for="email"
-                                        class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                                    <input type="email" name="email" id="email" value="{{$user->email}}"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                         required>
-                                </div>
-                                
-                                <div>
-                                    <label for="password"
-                                        class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                                    <input type="password" name="password" id="password"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
-                                </div>
-                            </div>
 
                                 <label for="address"
                                     class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
-                                <textarea id="address" name="address" rows="4" 
+                                <textarea id="address" name="address" rows="4"
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    required>{{$user->address}}</textarea>
+                                    required>{{ $user->address }}</textarea>
 
                                 <div class="flex justify-between">
-                                    
+
                                 </div>
                                 <button type="submit"
                                     class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</button>
@@ -94,24 +104,17 @@
                 </div>
             </div>
 
-        </div>  
+        </div>
 
     </div>
 
 
     <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <svg class="w-10 h-10 mb-2 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
-            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-                d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z"
-                clip-rule="evenodd"></path>
-            <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z"></path>
-        </svg>
-        <a href="#">
-            <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ $user->name }}</h5>
+
+        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ $user->name }}</h5>
         </a>
         <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Alamat : {{ $user->address }}</p>
-        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Saldo : 700.000 </p>
+        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Saldo : @currency($user->transactions->where('pay_status', 2)->sum('pay_total') - $user->convertions->where('pay_status', 2)->sum('pay_total')) </p>
 
 
 
@@ -121,18 +124,16 @@
                 <li class="mr-2">
                     <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about"
                         aria-selected="true"
-                        class="inline-block p-4 text-blue-600 rounded-tl-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-blue-500">Riwayat Transaksi</button>
+                        class="inline-block p-4 text-blue-600 rounded-tl-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-blue-500">Riwayat
+                        Transaksi</button>
                 </li>
                 <li class="mr-2">
                     <button id="services-tab" data-tabs-target="#services" type="button" role="tab"
                         aria-controls="services" aria-selected="false"
-                        class="inline-block p-4 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300">Riwayat Konversi</button>
+                        class="inline-block p-4 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300">Riwayat
+                        Konversi</button>
                 </li>
-                <li class="mr-2">
-                    <button id="statistics-tab" data-tabs-target="#statistics" type="button" role="tab"
-                        aria-controls="statistics" aria-selected="false"
-                        class="inline-block p-4 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300">Facts</button>
-                </li>
+
             </ul>
             <div id="defaultTabContent">
                 <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="about" role="tabpanel"
@@ -142,25 +143,45 @@
                             <table class="w-full bg-white">
                                 <thead class="bg-gray-800 text-white w-full">
                                     <tr>
+
                                         <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
-                                            Nama</th>
-                                        <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
-                                            Saldo</th>
-                                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Riwayat
+                                            tanggal</th>
+                                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">
                                             Transaksi</th>
+                                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">
+                                            Status</th>
                                     </tr>
+                                </thead>
                                 </thead>
                                 <tbody class="text-gray-700">
 
-                                    <tr>
-                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4"></td>
-                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">500000</td>
-                                        <td class="sm:text-left py-3 px-4">
-                                            <a href=""
-                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
-                                        </td>
-                                    </tr>
-
+                                    @foreach ($transactions as $item)
+                                        <tr>
+                                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $item->created_at }}</td>
+                                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($item->pay_total)</td>
+                                            <td class="sm:text-left py-3 px-4">
+                                                @if ($item->pay_status == 0)
+                                                    <span
+                                                        class="inline-flex items-center bg-yellow-100 text-yellow-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">
+                                                        <span class="w-2 h-2 mr-1 bg-yellow-500 rounded-full"></span>
+                                                        proses
+                                                    </span>
+                                                @elseif($item->pay_status == 1)
+                                                    <span
+                                                        class="inline-flex items-center bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                                                        <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+                                                        menunggu
+                                                    </span>
+                                                @else
+                                                    <span
+                                                        class="inline-flex items-center bg-blue-100 text-blue-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                                                        <span class="w-2 h-2 mr-1 bg-blue-500 rounded-full"></span>
+                                                        selesai
+                                                    </span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -175,25 +196,50 @@
                             <table class="w-full bg-white">
                                 <thead class="bg-gray-800 text-white w-full">
                                     <tr>
+
                                         <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
-                                            Nama</th>
-                                        <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
-                                            Saldo</th>
-                                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Riwayat
+                                            tanggal</th>
+                                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">
                                             Transaksi</th>
+                                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">
+                                            Status</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-gray-700">
 
-                                    <tr>
-                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4"></td>
-                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">500000</td>
-                                        <td class="sm:text-left py-3 px-4">
-                                            <a href=""
-                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
-                                        </td>
-                                    </tr>
-
+                                    @foreach ($convertions as $item)
+                                        <tr>
+                                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $item->created_at }}</td>
+                                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($item->pay_total)</td>
+                                            <td class="sm:text-left py-3 px-4">
+                                                @if ($item->pay_status == 1)
+                                                    <span
+                                                        class="inline-flex items-center bg-yellow-100 text-yellow-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">
+                                                        <span class="w-2 h-2 mr-1 bg-yellow-500 rounded-full"></span>
+                                                        proses
+                                                    </span>
+                                                @elseif($item->pay_status == 2)
+                                                    <span
+                                                        class="inline-flex items-center bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                                                        <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+                                                        menunggu
+                                                    </span>
+                                                    @elseif($item->pay_status == 3)
+                                                    <span
+                                                        class="inline-flex items-center bg-blue-100 text-blue-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                                                        <span class="w-2 h-2 mr-1 bg-blue-500 rounded-full"></span>
+                                                        selesai
+                                                    </span>
+                                                    @else
+                                                    <span
+                                                        class="inline-flex items-center bg-red-100 text-red-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                                                        <span class="w-2 h-2 mr-1 bg-red-500 rounded-full"></span>
+                                                        ditolak
+                                                    </span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -201,24 +247,7 @@
 
                     </div>
                 </div>
-                <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="statistics" role="tabpanel"
-                    aria-labelledby="statistics-tab">
-                    <dl
-                        class="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-6 dark:text-white sm:p-8">
-                        <div class="flex flex-col">
-                            <dt class="mb-2 text-3xl font-extrabold">73M+</dt>
-                            <dd class="font-light text-gray-500 dark:text-gray-400">Developers</dd>
-                        </div>
-                        <div class="flex flex-col">
-                            <dt class="mb-2 text-3xl font-extrabold">100M+</dt>
-                            <dd class="font-light text-gray-500 dark:text-gray-400">Public repositories</dd>
-                        </div>
-                        <div class="flex flex-col">
-                            <dt class="mb-2 text-3xl font-extrabold">1000s</dt>
-                            <dd class="font-light text-gray-500 dark:text-gray-400">Open source projects</dd>
-                        </div>
-                    </dl>
-                </div>
+
             </div>
         </div>
 

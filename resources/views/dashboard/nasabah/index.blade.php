@@ -155,7 +155,7 @@
                                     </th>
                                     <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Saldo
                                     </th>
-                                    <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Riwayat Transaksi
+                                    <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Riwayat
                                     </th>
                                 </tr>
                             </thead>
@@ -163,7 +163,7 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $user->name }}</td>
-                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">500000</td>
+                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($user->transactions->where('pay_status', 2)->sum('pay_total') - $user->convertions->where('pay_status', 2)->sum('pay_total'))</td>
                                         <td class="sm:text-left py-3 px-4">
                                             <a href="{{ route('nasabah_detail', ['user_id' => $user->id]) }}"
                                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
@@ -187,7 +187,7 @@
                                     <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
                                         Nama</th>
 
-                                    <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm"></th>
+                                    
                                 </tr>
                             </thead>
                             <tbody class="text-gray-700">
@@ -195,10 +195,7 @@
                                     <tr>
                                         <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $collector->name }}</td>
 
-                                        <td class="sm:text-left py-3 px-4">
-                                            <a href=""
-                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
-                                        </td>
+                                       
                                     </tr>
                                 @endforeach
 
@@ -219,7 +216,7 @@
                                     <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
                                         Nama</th>
 
-                                    <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm"></th>
+                                    
                                 </tr>
                             </thead>
                             <tbody class="text-gray-700">
@@ -227,10 +224,6 @@
                                     <tr>
                                         <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $admin->name }}</td>
 
-                                        <td class="sm:text-left py-3 px-4">
-                                            <a href=""
-                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
-                                        </td>
                                     </tr>
                                 @endforeach
 
