@@ -53,4 +53,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Convertion::class);
     }
+    public function expends()
+    {
+        return $this->hasMany(Expend::class);
+    }
 }

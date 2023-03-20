@@ -96,6 +96,12 @@
             </div>
 
         </div>
+        <div>
+            <form action="{{route('finishpengepul',['id' => $transaction->id])}}" method="post">
+             @csrf
+             <input type="hidden" name="pay_status" value="1">
+                     <button type="submit" onclick="return confirm('Apakah Transaksi sudah benar? Data Tidak bisa diubah setelah anda klik selesai')" class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900">Selesai</button>
+                 </form></div>
 
     </div>
 

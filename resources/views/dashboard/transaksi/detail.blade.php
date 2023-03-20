@@ -92,7 +92,6 @@
             </div>
 
         </div>
-
         <div>
             <form action="{{route('finish',['id' => $transaction->id])}}" method="post">
              @csrf

@@ -17,7 +17,7 @@ class CollectorTransactionController extends Controller
         return view('dashboard.transaksipengepul.index', [
             'categories' => Category::all(),
             'users' => User::where('role', 2)->get(),
-            'collectortransactions' => CollectorTransaction::all(),
+            'collectortransactions' => CollectorTransaction::orderBy('id', 'desc    ')->get(),
 
         ]);
     }
@@ -91,6 +91,21 @@ class CollectorTransactionController extends Controller
         Alert::info('Berhasil', 'Transaksi Berhasil');
         return back();
     }
+
+    public function finish(Request $request, $id)
+    {
+        
+
+        
+        $transaction = CollectorTransaction::find($id);
+      
+        $transaction->fill($request->all());
+        $transaction->save();
+        
+        Alert::info('Berhasil', 'Transaksi Selesai');
+        return redirect('/dashboard/transaksipengepul');
+    }
+
 
     public function destroy($id)
     {

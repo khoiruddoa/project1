@@ -133,17 +133,35 @@
                         <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                Tanggal
+                                </th>
+
+                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
                                     Nama Pengepul
                                 </th>
                                 <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                    Jumlah
                                 
                                 </th>
+                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                Status
+                                
+                                </th>
+                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                
+                                    
+                                    </th>
+
 
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($collectortransactions as $transaction)
                                 <tr class="border-b border-gray-200 dark:border-gray-700">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                        {{ $transaction->created_at }}
+                                    </th>
                                     
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
@@ -151,9 +169,58 @@
                                     </th>
                                     <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    @currency($transaction->pay_total)
+                                </th>
+
+                                <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                
+                                @if($transaction->pay_status == 0)
+                                <span
+                                class="inline-flex items-center bg-yellow-100 text-yellow-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">
+                                <span class="w-2 h-2 mr-1 bg-yellow-500 rounded-full"></span>
+                                Proses
+                            </span>
+                            @elseif($transaction->pay_status == 1)
+                            <span
+                            class="inline-flex items-center bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                            <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+                            Selesai penimbangan
+                        </span>
+                        @elseif($transaction->pay_status == 2)
+                            <span
+                            class="inline-flex items-center bg-green-200 text-green-900 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                            <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+                            Disetujui
+                        </span>
+                        @elseif($transaction->pay_status == 3)
+                            <span
+                            class="inline-flex items-center bg-blue-200 text-blue-900 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                            <span class="w-2 h-2 mr-1 bg-blue-500 rounded-full"></span>
+                            Dibayar
+                        </span>
+                        @endif
+                            </th>
+
+
+
+
+                             
+                                    <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    @if($transaction->pay_status == 0)
                                     <a href="{{ route('transaksipengepul_detail', ['id' => $transaction->id]) }}"
                                         class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail Transaksi Pengepul</a>
-                               
+                                    @endif
+                                    @if($transaction->pay_status == 2)
+                                    <div>
+                                        <form action="{{route('finishpengepul',['id' => $transaction->id])}}" method="post">
+                                         @csrf
+                                         <input type="hidden" name="pay_status" value="3">
+                                         <input type="hidden" name="administrator" value="{{ auth()->user()->name }}">
+                                                 <button type="submit" onclick="return confirm('Apakah Transaksi sudah dibayar? Data Tidak bisa diubah setelah anda klik selesai')" class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900">Sudah dibayar</button>
+                                             </form></div>
+                                             @endif
                                 </th>
                                 </tr>
                                 @endforeach

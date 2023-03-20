@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminConvertionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectorTransactionController;
 use App\Http\Controllers\ConvertionController;
+use App\Http\Controllers\ExpendController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OwnerReviewController;
 use App\Http\Controllers\RegisterController;
@@ -32,11 +33,19 @@ Route::get('/menu', function () {
     return view('menu');
 });
 
+Route::get('/dashboard/dashboard', function () {
+    return view('dashboard.dashboard');
+});
+
 
 Route::get('/transaction/review', [OwnerReviewController::class, 'index'])->name('transaction_review');
 Route::post('/transaction/review', [OwnerReviewController::class, 'store'])->name('transaction_review_store');
 Route::get('/convertion/review', [OwnerReviewController::class, 'convert'])->name('convertion_review');
 Route::post('/convertion/review', [OwnerReviewController::class, 'convertion'])->name('convertion_review_store');
+Route::get('/collector/review', [OwnerReviewController::class, 'collect'])->name('collector_review');
+Route::post('/collector/review', [OwnerReviewController::class, 'collector'])->name('collector_review_store');
+
+
 
 Route::get('/transaction', [UserTransactionController::class, 'index'])->name('transaction');
 Route::get('/transaction/{id}', [UserTransactionController::class, 'detail'])->name('detail_transaction');
@@ -89,6 +98,15 @@ Route::get('/dashboard/transaksipengepul/{id}', [CollectorTransactionController:
 Route::post('/dashboard/transaksipengepul/detail', [CollectorTransactionController::class, 'storedetail'])->name('storepengepul_detail');
 Route::get('/dashboard/transaksipengepul/detail/delete/{id}', [CollectorTransactionController::class, 'destroydetail'])->name('deletepengepul_detail');
 Route::get('/dashboard/transaksipengepul/delete/{id}', [CollectorTransactionController::class, 'destroy'])->name('transaksipengepul_delete');
+Route::post('/dashboard/transaksipengepul/finish/{id}', [CollectorTransactionController::class, 'finish'])->name('finishpengepul');
+
+
 
 Route::get('/dashboard/konversi', [AdminConvertionController::class, 'index'])->name('pengajuan_konversi');
 Route::post('/dashboard/konversi/update/{id}', [AdminConvertionController::class, 'store'])->name('store_konversi');
+
+
+
+
+Route::get('/dashboard/expend', [ExpendController::class, 'index'])->name('expend');
+Route::post('/dashboard/expend', [ExpendController::class, 'store'])->name('expend_store');
