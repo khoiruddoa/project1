@@ -23,7 +23,8 @@ class ScheduleController extends Controller
     {
         $schedule = Schedule::latest()->first();
         $user = User::find(auth()->user()->id);
-        $convertion = Convertion::where('pay_status', 1)->where('user_id', auth()->user()->id)->get();
+        $convertion = Convertion::where('pay_status', 1)->orwhere('pay_status', 2)->where('user_id', auth()->user()->id)->get();
+
 
         return view('dashboard', [
             'schedule' => $schedule,

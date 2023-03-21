@@ -17,7 +17,7 @@ class CollectorTransactionController extends Controller
         return view('dashboard.transaksipengepul.index', [
             'categories' => Category::all(),
             'users' => User::where('role', 2)->get(),
-            'collectortransactions' => CollectorTransaction::orderBy('id', 'desc    ')->get(),
+            'collectortransactions' => CollectorTransaction::orderBy('id', 'desc')->get(),
 
         ]);
     }

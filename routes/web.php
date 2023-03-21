@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdjustmentController;
 use App\Http\Controllers\AdminConvertionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectorTransactionController;
@@ -110,3 +111,8 @@ Route::post('/dashboard/konversi/update/{id}', [AdminConvertionController::class
 
 Route::get('/dashboard/expend', [ExpendController::class, 'index'])->name('expend');
 Route::post('/dashboard/expend', [ExpendController::class, 'store'])->name('expend_store');
+
+Route::get('/dashboard/adjustment', [AdjustmentController::class, 'index'])->name('adjustment');
+Route::post('/dashboard/adjustment', [AdjustmentController::class, 'store'])->name('adjustment_store');
+Route::post('/dashboard/adjustment/edit/{id}', [AdjustmentController::class, 'update'])->name('adjustment_update');
+Route::post('/dashboard/adjustment/delete/{id}', [AdjustmentController::class, 'delete'])->name('adjustment_delete');
