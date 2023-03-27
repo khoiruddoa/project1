@@ -7,7 +7,7 @@
 
         </div>
         <div>
-            <a href="{{route('transaksi_delete',['id' => $transaction->id])}}" onclick="return confirm('Apa Anda Yakin Ingin Menghapus data ini?')"
+            <a href="{{route('transaksipengepul_delete',['id' => $transaction->id])}}" onclick="return confirm('Apa Anda Yakin Ingin Menghapus data ini?')"
                 class="block focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-red-600 dark:ho ver:bg-red-700 dark:focus:ring-red-900">Hapus
                 Transaksi</a>
         </div>
@@ -51,7 +51,7 @@
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             @foreach ($categories as $category)
 
-                                            @if(($category->detailTransactions->sum('qty')-$category->detailCollectorTransactions->sum('qty'))>0)
+                                            @if(($category->detailTransactions->sum('qty')-$category->detailCollectorTransactions->sum('qty')) > 0)
                                                 <option value="{{ $category->id }}">{{ $category->category_name }} (Stock : {{$category->detailTransactions->sum('qty')}} {{ $category->uom }})</option>
                                             
                                             @endif

@@ -26,7 +26,7 @@
                                     class="border border-gray-300 p-2 rounded-lg flex items-center bg-[#15C972] hover:bg-[#016b38]">
                                     <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500" x-model="allChecked"
                                         x-on:click="allChecked ? uncheckAll() : checkAll()">
-                                    <div class="ml-3 text-gray-700 font-mono text-white">
+                                    <div class="ml-3 text-gray-700 font-mono">
                                         Pilih Semua
                                     </div>
 
@@ -47,16 +47,16 @@
                                         class="form-checkbox h-5 w-5 text-green-500"
                                         x-model="checkedItems[{{ $index }}]">
                                         <div>
-                                    <div class="ml-3 text-gray-700 font-mono text-white">
+                                    <div class="ml-3 text-gray-700 font-mono">
                                          Nama : {{ $item->user->name }}
                                     </div>
                                    
-                                    <div class="ml-3 text-gray-700 font-mono text-white">
+                                    <div class="ml-3 text-gray-700 font-mono">
                                         Total Penimbangan : @currency($item->pay_total)
                                     </div>
                                     
                                         @foreach($item->detailTransactions as $detail)
-                                        <div class="ml-3 text-gray-700 font-mono text-white">
+                                        <div class="ml-3 text-gray-700 font-mono">
                                         {{$detail->category->category_name}} {{$detail->qty}} {{$detail->category->uom}} @currency($detail->price) Jumlah @currency($detail->qty * $detail->price)
                                     </div>
                                         @endforeach
@@ -99,6 +99,6 @@
                 </div>
             </div>
 
-
+            <a href="/menu" class="mt-4 text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Kembali</a>
         </div>
     @endsection

@@ -28,15 +28,15 @@ class CollectorTransactionController extends Controller
 
 
 
-        if (count($collectortransaction) > 0) {
-            Alert::warning('Gagal', 'Pengepul sudah bertransaksi di tanggal yang sama');
-            return redirect('/dashboard/transaksipengepul');
-        } else {
+        // if (count($collectortransaction) > 0) {
+        //     Alert::warning('Gagal', 'Pengepul sudah bertransaksi di tanggal yang sama');
+        //     return redirect('/dashboard/transaksipengepul');
+        // } 
 
             CollectorTransaction::create($request->all());
             Alert::info('Berhasil', 'Transaksi dibuat');
             return redirect('/dashboard/transaksipengepul');
-        }
+        
     }
 
     public function detail($id)
@@ -111,7 +111,7 @@ class CollectorTransactionController extends Controller
     {
 
         
-        $detail = DetailCollectorTransaction::where('transaction_id', $id)->get();
+        $detail = DetailCollectorTransaction::where('collector_transaction_id', $id)->get();
         $transaction = CollectorTransaction::find($id);
 
         if (count($detail) > 0) {
@@ -122,7 +122,7 @@ class CollectorTransactionController extends Controller
 
             $transaction->delete();
             Alert::info('Berhasil', 'Hapus Data Berhasil');
-            return redirect('/dashboard/transaksi');
+            return redirect('/dashboard/transaksipengepul');
         }
     }
 

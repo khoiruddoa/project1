@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminConvertionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectorTransactionController;
 use App\Http\Controllers\ConvertionController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpendController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OwnerReviewController;
@@ -39,9 +40,7 @@ Route::get('/menu', function () {
     return view('menu');
 });
 
-Route::get('/dashboard/dashboard', function () {
-    return view('dashboard.dashboard');
-});
+Route::get('/dashboard/dashboard', [DashboardController::class, 'admindashboard']);
 
 
 Route::get('/transaction/review', [OwnerReviewController::class, 'index'])->name('transaction_review');
@@ -52,6 +51,7 @@ Route::get('/collector/review', [OwnerReviewController::class, 'collect'])->name
 Route::post('/collector/review', [OwnerReviewController::class, 'collector'])->name('collector_review_store');
 Route::get('/adjustment/review', [OwnerReviewController::class, 'adjust'])->name('adjust_review');
 Route::post('/adjustment/review', [OwnerReviewController::class, 'adjustment'])->name('adjustment_review_store');
+Route::get('/dashboard/review', [OwnerReviewController::class, 'admindashboard'])->name('dashboard_review');
 
 
 
