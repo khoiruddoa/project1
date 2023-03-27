@@ -26,7 +26,7 @@
                                     class="border border-gray-300 p-2 rounded-lg flex items-center bg-[#15C972] hover:bg-[#016b38]">
                                     <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500" x-model="allChecked"
                                         x-on:click="allChecked ? uncheckAll() : checkAll()">
-                                    <div class="ml-3 text-gray-700 font-mono text-white">
+                                    <div class="ml-3 text-gray-700 font-mono">
                                         Pilih Semua
                                     </div>
 
@@ -47,19 +47,19 @@
                                         class="form-checkbox h-5 w-5 text-green-500"
                                         x-model="checkedItems[{{ $index }}]">
                                     <div>
-                                        <div class="ml-3 text-gray-700 font-mono text-white">
+                                        <div class="ml-3 text-gray-700 font-mono">
                                             Nama : {{ $item->user->name }}
                                         </div>
 
                                       
 
 
-                                        <div class="ml-3 text-gray-700 font-mono text-white">
+                                        <div class="ml-3 text-gray-700 font-mono">
                                             Transaksi senilai : @currency($item->pay_total)
 
                                         </div>
                                         @foreach($item->detailCollectorTransactions as $detail)
-                                        <div class="ml-3 text-gray-700 font-mono text-white">
+                                        <div class="ml-3 text-gray-700 font-mono">
                                         {{$detail->category->category_name}} {{$detail->qty}} {{$detail->category->uom}} @currency($detail->price) Jumlah @currency($detail->qty * $detail->price)
                                     </div>
                                         @endforeach

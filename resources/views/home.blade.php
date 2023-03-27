@@ -14,10 +14,17 @@
         <img src="./img/image.png" alt="" class="h-[300px]">
      </div>
      <div>
+      @if(auth()->user())
+      <a class="font-mono bg-[white] hover:bg-blue-700 text-[#3d68ff] hover:text-white text-xl sm:text-3xl py-2 px-4 sm:px-6 rounded"
+          href="/dashboard">
+            Dashboard
+     </a>
+      @else
      <a class="font-mono bg-[white] hover:bg-blue-700 text-[#3d68ff] hover:text-white text-xl sm:text-3xl py-2 px-4 sm:px-6 rounded"
           href="/login">
             Login
      </a>
+     @endif
     </div>
 </div>
 @endsection

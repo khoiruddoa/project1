@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('administrator'); 
             $table->integer('pay_total')->nullable();
             $table->integer('pay_status');
-            $table->text('information')->nullable();
+            $table->integer('information')->nullable();
             $table->timestamps();
         });
     }

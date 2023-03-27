@@ -13,13 +13,12 @@
                     <div> <img src="/img/kitchen-scales.png" alt="" class="w-20 h-20"></div>
                     <div>
                         <div class="">
-                            <h5 class="mb-2 text-1xl font-bold font-mono text-gray-900 dark:text-white">Transaksi
-                                Konversi Nasabah</h5>
+                            <h5 class="mb-2 text-1xl font-bold font-mono text-gray-900 dark:text-white">adjustment Nasabah</h5>
                         </div>
                     </div>
 
                     <div x-data="{ allChecked: false }" class="">
-                        <form action="{{ route('convertion_review_store') }}" method="post">
+                        <form action="{{ route('adjustment_review_store') }}" method="post">
                             @csrf
                             <div class="flex flex-row items-center justify-center gap-2">
                                 <div
@@ -45,7 +44,7 @@
                                 </div>
                             </div>
 
-                            @foreach ($convertions as $index => $item)
+                            @foreach ($adjustments as $index => $item)
                             
                                 <div
                                     class="border border-gray-300 p-4 rounded-lg flex items-center mb-4 bg-[#15C972] hover:bg-[#016b38]">
@@ -53,17 +52,17 @@
                                         class="form-checkbox h-5 w-5 text-green-500"
                                         x-model="checkedItems[{{ $index }}]">
                                         <div>
-                                    <div class="ml-3 text-gray-700 font-mono">
+                                    <div class="ml-3 text-gray-700 font-mon">
                                          Nama : {{ $item->user->name }}
                                     </div>
                                    
-                                    <div class="ml-3 text-gray-700 font-mono">
+                                    <div class="ml-3 text-gray-700 font-mono ">
                                       
                                     </div>
                                     
                                        
                                         <div class="ml-3 text-gray-700 font-mono">
-                                            Konversi senilai : @currency($item->pay_total)
+                                            Adjustmen senilai : @currency($item->pay_total)
                                        
                                     </div>
                                         
@@ -78,7 +77,7 @@
                     </div>
 
                     <script>
-                        const checkedItems = @json(array_fill(0, count($convertions), false));
+                        const checkedItems = @json(array_fill(0, count($adjustments), false));
                         const inputs = document.querySelectorAll('.form-checkbox');
                         const submitBtn = document.getElementById('submit-btn');
 

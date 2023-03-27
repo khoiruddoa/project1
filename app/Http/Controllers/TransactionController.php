@@ -16,9 +16,9 @@ class TransactionController extends Controller
         return view('dashboard.transaksi.index', [
             'categories' => Category::all(),
             'users' => User::where('role',1)->get(),
-            'transactions' => Transaction::where('pay_status', 0)->orderBy('id', 'desc')->get(),
-            'finish' => Transaction::where('pay_status', 1)->orderBy('id', 'desc')->get(),
-            'approved' => Transaction::where('pay_status', 2)->get(),
+            'transactions' => Transaction::where('pay_status', 0)->where('information', null)->orderBy('id', 'desc')->get(),
+            'finish' => Transaction::where('pay_status', 1)->where('information', null)->orderBy('id', 'desc')->get(),
+            'approved' => Transaction::where('pay_status', 2)->where('information', null)->get(),
 
         ]);
     }

@@ -43,8 +43,12 @@
                                     $total += $detail->price * $detail->qty; // tambahkan nilai baru ke total
                                 @endphp
                             @endforeach
-                            <div>Total : @currency($total)</div>
 
+                            @if(empty($transaction->information))
+                            <div>Total : @currency($total)</div>
+                            @else
+                            <div>Penyelarasan saldo sebesar @currency($transaction->pay_total)</div>
+                            @endif
                         </div>
                     </div>
 

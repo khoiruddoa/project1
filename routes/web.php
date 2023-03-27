@@ -30,6 +30,11 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/home', function () {
+    return view('home');
+});
+
+
 Route::get('/menu', function () {
     return view('menu');
 });
@@ -45,6 +50,9 @@ Route::get('/convertion/review', [OwnerReviewController::class, 'convert'])->nam
 Route::post('/convertion/review', [OwnerReviewController::class, 'convertion'])->name('convertion_review_store');
 Route::get('/collector/review', [OwnerReviewController::class, 'collect'])->name('collector_review');
 Route::post('/collector/review', [OwnerReviewController::class, 'collector'])->name('collector_review_store');
+Route::get('/adjustment/review', [OwnerReviewController::class, 'adjust'])->name('adjust_review');
+Route::post('/adjustment/review', [OwnerReviewController::class, 'adjustment'])->name('adjustment_review_store');
+
 
 
 
@@ -59,8 +67,9 @@ Route::post('/convertion', [ConvertionController::class, 'store'])->name('store_
 Route::get('/dashboard', [ScheduleController::class, 'dashboard'])->name('dashboard');
 
 
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     
 Route::get('/dashboard/contoh', function () {
@@ -115,4 +124,4 @@ Route::post('/dashboard/expend', [ExpendController::class, 'store'])->name('expe
 Route::get('/dashboard/adjustment', [AdjustmentController::class, 'index'])->name('adjustment');
 Route::post('/dashboard/adjustment', [AdjustmentController::class, 'store'])->name('adjustment_store');
 Route::post('/dashboard/adjustment/edit/{id}', [AdjustmentController::class, 'update'])->name('adjustment_update');
-Route::post('/dashboard/adjustment/delete/{id}', [AdjustmentController::class, 'delete'])->name('adjustment_delete');
+Route::get('/dashboard/adjustment/delete/{id}', [AdjustmentController::class, 'delete'])->name('adjustment_delete');

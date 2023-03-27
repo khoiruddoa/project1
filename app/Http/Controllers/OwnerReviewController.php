@@ -14,7 +14,7 @@ class OwnerReviewController extends Controller
     public function index()
     {
         return view('transactionreview', [
-            'transactions' => Transaction::where('pay_status', 1)->get(),
+            'transactions' => Transaction::where('pay_status', 1)->where('information', null)->get(),
 
         ]);
     }
@@ -30,6 +30,14 @@ class OwnerReviewController extends Controller
     {
         return view('collectorreview', [
             'collectors' => CollectorTransaction::where('pay_status', 1)->get(),
+
+        ]);
+    }
+
+    public function adjust()
+    {
+        return view('adjustmentreview', [
+            'adjustments' => Transaction::where('pay_status', 1)->where('information', 1)->get(),
 
         ]);
     }
@@ -131,6 +139,35 @@ class OwnerReviewController extends Controller
             $data = 2;
 
             $transaction = CollectorTransaction::findOrFail($validatedData['id'][$key]);
+
+            $transaction->update(['pay_status' => $data]);
+
+            Alert::info('Berhasil', 'Sukses disetujui');
+        }
+
+        return back();
+    }
+
+    public function adjustment(Request $request)
+    {
+        $validatedData = $request->validate([
+
+            'id.*' => 'required|max:150'
+
+        ]);
+
+        if ($validatedData == null) {
+            Alert::warning('Gagal', 'Tidak ada data yang dipilih');
+            return back();
+        }
+
+
+        foreach ($validatedData['id'] as $key => $value) {
+
+
+            $data = 2;
+
+            $transaction = Transaction::findOrFail($validatedData['id'][$key]);
 
             $transaction->update(['pay_status' => $data]);
 

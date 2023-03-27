@@ -40,7 +40,7 @@
                         </a>
                     </div>
                     <div>
-                        <a href="{{route('transaction')}}"
+                        <a href="{{route('adjust_review')}}"
                             class="w-40 h-32 flex flex-col justify-center items-center hover:shadow-2xl hover:bg-blue-600 border-[2px] xl:px-[65px] xl:py-[44px] lg:px-[45px] lg:py-[24px] px-[20px] py-[10px] bg-white rounded-[35px] shadow-lg">
                             <div><img src="{{ asset('img/adjustments.png')}}" alt="" class="w-10 h-10"></div>
                             <div>Adjustment</div>
