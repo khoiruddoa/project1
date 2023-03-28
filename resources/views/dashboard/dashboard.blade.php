@@ -3,7 +3,7 @@
 @section('container')
     <div class="flex flex-col">
         <div class="">
-            <h1 class="text-3xl text-black pb-6">Dashboard</h1>
+            
         </div>
 
         <div class="bg-blue-500 text-white rounded-lg p-6">
@@ -35,11 +35,11 @@
               </div>
               <div class="text-center bg-blue-600 rounded-xl p-4">
                 <p class="text-sm text-gray-100 mb-2">Total Pengajuan Konversi</p>
-                <p class="text-3xl font-semibold">@currency($uangkonversi)</p>
+                <p class="text-3xl font-semibold">@currency($konversi)</p>
               </div>
               <div class="text-center bg-blue-600 rounded-xl p-4">
                 <p class="text-sm text-gray-100 mb-2">Total Konversi Yang disetujui</p>
-                <p class="text-3xl font-semibold">@currency($konversi)</p>
+                <p class="text-3xl font-semibold">@currency($uangkonversi)</p>
               </div>
               <div class="text-center bg-blue-600 rounded-xl p-4">
                 <p class="text-sm text-gray-100 mb-2">Jumlah Pengaju Konversi</p>

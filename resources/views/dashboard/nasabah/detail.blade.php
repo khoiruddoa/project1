@@ -32,7 +32,7 @@
                     <!-- Modal content -->
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                         <button type="button"
-                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-sidebar dark:hover:text-white"
                             data-modal-hide="authentication-modal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -109,22 +109,24 @@
     </div>
 
 
-    <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-sidebar dark:border-gray-700">
 
-        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ $user->name }}</h5>
+        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Nama : {{ $user->name }}</h5>
         </a>
         <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Alamat : {{ $user->address }}</p>
-        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Saldo : @currency($user->transactions->where('pay_status', 2)->sum('pay_total') - $user->convertions->where('pay_status', 2)->sum('pay_total')) </p>
+        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Email : {{ $user->email }}</p>
+        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">No Telephone : {{ $user->phone_number }}</p>
+        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Saldo : @currency($user->transactions->where('pay_status', 2)->sum('pay_total') - $user->convertions->where('pay_status', 3)->sum('pay_total')) </p>
 
 
 
-        <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800"
+        <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-sidebar dark:border-gray-700">
+            <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-sidebar"
                 id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
                 <li class="mr-2">
                     <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about"
                         aria-selected="true"
-                        class="inline-block p-4 text-blue-600 rounded-tl-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-blue-500">Riwayat
+                        class="inline-block p-4 text-blue-600 rounded-tl-lg hover:bg-gray-100 dark:bg-sidebar dark:hover:bg-gray-700 dark:text-blue-500">Riwayat
                         Transaksi</button>
                 </li>
                 <li class="mr-2">
@@ -136,12 +138,12 @@
 
             </ul>
             <div id="defaultTabContent">
-                <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="about" role="tabpanel"
+                <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-sidebar" id="about" role="tabpanel"
                     aria-labelledby="about-tab">
                     <div class="w-full mt-6">
                         <div class="overflow-x-auto">
                             <table class="w-full bg-white">
-                                <thead class="bg-gray-800 text-white w-full">
+                                <thead class="bg-sidebar text-white w-full">
                                     <tr>
 
                                         <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
@@ -189,12 +191,12 @@
 
                     </div>
                 </div>
-                <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="services" role="tabpanel"
+                <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-sidebar" id="services" role="tabpanel"
                     aria-labelledby="services-tab">
                     <div class="w-full mt-6">
                         <div class="overflow-x-auto">
                             <table class="w-full bg-white">
-                                <thead class="bg-gray-800 text-white w-full">
+                                <thead class="bg-sidebar text-white w-full">
                                     <tr>
 
                                         <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">

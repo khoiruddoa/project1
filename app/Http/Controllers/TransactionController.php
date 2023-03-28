@@ -29,10 +29,10 @@ class TransactionController extends Controller
 
 
 
-        // if (count($transaction) > 0) {
-        //     Alert::warning('Gagal', 'Nasabah sudah bertransaksi di tanggal yang sama');
-        //     return redirect('/dashboard/transaksi');
-        // }
+        if (count($transaction) > 0) {
+            Alert::warning('Gagal', 'Nasabah sudah bertransaksi di tanggal yang sama');
+            return redirect('/dashboard/transaksi');
+        }
 
             Transaction::create($request->all());
             Alert::info('Berhasil', 'Transaksi Nasabah dibuat');
@@ -88,7 +88,11 @@ if($transaction->pay_status > 0)
     public function finish(Request $request, $id)
     {
         
-
+$detail_transactions = DetailTransaction::where('transaction_id', $id)->get();
+if(count($detail_transactions) == 0){
+    Alert::warning('Gagal', 'Belum ada transaksi yang diisi');
+    return back();
+}
         
         $transaction = Transaction::find($id);
       
@@ -124,6 +128,11 @@ if($transaction->pay_status > 0)
         $detail = DetailTransaction::findOrFail($id);
         $transaction = Transaction::find($detail->transaction_id);
         $debet = $detail->price * $detail->qty;
+        if($transaction->pay_status > 0)
+{
+    Alert::warning('Gagal', 'Tidak bisa hapus karena transaksi sudah selesai');
+    return back();
+}
 
 
         $payloadtransaction = ['pay_total' => $transaction['pay_total'] - $debet];

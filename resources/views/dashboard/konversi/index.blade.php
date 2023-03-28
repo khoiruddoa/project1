@@ -12,13 +12,13 @@
 
 
     </div>
-    <div class="w-full mt-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800"
+    <div class="w-full mt-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-sidebar dark:border-gray-700">
+        <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-sidebar"
             id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
             <li class="mr-2">
                 <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about"
                     aria-selected="true"
-                    class="inline-block p-4 text-blue-600 rounded-tl-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-blue-500">Pengajuan</button>
+                    class="inline-block p-4 text-blue-600 rounded-tl-lg hover:bg-gray-100 dark:bg-sidebar dark:hover:bg-gray-700 dark:text-blue-500">Pengajuan</button>
             </li>
             <li class="mr-2">
                 <button id="services-tab" data-tabs-target="#services" type="button" role="tab"
@@ -32,12 +32,12 @@
             </li>
         </ul>
         <div id="defaultTabContent">
-            <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="about" role="tabpanel"
+            <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-sidebar" id="about" role="tabpanel"
                 aria-labelledby="about-tab">
                 <div class="w-full mt-6">
                     <div class="overflow-x-auto">
                         <table class="w-full bg-white">
-                            <thead class="bg-gray-800 text-white w-full">
+                            <thead class="bg-sidebar text-white w-full">
                                 <tr>
                                     <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Nama
                                     </th>
@@ -70,12 +70,12 @@
 
         </div>
     </div>
-    <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="services" role="tabpanel"
+    <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-sidebar" id="services" role="tabpanel"
         aria-labelledby="services-tab">
         <div class="w-full mt-6">
             <div class="overflow-x-auto">
                 <table class="w-full bg-white">
-                    <thead class="bg-gray-800 text-white w-full">
+                    <thead class="bg-sidebar text-white w-full">
                         <tr>
                             <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Nama
                             </th>
@@ -115,7 +115,7 @@
                                                 <!-- Modal content -->
                                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                                     <button type="button"
-                                                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                                                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-sidebar dark:hover:text-white"
                                                         data-modal-hide="authentication-modal">
                                                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
                                                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -176,11 +176,11 @@
 
         </div>
     </div>
-    <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="statistics" role="tabpanel"
+    <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-sidebar" id="statistics" role="tabpanel"
         aria-labelledby="statistics-tab"><div class="w-full mt-6">
             <div class="overflow-x-auto">
                 <table class="w-full bg-white">
-                    <thead class="bg-gray-800 text-white w-full">
+                    <thead class="bg-sidebar text-white w-full">
                         <tr>
                             <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Nama
                             </th>

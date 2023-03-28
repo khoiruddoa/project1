@@ -28,14 +28,14 @@ class CollectorTransactionController extends Controller
 
 
 
-        // if (count($collectortransaction) > 0) {
-        //     Alert::warning('Gagal', 'Pengepul sudah bertransaksi di tanggal yang sama');
-        //     return redirect('/dashboard/transaksipengepul');
-        // } 
+        if (count($collectortransaction) > 0) {
+            Alert::warning('Gagal', 'Pengepul sudah bertransaksi di tanggal yang sama');
+            return redirect('/dashboard/pengepul');
+        } 
 
             CollectorTransaction::create($request->all());
             Alert::info('Berhasil', 'Transaksi dibuat');
-            return redirect('/dashboard/transaksipengepul');
+            return redirect('/dashboard/pengepul');
         
     }
 
@@ -95,15 +95,20 @@ class CollectorTransactionController extends Controller
     public function finish(Request $request, $id)
     {
         
-
+$detail_collector_transactions = DetailCollectorTransaction::where('collector_transaction_id', $id)->get();
         
         $transaction = CollectorTransaction::find($id);
+        if(count($detail_collector_transactions) == 0){
+            Alert::warning('Gagal', 'Belum ada transaksi yang diisi');
+            return back();
+        }
+           
       
         $transaction->fill($request->all());
         $transaction->save();
         
         Alert::info('Berhasil', 'Transaksi Selesai');
-        return redirect('/dashboard/transaksipengepul');
+        return redirect('/dashboard/pengepul');
     }
 
 
@@ -122,7 +127,7 @@ class CollectorTransactionController extends Controller
 
             $transaction->delete();
             Alert::info('Berhasil', 'Hapus Data Berhasil');
-            return redirect('/dashboard/transaksipengepul');
+            return redirect('/dashboard/pengepul');
         }
     }
 
@@ -132,6 +137,11 @@ class CollectorTransactionController extends Controller
         $detail = DetailCollectorTransaction::findOrFail($id);
         $transaction = CollectorTransaction::find($detail->collector_transaction_id);
         $debet = $detail->price * $detail->qty;
+        if($transaction->pay_status > 0)
+{
+    Alert::warning('Gagal', 'Tidak bisa hapus karena transaksi sudah selesai');
+    return back();
+}
 
 
         $payloadtransaction = ['pay_total' => $transaction['pay_total'] - $debet];

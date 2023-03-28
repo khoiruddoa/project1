@@ -22,7 +22,7 @@
                     <!-- Modal content -->
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                         <button type="button"
-                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-sidebar dark:hover:text-white"
                             data-modal-hide="authentication-modal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -67,7 +67,7 @@
                             <div class="w-full mt-6">
                                 <div class="overflow-x-auto">
                                     <table class="w-full bg-white">
-                                        <thead class="bg-gray-800 text-white w-full">
+                                        <thead class="bg-sidebar text-white w-full">
                                             <tr>
                                                 <th
                                                     class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
@@ -132,22 +132,22 @@
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-sidebar">
                                 Tanggal
                                 </th>
 
-                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-sidebar">
                                     Nama Pengepul
                                 </th>
-                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-sidebar">
                                     Jumlah
                                 
                                 </th>
-                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-sidebar">
                                 Status
                                 
                                 </th>
-                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-sidebar">
                                 
                                     
                                     </th>
@@ -159,21 +159,21 @@
                             @foreach ($collectortransactions as $transaction)
                                 <tr class="border-b border-gray-200 dark:border-gray-700">
                                     <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
                                         {{ $transaction->created_at }}
                                     </th>
                                     
                                     <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
                                         {{ $transaction->user->name }}
                                     </th>
                                     <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
                                     @currency($transaction->pay_total)
                                 </th>
 
                                 <th scope="row"
-                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
                                 
                                 @if($transaction->pay_status == 0)
                                 <span
@@ -207,7 +207,7 @@
 
                              
                                     <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
                                     @if($transaction->pay_status == 0)
                                     <a href="{{ route('transaksipengepul_detail', ['id' => $transaction->id]) }}"
                                         class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail Transaksi Pengepul</a>

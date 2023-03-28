@@ -22,7 +22,7 @@
                         </a>
                         @elseif(auth()->user()->role == 3)
                         <a class="font-mono bg-[white] hover:bg-blue-700 text-[#3d68ff] hover:text-white text-xl sm:text-3xl py-2 px-4 sm:px-6 rounded"
-                            href="/dashboard">
+                            href="/dashboard/dashboard">
                             Dashboard
                         </a>
                         @elseif(auth()->user()->role == 4)

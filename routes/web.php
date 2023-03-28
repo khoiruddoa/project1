@@ -102,13 +102,13 @@ Route::post('/dashboard/transaksi/finish/{id}', [TransactionController::class, '
 
 
 
-Route::get('/dashboard/transaksipengepul', [CollectorTransactionController::class, 'index'])->name('transaksipengepul');
-Route::post('/dashboard/transaksipengepul', [CollectorTransactionController::class, 'store'])->name('transaksipengepul_store');
-Route::get('/dashboard/transaksipengepul/{id}', [CollectorTransactionController::class, 'detail'])->name('transaksipengepul_detail');
-Route::post('/dashboard/transaksipengepul/detail', [CollectorTransactionController::class, 'storedetail'])->name('storepengepul_detail');
-Route::get('/dashboard/transaksipengepul/detail/delete/{id}', [CollectorTransactionController::class, 'destroydetail'])->name('deletepengepul_detail');
-Route::get('/dashboard/transaksipengepul/delete/{id}', [CollectorTransactionController::class, 'destroy'])->name('transaksipengepul_delete');
-Route::post('/dashboard/transaksipengepul/finish/{id}', [CollectorTransactionController::class, 'finish'])->name('finishpengepul');
+Route::get('/dashboard/pengepul', [CollectorTransactionController::class, 'index'])->name('transaksipengepul');
+Route::post('/dashboard/pengepul', [CollectorTransactionController::class, 'store'])->name('transaksipengepul_store');
+Route::get('/dashboard/pengepul/{id}', [CollectorTransactionController::class, 'detail'])->name('transaksipengepul_detail');
+Route::post('/dashboard/pengepul/detail', [CollectorTransactionController::class, 'storedetail'])->name('storepengepul_detail');
+Route::get('/dashboard/pengepul/detail/delete/{id}', [CollectorTransactionController::class, 'destroydetail'])->name('deletepengepul_detail');
+Route::get('/dashboard/pengepul/delete/{id}', [CollectorTransactionController::class, 'destroy'])->name('transaksipengepul_delete');
+Route::post('/dashboard/pengepul/finish/{id}', [CollectorTransactionController::class, 'finish'])->name('finishpengepul');
 
 
 

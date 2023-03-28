@@ -41,11 +41,11 @@
                                         </div>
                                         <div class="bg-blue-500 text-white rounded-lg p-4">
                                             <p class="text-sm text-gray-100 mb-2">Total Pengajuan Konversi</p>
-                                            <p class="text-3xl font-semibold">@currency($uangkonversi)</p>
+                                            <p class="text-3xl font-semibold">@currency($konversi)</p>
                                         </div>
                                         <div class="bg-blue-500 text-white rounded-lg p-4">
                                             <p class="text-sm text-gray-100 mb-2">Total Konversi Yang disetujui</p>
-                                            <p class="text-3xl font-semibold">@currency($konversi)</p>
+                                            <p class="text-3xl font-semibold">@currency($uangkonversi)</p>
                                         </div>
                                         <div class="bg-blue-500 text-white rounded-lg p-4">
                                             <p class="text-sm text-gray-100 mb-2">Jumlah Pengaju Konversi</p>
