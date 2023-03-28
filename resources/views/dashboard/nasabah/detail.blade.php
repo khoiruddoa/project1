@@ -126,14 +126,13 @@
                 <li class="mr-2">
                     <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about"
                         aria-selected="true"
-                        class="inline-block p-4 text-blue-600 rounded-tl-lg hover:bg-gray-100 dark:bg-sidebar dark:hover:bg-gray-700 dark:text-blue-500">Riwayat
+                        class="inline-block p-4 text-blue-600 rounded-tl-lg hover:bg-gray-100 dark:bg-sidebar dark:hover:bg-gray-700 dark:text-blue-500">
                         Transaksi</button>
                 </li>
                 <li class="mr-2">
                     <button id="services-tab" data-tabs-target="#services" type="button" role="tab"
                         aria-controls="services" aria-selected="false"
-                        class="inline-block p-4 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300">Riwayat
-                        Konversi</button>
+                        class="inline-block p-4 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300">Konversi</button>
                 </li>
 
             </ul>
@@ -141,7 +140,8 @@
                 <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-sidebar" id="about" role="tabpanel"
                     aria-labelledby="about-tab">
                     <div class="w-full mt-6">
-                        <div class="overflow-x-auto">
+                        <div class="overflow-auto max-h-[300px]">
+
                             <table class="w-full bg-white">
                                 <thead class="bg-sidebar text-white w-full">
                                     <tr>
@@ -194,7 +194,7 @@
                 <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-sidebar" id="services" role="tabpanel"
                     aria-labelledby="services-tab">
                     <div class="w-full mt-6">
-                        <div class="overflow-x-auto">
+                        <div class="overflow-auto max-h-[300px]">
                             <table class="w-full bg-white">
                                 <thead class="bg-sidebar text-white w-full">
                                     <tr>

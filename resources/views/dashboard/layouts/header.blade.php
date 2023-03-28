@@ -1,4 +1,4 @@
-<div class="relative w-full flex flex-col h-screen overflow-y-hidden">
+<div class="w-full flex flex-col h-screen overflow-y-hidden">
     <!-- Desktop Header -->
     <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
         <div class="w-1/2"></div>
@@ -37,42 +37,76 @@
                 <i class="fas fa-tachometer-alt mr-3"></i>
                 Dashboard
             </a>
-            <a href="{{route('nasabah')}}" class="flex items-center {{ Request::is('dashboard/nasabah*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-                <i class="fas fa-sticky-note mr-3"></i>
-                Data Pengguna
-            </a>
+           
             
-            <a href="{{route('sampah')}}" class="flex items-center text-white opacity-75 {{ Request::is('dashboard/sampah*') ? 'active-nav-link' : '' }} hover:opacity-100 py-4 pl-6 nav-item">
-               
-                <i class="fas fa-sticky-note mr-3"></i>
-                Data Kategori Sampah
-            </a>
+            <div x-data="{ open: false }" class="relative">
+                <a @click="open = !open" href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                    <i class="fas fa-sticky-note mr-3"></i>
+                    Data
+                    <i class="fas fa-chevron-down ml-2"></i>
+                </a>
+            
+                <div x-show="open" @click.away="open = false" class="absolute top-full left-0 mt-2 py-2 bg-sidebar z-20 rounded-md shadow-lg">
+                    <a href="{{route('nasabah')}}" class="flex items-center {{ Request::is('dashboard/nasabah*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                        <i class="fas fa-sticky-note mr-3"></i>
+                        Data Pengguna
+                    </a>
+                    <a href="{{route('nasabah')}}" class="flex items-center {{ Request::is('dashboard/sampah*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                        <i class="fas fa-sticky-note mr-3"></i>
+                        Data Kategori Sampah
+                    </a>
+                </div>
+            </div>
+           
+            <div x-data="{ open: false }" class="relative">
+                <a @click="open = !open" href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                    <i class="fas fa-sticky-note mr-3"></i>
+                    Transaksi
+                    <i class="fas fa-chevron-down ml-2"></i>
+                </a>
+            
+                <div x-show="open" @click.away="open = false" class="absolute top-full left-0 mt-2 py-2 bg-sidebar z-20 rounded-md shadow-lg">
+                    <a href="{{route('transaksi')}}" class="flex items-center {{ Request::is('dashboard/transaksi*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                        <i class="fas fa-tablet-alt mr-3"></i>
+                        Transaksi Nasabah
+                    </a>
+                    <a href="{{route('transaksipengepul')}}" class="flex items-center {{ Request::is('dashboard/pengepul*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                        <i class="fas fa-tablet-alt mr-3"></i>
+                        Transaksi Pengepul
+                    </a>
+                   
+                </div>
+            </div>
+            <div x-data="{ open: false }" class="relative">
+                <a @click="open = !open" href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                    <i class="fas fa-sticky-note mr-3"></i>
+                    Pengajuan
+                    <i class="fas fa-chevron-down ml-2"></i>
+                </a>
+            
+                <div x-show="open" @click.away="open = false" class="absolute top-full left-0 mt-2 py-2 bg-sidebar z-20 rounded-md shadow-lg">
+                    <a href="{{route('pengajuan_konversi')}}" class="flex items-center {{ Request::is('dashboard/konversi*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                        <i class="fas fa-align-left mr-3"></i>
+       
+                      
+                       Pengajuan Konversi
+                   </a>
+                   <a href="{{route('expend')}}" class="flex items-center {{ Request::is('dashboard/expend*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                       <i class="fas fa-align-left mr-3"></i>
+                       Pengeluaran Operasional
+                   </a>
+                   <a href="{{route('adjustment')}}" class="flex items-center {{ Request::is('dashboard/adjustment*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                       <i class="fas fa-align-left mr-3"></i>
+                       Penyelarasan Saldo
+                   </a>
+                </div>
+            </div>
+           
+           
             <a href="{{route('jadwal')}}" class="flex items-center {{ Request::is('dashboard/jadwal*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                
                 <i class="fas fa-calendar mr-3"></i>
                Jadwal Angkut
-            </a>
-            <a href="{{route('transaksi')}}" class="flex items-center {{ Request::is('dashboard/transaksi*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-                <i class="fas fa-tablet-alt mr-3"></i>
-                Transaksi Nasabah
-            </a>
-            <a href="{{route('transaksipengepul')}}" class="flex items-center {{ Request::is('dashboard/pengepul*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-                <i class="fas fa-tablet-alt mr-3"></i>
-                Transaksi Pengepul
-            </a>
-            <a href="{{route('pengajuan_konversi')}}" class="flex items-center {{ Request::is('dashboard/konversi*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-                 <i class="fas fa-align-left mr-3"></i>
-
-               
-                Pengajuan Konversi
-            </a>
-            <a href="{{route('expend')}}" class="flex items-center {{ Request::is('dashboard/expend*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-                <i class="fas fa-align-left mr-3"></i>
-                Pengeluaran Operasional
-            </a>
-            <a href="{{route('adjustment')}}" class="flex items-center {{ Request::is('dashboard/adjustment*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-                <i class="fas fa-align-left mr-3"></i>
-                Penyelarasan Saldo
             </a>
             <a href="/dashboard/report" class="flex items-center {{ Request::is('dashboard/report*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-table mr-3"></i>
@@ -80,15 +114,15 @@
             </a>
             <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                 <i class="fas fa-cogs mr-3"></i>
-                Support
+                Ganti Password
             </a>
             <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                 <i class="fas fa-user mr-3"></i>
-                My Account
+                Ganti Photo
             </a>
             <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                 <i class="fas fa-sign-out-alt mr-3"></i>
-                Sign Out
+                Keluar
             </a>
            
         </nav>

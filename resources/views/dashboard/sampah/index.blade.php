@@ -82,7 +82,7 @@
     </div>
 
     <div class="w-full mt-6">
-        <div class="overflow-x-auto">
+        <div class="overflow-auto max-h-[300px]">
             <table class="w-full bg-white">
                 <thead class="bg-sidebar text-white w-full">
                     <tr>

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -21,8 +22,8 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         User::create([
-            'name' => 'fulan',
-            'email' => 'fulan@gmail.com',
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
             'phone_number' => '0123',
             'password' => bcrypt('password'),
             'address' => 'tangerang',
@@ -38,5 +39,14 @@ class DatabaseSeeder extends Seeder
             'role' => '4'
 
         ]);
+
+        Category::create([
+            'category_name' => '1. Kardus',
+            'uom' => 'kg'],[
+            'category_name' => '',
+            'uom' => 'kg'],
+        
+        
+        );
     }
 }

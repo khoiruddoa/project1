@@ -152,7 +152,7 @@
             " id="about" role="tabpanel"
                 aria-labelledby="about-tab">
                 <div class="w-full mt-6">
-                    <div class="overflow-x-auto">
+                    <div class="overflow-auto max-h-[300px]">
                         <table class="w-full bg-white">
                             <thead class="bg-sidebar
                              text-white w-full">
@@ -178,6 +178,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                       
                     </div>
 
 
@@ -187,7 +188,7 @@
             " id="services" role="tabpanel"
                 aria-labelledby="services-tab">
                 <div class="w-full mt-6">
-                    <div class="overflow-x-auto">
+                    <div class="overflow-auto max-h-[300px]">
                         <table class="w-full bg-white">
                             <thead class="  w-1/2">
                                 <tr>
@@ -217,7 +218,7 @@
             " id="statistics" role="tabpanel"
                 aria-labelledby="statistics-tab">
                 <div class="w-full mt-6">
-                    <div class="overflow-x-auto">
+                    <div class="overflow-auto max-h-[300px]">
                         <table class="w-full bg-white">
                             <thead class="  w-1/2">
                                 <tr>

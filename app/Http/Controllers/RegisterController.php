@@ -15,7 +15,7 @@ class RegisterController extends Controller
     public function index()
     {
         return view('dashboard.nasabah.index', [
-            'users' => User::where('role', 1)->get(),
+            'users' => User::where('role', 1)->orderBy('id', 'desc')->get(),
             'collectors' =>  User::where('role', 2)->get(),
             'admins' =>  User::where('role', 3)->get(),
         ]);
