@@ -3,7 +3,7 @@
 @section('container')
 <div class="container mx-auto p-5 sm:p-10 lg:p-20 bg-[#3d68ff] min-h-screen">
     <div class="flex flex-col lg:flex-col justify-end items-center ">
-      <div class="font-mono md:text-4xl text-2xl font-extrabold text-white text-center lg:mt-20 mt-16 mb-6 flex flex-col items-center">
+      <div class="font-mono md:text-4xl text-2xl font-extrabold text-white text-center lg:mt-16 mt-16 mb-6 flex flex-col items-center">
         <div><img src="{{ asset('img/logo2.png')}}" class="w-40 h-40 "></div>
         <div>Faida Cendikia</div>
       </div>

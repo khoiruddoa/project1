@@ -57,7 +57,7 @@
                                     
                                         @foreach($item->detailTransactions as $detail)
                                         <div class="ml-3 text-gray-700 font-mono">
-                                        {{$detail->category->category_name}} {{$detail->qty}} {{$detail->category->uom}} @currency($detail->price) Jumlah @currency($detail->qty * $detail->price)
+                                        {{ preg_replace('/\d+\./', '',$detail->category->category_name) }} {{$detail->qty}} {{$detail->category->uom}} @currency($detail->price) Jumlah @currency($detail->qty * $detail->price)
                                     </div>
                                         @endforeach
                                    

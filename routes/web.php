@@ -40,6 +40,10 @@ Route::get('/menu', function () {
     return view('menu');
 });
 
+Route::get('/dashboard/report', function () {
+    return view('dashboard.report');
+});
+
 Route::get('/dashboard/dashboard', [DashboardController::class, 'admindashboard']);
 
 

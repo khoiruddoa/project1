@@ -34,7 +34,7 @@
                             @endphp
                             @foreach ($details as $detail)
                                 <div class="flex flex-row gap-4">
-                                    <div>{{ $detail->category->category_name }}</div>
+                                    <div>{{  preg_replace('/\d+\./', '',$detail->category->category_name) }}</div>
                                     <div>{{ $detail->qty }} {{ $detail->category->uom }}</div>
                                     <div>@currency($detail->price)</div>
                                     <div>Jumlah : @currency($detail->price * $detail->qty)</div>
