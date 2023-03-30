@@ -25,7 +25,11 @@
                     <p class="md:text-3xl font-semibold"></p>
                 </div>
                 <div class="text-center bg-blue-600 hover:bg-blue-800 rounded-xl p-4">
-                    <p class="text-sm text-gray-100 mb-2">Laporan Pengeluaran</p>
+                    <p class="text-sm text-gray-100 mb-2">Laporan Pendapatan & Pengeluaran</p>
+                    <p class="md:text-3xl font-semibold"></p>
+                </div>
+                <div class="text-center bg-blue-600 hover:bg-blue-800 rounded-xl p-4">
+                    <p class="text-sm text-gray-100 mb-2">Keuntungan & Bagi Hasil</p>
                     <p class="md:text-3xl font-semibold"></p>
                 </div>
             </div>
