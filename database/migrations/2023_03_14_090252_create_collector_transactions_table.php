@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('administrator'); 
-            $table->integer('pay_total')->nullable();
+            $table->float('pay_total', 10 , 3)->nullable();
             $table->integer('pay_status');
-            $table->text('information')->nullable();
+            $table->integer('information')->nullable();
             $table->timestamps();
         });
     }

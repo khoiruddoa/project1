@@ -159,6 +159,8 @@
                                 <tr>
                                     <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Nama
                                     </th>
+                                    <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Status
+                                    </th>
                                     <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Saldo
                                     </th>
                                     <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Riwayat
@@ -169,6 +171,28 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $user->name }}</td>
+
+                                        @if(isset($user->transactions()->latest('created_at')->first()->created_at))
+                                        @if (strtotime($user->transactions()->latest('created_at')->first()->created_at) < strtotime('-3 months'))
+                                        <td class="w-1/3 sm:w-auto bg-red-700 text-white text-left py-3 px-4">Aktif {{ $user->transactions()->latest('created_at')->first()->created_at->diffForHumans()}}</td>
+                                        @elseif(strtotime($user->transactions()->latest('created_at')->first()->created_at) < strtotime('-2 months'))
+                                        <td class="w-1/3 sm:w-auto bg-purple-600 text-white text-left py-3 px-4">Aktif {{ $user->transactions()->latest('created_at')->first()->created_at->diffForHumans()}}</td>
+                                        @else
+                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4 bg-green-600 text-white">Aktif {{ $user->transactions()->latest('created_at')->first()->created_at->diffForHumans()}}</td>
+                                        @endif
+                                        
+                                        @else
+                                        @if (strtotime($user->created_at) < strtotime('-3 months'))
+                                        <td class="w-1/3 sm:w-auto bg-red-700 text-left text-white py-3 px-4">Belum Melakukan Transaksi dari {{ $user->created_at->diffForHumans()}}</td>
+                                        @elseif(strtotime($user->created_at) < strtotime('-2 months'))
+                                        <td class="w-1/3 sm:w-auto bg-Purpel-700 text-left text-white py-3 px-4">Belum Melakukan Transaksi dari {{ $user->created_at->diffForHumans()}}</td>
+                                        @else
+                                        <td class="w-1/3 sm:w-auto bg-green-700 text-left text-white py-3 px-4">Belum Melakukan Transaksi dari {{ $user->created_at->diffForHumans()}}</td>
+                                        @endif
+                                        @endif
+
+
+
                                         <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($user->transactions->where('pay_status', 2)->sum('pay_total') - $user->convertions->where('pay_status', 3)->sum('pay_total'))</td>
                                         <td class="sm:text-left py-3 px-4">
                                             <a href="{{ route('nasabah_detail', ['user_id' => $user->id]) }}"

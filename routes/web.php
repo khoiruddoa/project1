@@ -10,6 +10,7 @@ use App\Http\Controllers\ExpendController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OwnerReviewController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserTransactionController;
@@ -103,6 +104,7 @@ Route::post('/dashboard/transaksi/detail', [TransactionController::class, 'store
 Route::get('/dashboard/transaksi/detail/delete/{id}', [TransactionController::class, 'destroydetail'])->name('delete_detail');
 Route::get('/dashboard/transaksi/delete/{id}', [TransactionController::class, 'destroy'])->name('transaksi_delete');
 Route::post('/dashboard/transaksi/finish/{id}', [TransactionController::class, 'finish'])->name('finish');
+Route::post('/dashboard/transaksi/pick', [TransactionController::class, 'storepick'])->name('store_pick');
 
 
 
@@ -129,3 +131,6 @@ Route::get('/dashboard/adjustment', [AdjustmentController::class, 'index'])->nam
 Route::post('/dashboard/adjustment', [AdjustmentController::class, 'store'])->name('adjustment_store');
 Route::post('/dashboard/adjustment/edit/{id}', [AdjustmentController::class, 'update'])->name('adjustment_update');
 Route::get('/dashboard/adjustment/delete/{id}', [AdjustmentController::class, 'delete'])->name('adjustment_delete');
+
+
+Route::get('/dashboard/report/transaksi', [ReportController::class, 'transaksi'])->name('print_transaction');

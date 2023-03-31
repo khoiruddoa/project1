@@ -57,4 +57,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Expend::class);
     }
+    public function picks()
+    {
+        return $this->hasMany(Pick::class);
+    }
 }
