@@ -14,8 +14,12 @@
                 <p class="md:text-3xl font-semibold">@currency($saldoNasabah)</p>
               </div>
               <div class="text-center bg-blue-600 rounded-xl p-4">
-                <p class="text-sm text-gray-100 mb-2">Saldo Admin</p>
+                <p class="text-sm text-gray-100 mb-2">Pendapatan</p>
                 <p class="md:text-3xl font-semibold">@currency($saldoAdmin)</p>
+              </div>
+              <div class="text-center bg-blue-600 rounded-xl p-4">
+                <p class="text-sm text-gray-100 mb-2">Keuntungan</p>
+              
               </div>
               <div class="text-center bg-blue-600 rounded-xl p-4">
                 <p class="text-sm text-gray-100 mb-2">Jumlah Transaksi Bulan Ini</p>

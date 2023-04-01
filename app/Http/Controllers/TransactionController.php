@@ -131,7 +131,6 @@ class TransactionController extends Controller
 
             $hasilangkut = $hasil10persen / $jumlahanggotanya;
 
-
             foreach ($jumlahanggota as $jumlah) {
 
                 $transac = new Transaction([

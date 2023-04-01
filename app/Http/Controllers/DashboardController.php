@@ -38,7 +38,7 @@ class DashboardController extends Controller
 
         $saldoNasabah = $transaksiNasabah->sum('pay_total') -  $konversiNasabah->sum('pay_total');
 
-        $saldoAdmin = $transaksiPengepul->sum('pay_total') - $pengeluaran->sum('pay_total') - $transaksiNasabah->sum('pay_total');
+        $saldoAdmin = $transaksiPengepul->sum('pay_total') - $transaksiNasabah->sum('pay_total');
 
     
        

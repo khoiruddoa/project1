@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('convertions', function (Blueprint $table) {
+        Schema::create('incomes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('administrator')->nullable(); 
-            $table->float('pay_total',15,3)->nullable();
-            $table->integer('pay_status');
-            $table->integer('buy')->nullable();
-            $table->float('profit',15,3)->nullable();
-            $table->float('information',10,3)->nullable();
+            $table->string('administrator'); 
+            $table->float('pay_total', 15, 3)->nullable();
+            $table->integer('pay_status')->nullable();
+            $table->text('information')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('convertions');
+        Schema::dropIfExists('incomes');
     }
 };

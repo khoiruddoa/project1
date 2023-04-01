@@ -24,6 +24,12 @@ class AdminConvertionController extends Controller
         $request->merge([
             'pay_total' => str_replace('.', '', $request->pay_total)
         ]);
+        $request->merge([
+            'buy' => str_replace('.', '', $request->buy)
+        ]);
+
+        $profit = $request->pay_total - $request->buy;
+        $request->merge(['profit' => $profit]);
 
         $convertions = Convertion::findOrFail($id);
         if ($request->pay_total > $convertions->pay_total) {

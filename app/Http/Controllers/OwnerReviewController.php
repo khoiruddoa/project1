@@ -28,13 +28,13 @@ class OwnerReviewController extends Controller
         ]);
     }
 
-    public function collect()
-    {
-        return view('collectorreview', [
-            'collectors' => CollectorTransaction::where('pay_status', 1)->get(),
+    // public function collect()
+    // {
+    //     return view('collectorreview', [
+    //         'collectors' => CollectorTransaction::where('pay_status', 1)->get(),
 
-        ]);
-    }
+    //     ]);
+    // }
 
     public function adjust()
     {
@@ -121,34 +121,35 @@ class OwnerReviewController extends Controller
 
         return back();
     }
-    public function collector(Request $request)
-    {
-        $validatedData = $request->validate([
+    
+    // public function collector(Request $request)
+    // {
+    //     $validatedData = $request->validate([
 
-            'id.*' => 'required|max:150'
+    //         'id.*' => 'required|max:150'
 
-        ]);
+    //     ]);
 
-        if ($validatedData == null) {
-            Alert::warning('Gagal', 'Tidak ada data yang dipilih');
-            return back();
-        }
-
-
-        foreach ($validatedData['id'] as $key => $value) {
+    //     if ($validatedData == null) {
+    //         Alert::warning('Gagal', 'Tidak ada data yang dipilih');
+    //         return back();
+    //     }
 
 
-            $data = 2;
+    //     foreach ($validatedData['id'] as $key => $value) {
 
-            $transaction = CollectorTransaction::findOrFail($validatedData['id'][$key]);
 
-            $transaction->update(['pay_status' => $data]);
+    //         $data = 2;
 
-            Alert::info('Berhasil', 'Sukses disetujui');
-        }
+    //         $transaction = CollectorTransaction::findOrFail($validatedData['id'][$key]);
 
-        return back();
-    }
+    //         $transaction->update(['pay_status' => $data]);
+
+    //         Alert::info('Berhasil', 'Sukses disetujui');
+    //     }
+
+    //     return back();
+    // }
 
     public function adjustment(Request $request)
     {

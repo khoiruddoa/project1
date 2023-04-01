@@ -187,12 +187,12 @@
                             <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
                             Selesai penimbangan
                         </span>
-                        @elseif($transaction->pay_status == 2)
+                        {{-- @elseif($transaction->pay_status == 2)
                             <span
                             class="inline-flex items-center bg-green-200 text-green-900 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
                             <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
                             Disetujui
-                        </span>
+                        </span> --}}
                         @elseif($transaction->pay_status == 3)
                             <span
                             class="inline-flex items-center bg-blue-200 text-blue-900 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">

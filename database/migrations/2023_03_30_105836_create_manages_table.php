@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('manages', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('income_id');
+            $table->foreignId('user_id');
+            $table->float('profit',10,3)->nullable();
         });
     }
 

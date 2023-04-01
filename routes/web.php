@@ -8,6 +8,7 @@ use App\Http\Controllers\ConvertionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpendController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ManageController;
 use App\Http\Controllers\OwnerReviewController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReportController;
@@ -52,8 +53,8 @@ Route::get('/transaction/review', [OwnerReviewController::class, 'index'])->name
 Route::post('/transaction/review', [OwnerReviewController::class, 'store'])->name('transaction_review_store');
 Route::get('/convertion/review', [OwnerReviewController::class, 'convert'])->name('convertion_review');
 Route::post('/convertion/review', [OwnerReviewController::class, 'convertion'])->name('convertion_review_store');
-Route::get('/collector/review', [OwnerReviewController::class, 'collect'])->name('collector_review');
-Route::post('/collector/review', [OwnerReviewController::class, 'collector'])->name('collector_review_store');
+// Route::get('/collector/review', [OwnerReviewController::class, 'collect'])->name('collector_review');
+// Route::post('/collector/review', [OwnerReviewController::class, 'collector'])->name('collector_review_store');
 Route::get('/adjustment/review', [OwnerReviewController::class, 'adjust'])->name('adjust_review');
 Route::post('/adjustment/review', [OwnerReviewController::class, 'adjustment'])->name('adjustment_review_store');
 Route::get('/dashboard/review', [OwnerReviewController::class, 'admindashboard'])->name('dashboard_review');
@@ -131,6 +132,13 @@ Route::get('/dashboard/adjustment', [AdjustmentController::class, 'index'])->nam
 Route::post('/dashboard/adjustment', [AdjustmentController::class, 'store'])->name('adjustment_store');
 Route::post('/dashboard/adjustment/edit/{id}', [AdjustmentController::class, 'update'])->name('adjustment_update');
 Route::get('/dashboard/adjustment/delete/{id}', [AdjustmentController::class, 'delete'])->name('adjustment_delete');
+
+
+Route::get('/dashboard/pengurus', [ManageController::class, 'index'])->name('pengurus');
+Route::post('/dashboard/pengurus', [ManageController::class, 'update'])->name('pengurus_update');
+Route::post('/dashboard/pengurus/bagihasil', [ManageController::class, 'bagihasil'])->name('bagihasil');
+Route::get('/dashboard/pengurus/delete/{id}', [ManageController::class, 'delete'])->name('pengurus_delete');
+
 
 
 Route::get('/dashboard/report/transaksi', [ReportController::class, 'transaksi'])->name('print_transaction');

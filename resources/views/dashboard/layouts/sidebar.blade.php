@@ -50,7 +50,7 @@
                 <i class="fas fa-table mr-3"></i>
                 Laporan
             </a>
-            <a href="#" class="flex items-center {{ Request::is('dashboard/report*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <a href="{{route('pengurus')}}" class="flex items-center {{ Request::is('dashboard/pengurus*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-user mr-3"></i>
                 Pengurus
             </a>

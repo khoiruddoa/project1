@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('expends', function (Blueprint $table) {
+        Schema::create('bank_profits', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->string('administrator'); 
-            $table->float('pay_total', 15, 3)->nullable();
-            $table->integer('pay_status')->nullable();
-            $table->text('information')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('expends');
+        Schema::dropIfExists('bank_profits');
     }
 };
