@@ -27,7 +27,8 @@ class TransactionController extends Controller
 
     public function store(Request $request)
     {
-        $transaction = Transaction::where('user_id', $request->input('user_id'))->whereDate('created_at', '=', now()->toDateString())->get();
+        $transaction = Transaction::where('user_id', $request->input('user_id'))->where('information', null)
+        ->whereDate('created_at', '=', now()->toDateString())->get();
 
 
 
@@ -132,13 +133,13 @@ class TransactionController extends Controller
             $hasilangkut = $hasil10persen / $jumlahanggotanya;
 
             foreach ($jumlahanggota as $jumlah) {
-
+                
                 $transac = new Transaction([
                     'user_id' => $jumlah->user_id,
                     'administrator' => auth()->user()->name,
                     'pay_total' => $hasilangkut,
                     'pay_status' => 2,
-                    'information' => 2,
+                    'information' => 2
                 ]);
                 $transac->save();
 

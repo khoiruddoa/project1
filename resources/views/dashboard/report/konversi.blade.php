@@ -15,7 +15,7 @@
         <div class="table-responsive lg:w-3/4 mx-auto">
             <br>
 
-            <h2 class="text-center text-2xl font-bold mb-4">LAPORAN TRANSAKSI</h2>
+            <h2 class="text-center text-2xl font-bold mb-4">LAPORAN KONVERSI</h2>
             <table class="mb-4">
 
                 <tr>
@@ -41,33 +41,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($transactions as $transaction)
+                    @foreach ($convertions as $convertion)
                         <tr>
-                            <td class="border px-4 py-2">{{ $transaction->updated_at->format('d-m-Y') }}</td>
+                            <td class="border px-4 py-2">{{ $convertion->updated_at->format('d-m-Y') }}</td>
 
                             <td class="border px-4 py-2">
-                                @if ($transaction->origin == 'keluar')
-                                    Setor Sampah
-                                @elseif ($transaction->origin == 'masuk')
-                                    Jual Ke Pengepul
+                                @if ($convertion->origin == 'keluar')
+                                    Konversi Emas Senilai
+                                @elseif ($convertion->origin == 'masuk')
+                                    Dana Masuk
                                 @else
                                 Bagi Keuntungan
                                 @endif
                             </td>
                             <td class="border px-4 py-2">
-                                @if ($transaction->origin == 'masuk')
-                                    @currency($transaction->pay_total)
+                                @if ($convertion->origin == 'masuk')
+                                    @currency($convertion->pay_total)
                                 @endif
+                                @if ($convertion->origin == 'profit')
+                                    @currency($convertion->pay_total)
+                                @endif
+                            </td>
 
                             </td>
                             <td class="border px-4 py-2">
-                                @if ($transaction->origin == 'keluar')
-                                    @currency($transaction->pay_total)
+                                @if ($convertion->origin == 'keluar')
+                                    @currency($convertion->pay_total)
                                 @endif
-                                @if ($transaction->origin == 'profit')
-                                    @currency($transaction->pay_total)
-                                @endif
-                            </td>
+                                
 
                         </tr>
                     @endforeach

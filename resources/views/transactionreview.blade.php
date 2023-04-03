@@ -59,7 +59,16 @@
                                         <div class="ml-3 text-gray-700 font-mono">
                                         {{ preg_replace('/\d+\./', '',$detail->category->category_name) }} {{$detail->qty}} {{$detail->category->uom}} @currency($detail->price) Jumlah @currency($detail->qty * $detail->price)
                                     </div>
+                                    @php
+                                        $jumlah = $detail->qty * $detail->price
+                                    @endphp
                                         @endforeach
+
+                                        @if($jumlah - $item->pay_total > 0)
+                                        <div class="ml-3 text-gray-700 font-mono">
+                                        Jasa Angkut @currency($jumlah - $item->pay_total)
+                                        </div>
+                                        @endif
                                    
                                 </div>
                                 </div>

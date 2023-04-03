@@ -61,4 +61,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pick::class);
     }
+    public function manages()
+    {
+        return $this->hasMany(Manage::class);
+    }
 }

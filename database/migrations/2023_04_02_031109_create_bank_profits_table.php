@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('bank_profits', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('income_id');
+            $table->float('pay_total', 15, 3)->nullable();
+            $table->integer('pay_status')->nullable();
+            $table->text('information')->nullable();
             $table->timestamps();
         });
     }

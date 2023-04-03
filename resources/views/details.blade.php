@@ -34,7 +34,7 @@
                             @endphp
                             @foreach ($details as $detail)
                                 <div class="flex flex-row gap-4">
-                                    <div>{{  preg_replace('/\d+\./', '',$detail->category->category_name) }}</div>
+                                    <div>{{ preg_replace('/\d+\./', '', $detail->category->category_name) }}</div>
                                     <div>{{ $detail->qty }} {{ $detail->category->uom }}</div>
                                     <div>@currency($detail->price)</div>
                                     <div>Jumlah : @currency($detail->price * $detail->qty)</div>
@@ -44,10 +44,24 @@
                                 @endphp
                             @endforeach
 
-                            @if(empty($transaction->information))
-                            <div>Total : @currency($total)</div>
+                            @if (empty($transaction->information))
+                                <div>Total : @currency($total)</div>
+                                @php
+                                    $jumlah = $detail->qty * $detail->price;
+                                @endphp
+
+
+                                @if ($jumlah - $transaction->pay_total > 0)
+                                    <div>
+                                        Jasa Angkut @currency($jumlah - $transaction->pay_total)
+                                    </div>
+                                @endif
                             @else
-                            <div>Penyelarasan saldo sebesar @currency($transaction->pay_total)</div>
+                                @if ($transaction->information == 1)
+                                    <div>Penyelarasan saldo sebesar @currency($transaction->pay_total)</div>
+                                @else
+                                    <div>Pendapatan jasa angkut sebesar @currency($transaction->pay_total)</div>
+                                @endif
                             @endif
                         </div>
                     </div>

@@ -33,6 +33,45 @@ class DatabaseSeeder extends Seeder
             'role' => '4'
 
         ]);
+        User::create([
+            'name' => 'pengurus1',
+            'email' => 'pengurus11@gmail.com',
+            'phone_number' => '004444',
+            'password' => bcrypt('password'),
+            'address' => 'tangerang',
+            'role' => '1',
+            'manage' => '1'
+
+        ]);
+        User::create([
+            'name' => 'pengurus2',
+            'email' => 'pengurus2@gmail.com',
+            'phone_number' => '0044344',
+            'password' => bcrypt('password'),
+            'address' => 'tangerang',
+            'role' => '1',
+            'manage' => '1'
+
+        ]);
+        User::create([
+            'name' => 'pengepul',
+            'email' => 'pengepul@gmail.com',
+            'phone_number' => '0644344',
+            'password' => bcrypt('password'),
+            'address' => 'tangerang',
+            'role' => '2'
+
+        ]);
+
+        User::create([
+            'name' => 'doa',
+            'email' => 'doa@gmail.com',
+            'phone_number' => '0022',
+            'password' => bcrypt('password'),
+            'address' => 'tangerang',
+            'role' => '1'
+
+        ]);
 
         Category::create([
             'category_name' => '1. Kardus',

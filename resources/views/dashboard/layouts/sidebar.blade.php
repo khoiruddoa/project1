@@ -1,10 +1,10 @@
 
-    <aside class="relative bg-sidebar w-64 hidden sm:block shadow-xl">
+    <aside class="relative bg-sidebar w-64 hidden sm:block shadow-xl max-h-screen overflow-y-auto">
         <div class="p-6">
-            <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+            <a href="#" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
             
         </div>
-        <nav class="text-white text-base font-semibold pt-3">
+        <nav class="text-white text-base font-semibold pt-3 ">
             <a href="/dashboard/dashboard" class="flex items-center {{ Request::is('dashboard/dashboard') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-tachometer-alt mr-3"></i>
                 Dashboard

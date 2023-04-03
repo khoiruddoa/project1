@@ -142,3 +142,5 @@ Route::get('/dashboard/pengurus/delete/{id}', [ManageController::class, 'delete'
 
 
 Route::get('/dashboard/report/transaksi', [ReportController::class, 'transaksi'])->name('print_transaction');
+Route::get('/dashboard/report/konversi', [ReportController::class, 'konversi'])->name('print_convertion');
+Route::get('/dashboard/report/Pengeluaran', [ReportController::class, 'pengeluaran'])->name('print_expend');

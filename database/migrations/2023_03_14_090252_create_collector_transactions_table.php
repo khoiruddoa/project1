@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('collector_transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->string('administrator'); 
+            $table->foreignId('user_id')->nullable();
+            $table->string('administrator')->nullable(); 
             $table->float('pay_total', 10 , 3)->nullable();
             $table->integer('pay_status');
             $table->integer('information')->nullable();
+            $table->integer('source')->nullable();
             $table->timestamps();
         });
     }

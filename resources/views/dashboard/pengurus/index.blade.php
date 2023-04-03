@@ -106,25 +106,25 @@
                             <h3 class="mb-4 text-l font-medium text-gray-900 dark:text-white">Pendapatan @currency($income)</h3>
                             <h3 class="mb-4 text-l font-medium text-gray-900 dark:text-white">Keuntungan untuk Pengurus @currency($profit)</h3>
 
-                            <form class="space-y-6" action="{{route('bagihasil')}}" method="POST">
+                            <form action="{{route('bagihasil')}}" method="POST">
                                 @csrf
-                                
-                            <table class="w-full bg-white">
+                                <div class="md:max-h-80 overflow-y-scroll">
+                            <table class="w-full  bg-white">
                                 <thead class="bg-sidebar text-white w-full">
                                     <tr>
                                         <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Nama Pengurus</th>
                                         
-                                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Bagi Hasil</th>
+                                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Bagi Hasil dalam persen</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-gray-700">
                                     @foreach ($manages as $manage)
                                     <input type="hidden" name="user_id[]" value="{{$manage->id}}">
-                                    <input type="hidden" name="income_id[]" value="{{$income}}">
+                                   
                                         <tr>
                                             <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $manage->name }}</td>
                                             <td class="sm:text-left py-3 px-4">
-                                                <input type="text"  name="profit[]" id="profit"
+                                                <input type="number"  name="profit[]" id="profit"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                                 required>
                                                
@@ -133,6 +133,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                                </div>
                                 <button type="submit"
                                     class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Bagi Hasil</button>
                                
