@@ -11,7 +11,7 @@
 
 
 
-    <div class="container mx-auto p-4">
+    <div class="container mx-auto p-4 mt-10 mb-10 ">
         <div class="table-responsive lg:w-3/4 mx-auto">
             <br>
 
@@ -19,14 +19,11 @@
             <table class="mb-4">
 
                 <tr>
-                    <td class="font-bold">Per Tanggal</td>
-                    <td>:</td>
-                    <td></td>
+                    <td class="font-bold">Periode</td>
+                    <td>{{ date('d-m-Y', strtotime($start)) }} s/d {{ date('d-m-Y', strtotime($end)) }}</td>
                 </tr>
                 <tr>
-                    <td class="font-bold">Saldo Awal</td>
-                    <td>:</td>
-                    <td></td>
+                    <td class="font-bold">Saldo Awal : @currency($saldo_awal)</td>
                 </tr>
 
 
@@ -47,11 +44,21 @@
 
                             <td class="border px-4 py-2">
                                 @if ($transaction->origin == 'keluar')
-                                    Setor Sampah
+                                    @if ($transaction->information == 1)
+                                        Penyelarasan Saldo
+                                    @elseif($transaction->information == 2)
+                                        Jasa Angkut Sampah
+                                    @else
+                                        Setor Sampah
+                                    @endif
                                 @elseif ($transaction->origin == 'masuk')
+                                @if ($transaction->information == 1)
+                                        Penyelarasan Saldo Nasabah
+                                    @else
                                     Jual Ke Pengepul
+                                    @endif
                                 @else
-                                Bagi Keuntungan
+                                    Bagi Keuntungan
                                 @endif
                             </td>
                             <td class="border px-4 py-2">
@@ -76,14 +83,25 @@
                         <td class=""></td>
                         <td class=""></td>
 
-                        <th class="border px-4 py-2">Sisa Saldo</th>
-                        <td class="border px-4 py-2"></td>
+                        <th class="border px-4 py-2">Pendapatan :</th>
+                        <td class="border px-4 py-2">@currency($pendapatan)</td>
                     </tr>
+                    <tr>
+
+                        <td class=""></td>
+                        <td class=""></td>
+
+                        <th class="border px-4 py-2">Total Saldo :</th>
+                        <td class="border px-4 py-2">@currency($total_saldo)</td>
+                    </tr>
+
 
                 </tbody>
             </table>
+            <h2 class="text-left text-lg font-bold mb-4">Print By : {{ auth()->user()->name }}</h2>
         </div>
     </div>
+
     <script type="text/javascript">
         window.print();
     </script>

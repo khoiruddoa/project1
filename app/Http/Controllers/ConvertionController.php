@@ -13,8 +13,11 @@ class ConvertionController extends Controller
     public function index()
     {
         $user = User::find(auth()->user()->id);
-        $convertion = Convertion::where('pay_status', 1)->orwhere('pay_status', 2)->where('user_id', auth()->user()->id)->get();
-        $convertions = Convertion::where('pay_status', 2)->orwhere('pay_status', 3)->orwhere('pay_status', 4)->where('user_id', auth()->user()->id)->orderBy('id', 'desc')->get();
+        $saldo = 1;
+        
+        $convertion = Convertion::where('user_id', auth()->user()->id)->where('pay_status', 1)->orwhere('pay_status', 2)->get();
+
+        $convertions = Convertion::where('user_id', auth()->user()->id)->get();
 
         return view(
             'convertion',
@@ -22,6 +25,7 @@ class ConvertionController extends Controller
                 'user' => $user,
                 'convertion' => $convertion,
                 'convertions' => $convertions,
+                'saldo' => $saldo
             ]
         );
     }

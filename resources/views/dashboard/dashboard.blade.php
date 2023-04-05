@@ -18,7 +18,8 @@
                 <p class="md:text-3xl font-semibold">@currency($saldoAdmin)</p>
               </div>
               <div class="text-center bg-blue-600 rounded-xl p-4">
-                <p class="text-sm text-gray-100 mb-2">Keuntungan</p>
+                <p class="text-sm text-gray-100 mb-2">Saldo Operasional</p>
+                <p class="md:text-3xl font-semibold">@currency($keuntungan)</p>
               
               </div>
               <div class="text-center bg-blue-600 rounded-xl p-4">
@@ -27,7 +28,7 @@
               </div>
               <div class="text-center bg-blue-600 rounded-xl p-4">
                 <p class="text-sm text-gray-100 mb-2">Akumulasi Saldo</p>
-                <p class="md:text-3xl font-semibold">@currency($uangPengepul + $saldoNasabah + $saldoAdmin)</p>
+                <p class="md:text-3xl font-semibold">@currency($uangPengepul + $saldoNasabah + $saldoAdmin + $saldo_konversi)</p>
               </div>
               <div class="text-center bg-blue-600 rounded-xl p-4">
                 <p class="text-sm text-gray-100 mb-2">Uang di Pengepul</p>
@@ -48,6 +49,10 @@
               <div class="text-center bg-blue-600 rounded-xl p-4">
                 <p class="text-sm text-gray-100 mb-2">Jumlah Pengaju Konversi</p>
                 <p class="md:text-3xl font-semibold">{{$konver}}</p>
+              </div>
+              <div class="text-center bg-blue-600 rounded-xl p-4">
+                <p class="text-sm text-gray-100 mb-2">Pendapatan Konversi</p>
+                <p class="md:text-3xl font-semibold">@currency($saldo_konversi)</p>
               </div>
             </div>
           </div>

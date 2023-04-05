@@ -19,15 +19,10 @@
             <table class="mb-4">
 
                 <tr>
-                    <td class="font-bold">Per Tanggal</td>
-                    <td>:</td>
-                    <td></td>
+                    <td class="font-bold">Periode :</td>
+                    <td>{{ date('d-m-Y', strtotime($start)) }} s/d {{ date('d-m-Y', strtotime($end)) }}</td>
                 </tr>
-                <tr>
-                    <td class="font-bold">Saldo Awal</td>
-                    <td>:</td>
-                    <td></td>
-                </tr>
+               
 
 
             </table>
@@ -36,8 +31,9 @@
                     <tr>
                         <th class="px-4 py-2">Tgl</th>
                         <th class="px-4 py-2">Nama Transaksi</th>
-                        <th class="px-4 py-2">Debet</th>
-                        <th class="px-4 py-2">Kredit</th>
+                        <th class="px-4 py-2">Harga Jual</th>
+                        <th class="px-4 py-2">Harga Beli</th>
+                        <th class="px-4 py-2">keuntungan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,29 +42,30 @@
                             <td class="border px-4 py-2">{{ $convertion->updated_at->format('d-m-Y') }}</td>
 
                             <td class="border px-4 py-2">
-                                @if ($convertion->origin == 'keluar')
-                                    Konversi Emas Senilai
-                                @elseif ($convertion->origin == 'masuk')
-                                    Dana Masuk
-                                @else
-                                Bagi Keuntungan
-                                @endif
+                               
+                                    Konversi Emas dari {{$convertion->user->name}} Senilai
+                               
                             </td>
                             <td class="border px-4 py-2">
-                                @if ($convertion->origin == 'masuk')
+                                
                                     @currency($convertion->pay_total)
-                                @endif
-                                @if ($convertion->origin == 'profit')
-                                    @currency($convertion->pay_total)
-                                @endif
+                        
+                              
                             </td>
 
                             </td>
                             <td class="border px-4 py-2">
-                                @if ($convertion->origin == 'keluar')
-                                    @currency($convertion->pay_total)
-                                @endif
+                              
+                                    @currency($convertion->buy)
+                               
+                            </td>
+                            <td class="border px-4 py-2">
                                 
+                                @currency($convertion->profit)
+                    
+                          
+                        </td>
+
 
                         </tr>
                     @endforeach
@@ -77,12 +74,16 @@
                         <td class=""></td>
                         <td class=""></td>
 
-                        <th class="border px-4 py-2">Sisa Saldo</th>
-                        <td class="border px-4 py-2"></td>
+                        <td class=""></td>
+
+                        <th class="border px-4 py-2">Total</th>
+                        <td class="border px-4 py-2"> @currency($convertion->sum('profit'))
+                        </td>
                     </tr>
 
                 </tbody>
             </table>
+            <h2 class="text-left text-lg font-bold mb-4">Print By : {{ auth()->user()->name }}</h2>
         </div>
     </div>
     <script type="text/javascript">

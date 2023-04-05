@@ -69,14 +69,18 @@
                                             <label for="price"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga
                                                 Beli</label>
-                                            <div x-data="{ number: null }">
-                                                <input type="text" name="price" x-model="number"
-                                                    x-on:input="number = parseFloat($event.target.value)"
-                                                    x-on:blur="$event.target.value = number.toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0})"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                                    required>
-                                            </div>
-
+                                                <div x-data="{ number: null }">
+                                                    <input type="text" name="price" x-model="number"
+                                                        x-on:input="
+                                                             number = $event.target.value.replace(/[^0-9]/g, '');
+                                                           "
+                                                        x-on:blur="
+                                                             $event.target.value = parseInt(number).toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+                                                           "
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                                        required>
+                                                </div>
+        
                                         </div>
                                     </div>
 

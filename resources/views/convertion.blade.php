@@ -9,8 +9,8 @@
 
             <div class="flex flex-col gap-10 items-center">
 
-                
-                    @include('saldo')
+
+                @include('saldo')
 
 
                 <div
@@ -22,34 +22,40 @@
                                 <h5 class="mb-2 text-1xl font-bold font-mono text-gray-900 dark:text-white">Transaksi
                                     Konversi Emas Anda</h5>
                             </div>
-                            @if(count($convertion) > 0 )
-                            <div class=""><h5 class="mb-2 text-2xl font-bold font-mono text-[#a38c08]">Anda Sedang Mengajukan Konversi Emas</h5></div>
-                        @endif
+                            @if (count($convertion) > 0)
+                                <div class="">
+                                    <h5 class="mb-2 text-2xl font-bold font-mono text-[#a38c08]">Anda Sedang Mengajukan
+                                        Konversi Emas</h5>
+                                </div>
+                            @endif
                         </div>
 
                     </div>
                     <div class="flex flex-col gap-2">
-                        @if(count($convertions)  < 1 )
-<div
-class="bg-[#15C972] hover:bg-[#016b38] font-mono text-md font-bold p-2 w-full text-white rounded-xl">
-Anda belum mempunyai transaksi yang disetujui</div>
-@endif
-@foreach ($convertions as $convertion)
-@if($convertion->pay_status == 2)
-<div
-class="bg-[#15C972] hover:bg-[#016b38] font-mono text-md font-bold p-2 w-full text-white rounded-xl">
-Disetujui Tanggal: {{ $convertion->created_at->format('d-m-Y') }} senilai @currency($convertion->pay_total)</div>
-@elseif($convertion->pay_status == 3)
-<div
-class="bg-blue-500 hover:bg-blue-700 font-mono text-md font-bold p-2 w-full text-white rounded-xl">
-Konversi Tanggal: {{ $convertion->created_at->format('d-m-Y') }} senilai @currency($convertion->pay_total)</div>
-@elseif($convertion->pay_status == 4)
-<div
-class="bg-red-500 hover:bg-red-700 font-mono text-md font-bold p-2 w-full text-white rounded-xl">
-ditolak Tanggal: {{ $convertion->created_at->format('d-m-Y') }} senilai @currency($convertion->pay_total)</div>
-@endif
-@endforeach
-                        
+                        @if (count($convertions) < 1)
+                            <div
+                                class="bg-[#15C972] hover:bg-[#016b38] font-mono text-md font-bold p-2 w-full text-white rounded-xl">
+                                Anda belum mempunyai transaksi yang disetujui</div>
+                        @endif
+                        @foreach ($convertions as $convertion)
+                            @if ($convertion->pay_status == 2)
+                                <div
+                                    class="bg-[#15C972] hover:bg-[#016b38] font-mono text-md font-bold p-2 w-full text-white rounded-xl">
+                                    Disetujui Tanggal: {{ $convertion->created_at->format('d-m-Y') }} senilai
+                                    @currency($convertion->pay_total)</div>
+                            @elseif($convertion->pay_status == 3)
+                                <div
+                                    class="bg-blue-500 hover:bg-blue-700 font-mono text-md font-bold p-2 w-full text-white rounded-xl">
+                                    Konversi Tanggal: {{ $convertion->created_at->format('d-m-Y') }} senilai
+                                    @currency($convertion->pay_total)</div>
+                            @elseif($convertion->pay_status == 4)
+                                <div
+                                    class="bg-red-500 hover:bg-red-700 font-mono text-md font-bold p-2 w-full text-white rounded-xl">
+                                    ditolak Tanggal: {{ $convertion->created_at->format('d-m-Y') }} senilai
+                                    @currency($convertion->pay_total)</div>
+                            @endif
+                        @endforeach
+
 
                     </div>
 

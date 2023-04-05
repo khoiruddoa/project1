@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('adjustments', function (Blueprint $table) {
+        Schema::create('gold', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable();
+            $table->string('administrator'); 
+            $table->float('pay_total', 15, 3)->nullable();
+            $table->integer('pay_status')->nullable();
+            $table->text('information')->nullable();
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('adjustments');
+        Schema::dropIfExists('gold');
     }
 };

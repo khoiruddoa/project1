@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('income_id');
+            $table->foreignId('gold_id');
             $table->float('pay_total', 15, 3)->nullable();
             $table->integer('pay_status')->nullable();
             $table->text('information')->nullable();

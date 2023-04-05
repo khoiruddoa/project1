@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\BankProfit;
 use App\Models\CollectorTransaction;
+use App\Models\Convertion;
+use App\Models\Gold;
 use App\Models\Income;
 use App\Models\Manage;
 use App\Models\Transaction;
@@ -19,8 +21,10 @@ class ManageController extends Controller
         $pemasukan = CollectorTransaction::where('pay_status', 3)->sum('pay_total');
         $pengeluaran = Transaction::where('pay_status', 2)->sum('pay_total');
         $keuntungan = Income::sum('pay_total');
+        $konversi = Convertion::where('pay_status', 3)->sum('profit');
+        $gold = Gold::sum('pay_total');
 
-        $income = $pemasukan - $pengeluaran - $keuntungan;
+        $income = ($pemasukan + $konversi) - $pengeluaran - $keuntungan - $gold;
 
         $profit = $income / 2;
 
@@ -78,11 +82,16 @@ class ManageController extends Controller
         $total_pengurus = collect($request->profit)->sum();
         
         $income = Income::all();
+        $gold = Gold::all();
 
         $transaksiNasabah = Transaction::where('pay_status', 2)->get();
         $transaksiPengepul = CollectorTransaction::where('pay_status', 3)->get();
+        $konversi = Convertion::where('pay_status', 3)->get();
 
-       $profit = $transaksiPengepul->sum('pay_total') - $transaksiNasabah->sum('pay_total') - $income->sum('pay_total');
+       $profit = $transaksiPengepul->sum('pay_total')  - $transaksiNasabah->sum('pay_total') - $income->sum('pay_total');
+       $gold = $konversi->sum('profit') - $gold->sum('pay_total');
+
+
 
        if($profit < 1){
         Alert::warning('Gagal', 'Saldo 0');
@@ -94,13 +103,21 @@ class ManageController extends Controller
         $keuntungan->administrator = Auth()->user()->name;
         $keuntungan->save();
 
+
         $idkeuntungan = $keuntungan->id;
 
-        $bagihasil = $profit / 2;
+        $keuntungangold = new Gold;
+        $keuntungangold->pay_total = $gold;
+        $keuntungangold->administrator = Auth()->user()->name;
+        $keuntungangold->save();
+        $idkeuntungangold = $keuntungangold->id;
+
+        $bagihasil = ($profit + $gold) / 2;
 
 
         $bankProfit = new BankProfit();
         $bankProfit->income_id = $idkeuntungan;
+        $bankProfit->gold_id = $idkeuntungangold;
         $bankProfit->pay_total = $bagihasil;
         $bankProfit->save();
 
@@ -109,28 +126,17 @@ class ManageController extends Controller
 
 
 
-            $data = [
-                'user_id' => $validatedData['user_id'][$key],
-                'income_id' => $keuntungan->id,
-                'profit' => $validatedData['profit'][$key]
-            ];
 
             $bagibagi = $bagihasil * $validatedData['profit'][$key] / $total_pengurus;
 
-            // $transac = new Transaction([
-            //     'user_id' => $validatedData['user_id'][$key],
-            //     'administrator' => auth()->user()->name,
-            //     'pay_total' => $bagibagi,
-            //     'pay_status' => 2,
-            //     'information' => 3,
-                
-            // ]);
-            // $transac->save();
+          
 
             $manage = new Manage([
                 'user_id' => $validatedData['user_id'][$key],
                 'income_id' => $idkeuntungan,
-                'pay_total' => $bagibagi
+                'gold_id' => $idkeuntungangold,
+                'pay_total' => $bagibagi,
+                'pay_status' => 4
             ]);
             $manage->save();
 
@@ -138,14 +144,7 @@ class ManageController extends Controller
            
         }
 
-        // $balance = new CollectorTransaction([
-                
-        //     'pay_total' => $bagihasil,
-        //     'pay_status' => 3,
-        //     'information' => 3,
-            
-        // ]);
-        // $balance->save();
+      
         Alert::info('Berhasil', 'Bagi Hasil Berhasil');
         return back();
     }

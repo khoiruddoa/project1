@@ -18,7 +18,7 @@ return new class extends Migration
             $table->float('pay_total',15,3)->nullable();
             $table->integer('pay_status');
             $table->integer('buy')->nullable();
-            $table->float('profit',15,3)->nullable();
+            $table->float('profit',10, 3)->nullable();
             $table->float('information',10,3)->nullable();
             $table->timestamps();
         });

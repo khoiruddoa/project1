@@ -144,3 +144,6 @@ Route::get('/dashboard/pengurus/delete/{id}', [ManageController::class, 'delete'
 Route::get('/dashboard/report/transaksi', [ReportController::class, 'transaksi'])->name('print_transaction');
 Route::get('/dashboard/report/konversi', [ReportController::class, 'konversi'])->name('print_convertion');
 Route::get('/dashboard/report/Pengeluaran', [ReportController::class, 'pengeluaran'])->name('print_expend');
+Route::get('/dashboard/report/emas', [ReportController::class, 'emas'])->name('print_gold');
+Route::get('/dashboard/report/pengurus', [ReportController::class, 'pengurus'])->name('print_manage');
+Route::get('/dashboard/report/keuntungan', [ReportController::class, 'keuntungan'])->name('print_profit');

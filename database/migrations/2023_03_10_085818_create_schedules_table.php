@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id'); //menyambungkan atau relasi dari post ke user
+            $table->foreignId('user_id');
             $table->date('date');
             $table->timestamps();
         });
