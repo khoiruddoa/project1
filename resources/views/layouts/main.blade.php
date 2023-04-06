@@ -8,7 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap" rel="stylesheet">
   
   
-  <link href="{{ asset('build/assets/app-2752224f.css') }}" rel="stylesheet">
+  {{-- <link href="{{ asset('build/assets/app-2752224f.css') }}" rel="stylesheet"> --}}
+  <link href="./build/assets/app-2752224f.css" rel="stylesheet">
+  
 </head>
 <body>
     @include('partials.navbar')
