@@ -18,12 +18,14 @@
             <h2 class="text-center text-2xl font-bold mb-4">LAPORAN BAGI HASIL PENGURUS</h2>
             <table class="mb-4">
 
+              
                 <tr>
-                    <td class="font-bold">Per Tanggal</td>
+                    <td class="font-bold">Periode</td>
                     <td>:</td>
-                    <td></td>
+                    <td>{{ date('d-m-Y', strtotime($start)) }}</td>
+                    <td>s/d</td>
+                    <td>{{ date('d-m-Y', strtotime($end)) }}</td>
                 </tr>
-                
 
             </table>
             <table class="table-auto mb-4 w-full">
@@ -57,6 +59,8 @@
                     @endforeach
                 </tbody>
             </table>
+            <h2 class="text-left text-lg font-bold mb-4">Print By : {{ auth()->user()->name }}</h2>
+       
         </div>
     </div>
     <script type="text/javascript">

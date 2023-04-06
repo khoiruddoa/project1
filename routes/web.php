@@ -48,7 +48,9 @@ Route::get('/dashboard/report', function () {
 
 Route::get('/dashboard/dashboard', [DashboardController::class, 'admindashboard']);
 
-
+Route::get('/report/review', function () {
+    return view('reportreview');
+})->name('reportreview');
 Route::get('/transaction/review', [OwnerReviewController::class, 'index'])->name('transaction_review');
 Route::post('/transaction/review', [OwnerReviewController::class, 'store'])->name('transaction_review_store');
 Route::get('/convertion/review', [OwnerReviewController::class, 'convert'])->name('convertion_review');
@@ -58,8 +60,6 @@ Route::post('/convertion/review', [OwnerReviewController::class, 'convertion'])-
 Route::get('/adjustment/review', [OwnerReviewController::class, 'adjust'])->name('adjust_review');
 Route::post('/adjustment/review', [OwnerReviewController::class, 'adjustment'])->name('adjustment_review_store');
 Route::get('/dashboard/review', [OwnerReviewController::class, 'admindashboard'])->name('dashboard_review');
-
-
 
 
 Route::get('/transaction', [UserTransactionController::class, 'index'])->name('transaction');

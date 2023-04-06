@@ -72,12 +72,13 @@
                     <tr>
 
                         <td class=""></td>
-                        <td class=""></td>
-
-                        <td class=""></td>
+                        
 
                         <th class="border px-4 py-2">Total</th>
-                        <td class="border px-4 py-2"> @currency($convertion->sum('profit'))
+                        <td class="border px-4 py-2"> @currency($convertions->sum('pay_total'))
+                        </td><td class="border px-4 py-2"> @currency($convertions->sum('buy'))
+                        </td>
+                        <td class="border px-4 py-2"> @currency($convertions->sum('profit'))
                         </td>
                     </tr>
 

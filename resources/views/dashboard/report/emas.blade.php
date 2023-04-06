@@ -19,9 +19,9 @@
             <table class="mb-4">
 
                 <tr>
-                    <td class="font-bold">Per Tanggal</td>
+                    <td class="font-bold">Tanggal</td>
                     <td>:</td>
-                    <td></td>
+                    <td>{{ \Carbon\Carbon::now()->format('d-m-Y') }}</td>
                 </tr>
                 
 
@@ -41,7 +41,6 @@
                                 
                                 {{$user->name}}
                              </td>
-
                             <td class="border px-4 py-2">
                                 
                                {{$user->convertions->sum('information')}} Gram
@@ -49,7 +48,6 @@
 
                             </td>
                            
-                                
 
                         </tr>
                     @endforeach
@@ -57,6 +55,7 @@
 
                 </tbody>
             </table>
+            <h2 class="text-left text-lg font-bold mb-4">Print By : {{ auth()->user()->name }}</h2>
         </div>
     </div>
     <script type="text/javascript">
