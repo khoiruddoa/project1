@@ -9,7 +9,8 @@
   
   
   {{-- <link href="{{ asset('build/assets/app-2752224f.css') }}" rel="stylesheet"> --}}
-  <link href="build/assets/app-2752224f.css" rel="stylesheet">
+  {{-- <link href="build/assets/app-2752224f.css" rel="stylesheet"> --}}
+  <script src="https://cdn.tailwindcss.com"></script>
   
 </head>
 <body>
