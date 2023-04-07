@@ -11,7 +11,7 @@
             </div>
 
             <div class="mt-4">
-                <img src="./img/image.png" alt="" class="h-[300px]">
+                <img src="/public/img/image.png" alt="" class="h-[300px]">
             </div>
             <div>
                 @if(auth()->user())

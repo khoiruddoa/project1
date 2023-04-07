@@ -20,7 +20,7 @@
                         @endif
                     </div>
                     <div>
-                        <img class="w-16 h-16 rounded-full" src="{{ asset('img/dumy.png')}}" alt="user photo">
+                        <img class="w-16 h-16 rounded-full" src="{{ asset('/public/img/dumy.png')}}" alt="user photo">
                         <p class="mb-3 font-extrabold text-center text-gray-700 lg:text-xl text-md  font-mono ">
                             {{ $user->name }}</p>
                     </div>
@@ -30,17 +30,17 @@
 
                         <a href="{{route('konversi')}}"
                             class="flex flex-col justify-center items-center hover:shadow-2xl hover:bg-blue-600 border-[2px] xl:px-[65px] xl:py-[44px] lg:px-[45px] lg:py-[24px] px-[20px] py-[10px] bg-white rounded-[35px] shadow-lg">
-                            <div><img src="{{ asset('img/gold.png')}}" alt="" class="w-10 h-10"></div>
+                            <div><img src="{{ asset('/public/img/gold.png')}}" alt="" class="w-10 h-10"></div>
                             <div>Konversi</div>
                         </a>
                         <a href="{{route('transaction')}}"
                             class="flex flex-col justify-center items-center hover:shadow-2xl hover:bg-blue-600 border-[2px] xl:px-[65px] xl:py-[44px] lg:px-[45px] lg:py-[24px] px-[20px] py-[10px] bg-white rounded-[35px] shadow-lg">
-                            <div><img src="{{ asset('img/garbage.png')}}" alt="" class="w-10 h-10"></div>
+                            <div><img src="{{ asset('/public/img/garbage.png')}}" alt="" class="w-10 h-10"></div>
                             <div>Transaksi</div>
                         </a>
                         <a href="{{route('dashboard')}}"
                             class="flex flex-col justify-center items-center hover:shadow-2xl hover:bg-blue-600 border-[2px] xl:px-[65px] xl:py-[44px] lg:px-[45px] lg:py-[24px] px-[30px] py-[10px] bg-white rounded-[35px] shadow-lg">
-                            <div><img src="{{ asset('img/schedule.png')}}" alt="" class="w-10 h-10"></div>
+                            <div><img src="{{ asset('public/img/schedule.png')}}" alt="" class="w-10 h-10"></div>
                             <div> Jadwal</div>
                         </a>
 
