@@ -8,10 +8,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap" rel="stylesheet">
   
   
-  <link href="{{ asset('public/resources/css/app.css') }}" rel="stylesheet">
+  {{-- @vite('resources/css/app.css')
+   --}}
 
- 
-  
+   <link rel="stylesheet" href="resources/css/app.css">
   
   
 </head>
