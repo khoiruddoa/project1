@@ -8,9 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap" rel="stylesheet">
   
   
-  {{-- <link href="{{ asset('build/assets/app-2752224f.css') }}" rel="stylesheet"> --}}
+  <link href="{{ asset('public/resources/css/app.css') }}" rel="stylesheet">
 
-  <link rel="stylesheet" href="public/build/assets/app-2752224f.css">
+ 
   
   
   
