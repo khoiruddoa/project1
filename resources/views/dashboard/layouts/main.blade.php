@@ -8,7 +8,7 @@
     <meta name="description" content="">
 
     <!-- Tailwind -->
-    @vite('resources/css/app.css')
+    <script src="https://cdn.tailwindcss.com"></script>
   
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css" rel="stylesheet" />
     <style>

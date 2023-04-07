@@ -5,14 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap" rel="stylesheet">
-  
-  
-  {{-- @vite('resources/css/app.css')
-   --}}
-
-   <link rel="stylesheet" href="./resources/css/app.css">
-  
+  <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu+Mono&display=swap">
+    <!-- Konfigurasi font di Tailwind CSS -->
+    <style>
+        @import url('https://rsms.me/inter/inter.css'); /* Opsi lain untuk mengimpor font Inter */
+        @import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        code {
+            font-family: 'Ubuntu Mono', monospace;
+        }
+    </style>
+ 
   
 </head>
 <body>
