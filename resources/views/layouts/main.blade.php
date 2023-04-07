@@ -10,7 +10,7 @@
   
   {{-- <link href="{{ asset('build/assets/app-2752224f.css') }}" rel="stylesheet"> --}}
 
-  <link rel="stylesheet" href="/public/build/assets/app-2752224f.css">
+  <link rel="stylesheet" href="./public/build/assets/app-2752224f.css">
   
   
   
