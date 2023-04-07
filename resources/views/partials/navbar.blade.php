@@ -2,7 +2,7 @@
 <nav class="font-mono fixed w-full bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
   <div class="container flex flex-wrap items-center justify-between mx-auto">
   <a href="/" class="flex items-center">
-      <img src="{{ asset('img/logo.png')}}" class="h-6 mr-3 sm:h-16" alt="bank sampah Logo" />
+      <img src="{{ asset('public/img/logo.png')}}" class="h-6 mr-3 sm:h-16" alt="bank sampah Logo" />
   </a>
  
   <div class="flex items-center md:order-2">
