@@ -5,7 +5,7 @@
         <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
             <button @click="isOpen = !isOpen"
                 class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
-                <img src="{{asset(auth()->user()->photo )}}">
+                <img src="{{ asset(auth()->user()->photo) }}">
             </button>
             <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-0 cursor-default"></button>
             <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
@@ -34,51 +34,53 @@
                                 <span class="sr-only">Close modal</span>
                             </button>
                             <div class="px-6 py-6 lg:px-8">
-    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Ganti Photo</h3>
+                                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Ganti Photo</h3>
 
-    <div class="flex items-center justify-center w-full h-full flex">
-       
-        <div x-data="photoUploader()" class="flex flex-col gap-2">
-            
-            <div>
-            <form action="{{route('uploadPhoto')}}" method="post" enctype="multipart/form-data">
-                @csrf
-              <input type="file" id="photo" name="photo" @change="previewPhoto">
-              <div x-show="photoPreview" class="my-2">
-                <img :src="photoPreview" alt="Photo Preview" class="my-2">
-                <button type="submit" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Upload</button>
+                                <div class="flex items-center justify-center w-full h-full flex">
 
-              </div>
-             
-            </form>
-        </div>
-            
-          </div>
-          
-      
-    </div>
+                                    <div x-data="photoUploader()" class="flex flex-col gap-2">
 
-    <script>
-        function photoUploader() {
-  return {
-    photoPreview: null,
+                                        <div>
+                                            <form action="{{ route('uploadPhoto') }}" method="post"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="file" id="photo" name="photo"
+                                                    @change="previewPhoto">
+                                                <div x-show="photoPreview" class="my-2">
+                                                    <img :src="photoPreview" alt="Photo Preview" class="my-2">
+                                                    <button type="submit"
+                                                        class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Upload</button>
 
-    previewPhoto(event) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
+                                                </div>
 
-      reader.readAsDataURL(file);
+                                            </form>
+                                        </div>
 
-      reader.onload = () => {
-        this.photoPreview = reader.result;
-      };
-    }
-  };
-}
+                                    </div>
 
-    </script>
 
-</div>
+                                </div>
+
+                                <script>
+                                    function photoUploader() {
+                                        return {
+                                            photoPreview: null,
+
+                                            previewPhoto(event) {
+                                                const file = event.target.files[0];
+                                                const reader = new FileReader();
+
+                                                reader.readAsDataURL(file);
+
+                                                reader.onload = () => {
+                                                    this.photoPreview = reader.result;
+                                                };
+                                            }
+                                        };
+                                    }
+                                </script>
+
+                            </div>
 
                         </div>
                     </div>
@@ -110,47 +112,29 @@
                                 <span class="sr-only">Close modal</span>
                             </button>
                             <div class="px-6 py-6 lg:px-8">
-                                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Sign in to our
-                                    platform</h3>
-                                <form class="space-y-6" action="#">
-                                    <div>
-                                        <label for="email"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
-                                            email</label>
-                                        <input type="email" name="email" id="email"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                            placeholder="name@company.com" required>
-                                    </div>
+                                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Ganti Password</h3>
+                                <form class="space-y-6" action="{{ route('changePassword') }}" method="post">
+                                    @csrf
                                     <div>
                                         <label for="password"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
-                                            password</label>
-                                        <input type="password" name="password" id="password" placeholder="••••••••"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            Password Lama</label>
+                                        <input type="password" name="current_password" id="current_password"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                            required>
+
+                                        <label for="password"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password
+                                            Baru</label>
+                                        <input type="password" name="password" id="password"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                             required>
                                     </div>
-                                    <div class="flex justify-between">
-                                        <div class="flex items-start">
-                                            <div class="flex items-center h-5">
-                                                <input id="remember" type="checkbox" value=""
-                                                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                                                    required>
-                                            </div>
-                                            <label for="remember"
-                                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember
-                                                me</label>
-                                        </div>
-                                        <a href="#"
-                                            class="text-sm text-blue-700 hover:underline dark:text-blue-500">Lost
-                                            Password?</a>
-                                    </div>
+
                                     <button type="submit"
-                                        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login
-                                        to your account</button>
-                                    <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                                        Not registered? <a href="#"
-                                            class="text-blue-700 hover:underline dark:text-blue-500">Create account</a>
-                                    </div>
+                                        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ganti
+                                        Password</button>
+
                                 </form>
                             </div>
                         </div>

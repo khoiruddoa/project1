@@ -43,6 +43,11 @@ Route::get('/menu', function () {
     return view('menu');
 });
 
+
+Route::get('/profil', function () {
+    return view('profil');
+})->name('profil');
+
 Route::get('/dashboard/report', function () {
     return view('dashboard.report');
 });
@@ -152,3 +157,4 @@ Route::get('/dashboard/report/keuntungan', [ReportController::class, 'keuntungan
 
 
 Route::post('/upload/photo', [ChangePhotoPasswordController::class, 'changePhoto'])->name('uploadPhoto');
+Route::post('/change/password', [ChangePhotoPasswordController::class, 'changePassword'])->name('changePassword');

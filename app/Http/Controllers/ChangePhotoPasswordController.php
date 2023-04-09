@@ -55,7 +55,7 @@ class ChangePhotoPasswordController extends Controller
 
         $validator = Validator::make($request->all(), [
             'current_password' => 'required',
-            'password' => 'required|confirmed|min:5',
+            'password' => 'required|min:5',
         ]);
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
@@ -66,7 +66,7 @@ class ChangePhotoPasswordController extends Controller
         $user = Auth::user();
 
         if (!Hash::check($request->current_password, $user->password)) {
-            Alert::warning('Gagal', 'Password dan Konfirmasi Tidak sama');
+            Alert::warning('Gagal', 'Password Salah');
             return back();
         }
 
