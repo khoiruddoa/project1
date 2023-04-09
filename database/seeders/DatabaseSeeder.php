@@ -72,7 +72,16 @@ class DatabaseSeeder extends Seeder
             'role' => '1'
 
         ]);
-
+        for ($i = 0; $i < 100; $i++) {
+            User::create([
+                'name' => 'doang'. $i,
+                'email' => 'doang' . $i . '@gmail.com',
+                'phone_number' => '0022' . $i,
+                'password' => bcrypt('password'),
+                'address' => 'tangerang',
+                'role' => '1'
+            ]);
+        }
         Category::create([
             'category_name' => '1. Kardus',
             'uom' => 'kg'

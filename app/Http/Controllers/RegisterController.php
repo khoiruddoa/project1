@@ -65,6 +65,7 @@ class RegisterController extends Controller
         $user->email = $validatedData['email'];
         $user->phone_number = $validatedData['phone_number'];
         $user->address = $validatedData['address'];
+        $user->photo = '/storage/photos/dumy.png';
 
         if (!empty($validatedData['password'])) {
             $user->password = Hash::make($validatedData['password']);

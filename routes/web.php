@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdjustmentController;
 use App\Http\Controllers\AdminConvertionController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChangePhotoPasswordController;
 use App\Http\Controllers\CollectorTransactionController;
 use App\Http\Controllers\ConvertionController;
 use App\Http\Controllers\DashboardController;
@@ -147,3 +148,7 @@ Route::get('/dashboard/report/Pengeluaran', [ReportController::class, 'pengeluar
 Route::get('/dashboard/report/emas', [ReportController::class, 'emas'])->name('print_gold');
 Route::get('/dashboard/report/pengurus', [ReportController::class, 'pengurus'])->name('print_manage');
 Route::get('/dashboard/report/keuntungan', [ReportController::class, 'keuntungan'])->name('print_profit');
+
+
+
+Route::post('/upload/photo', [ChangePhotoPasswordController::class, 'changePhoto'])->name('uploadPhoto');

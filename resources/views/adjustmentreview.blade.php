@@ -10,7 +10,7 @@
             <div
                 class="w-full mb-0 p-4 text-left bg-white border border-gray-200 rounded-2xl shadow sm:p-8 dark:bg-gray-800 flex flex-col gap-4">
                 <div class="flex flex-col gap-10 items-center">
-                    <div> <img src="public/img/kitchen-scales.png" alt="" class="w-20 h-20"></div>
+                    <div> <img src="./public/img/kitchen-scales.png" alt="" class="w-20 h-20"></div>
                     <div>
                         <div class="">
                             <h5 class="mb-2 text-1xl font-bold font-mono text-gray-900 dark:text-white">adjustment Nasabah</h5>

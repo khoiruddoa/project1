@@ -32,11 +32,12 @@
                             </svg>
                             <span class="sr-only">Close</span>
                         </button>
-                        <div class="px-6 py-6 lg:px-8">
+
+                        <div x-data="{ searchText: '' }" class="px-6 py-6 lg:px-8">
                             <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Cari Data Nasabah</h3>
                             <div>
 
-                                <form class="flex items-center">
+                                <div class="flex items-center">
                                     <label for="simple-search" class="sr-only">Search</label>
                                     <div class="relative w-full">
                                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -47,27 +48,19 @@
                                                     clip-rule="evenodd"></path>
                                             </svg>
                                         </div>
-                                        <input type="text" id="simple-search"
+                                        <input type="text" id="simple-search" x-model="searchText"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Search" required>
                                     </div>
-                                    <button type="submit"
-                                        class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                        </svg>
-                                        <span class="sr-only">Search</span>
-                                    </button>
-                                </form>
+
+                                </div>
 
                             </div>
 
                             <div class="w-full mt-6">
-                                <div class="overflow-x-auto">
-                                    <table class="w-full bg-white">
-                                        <thead class="bg-gray-800 text-white w-full">
+                                <div class="overflow-auto max-h-[300px]">
+                                    <table class="w-full  bg-white">
+                                        <thead class="bg-sidebar text-white w-full">
                                             <tr>
                                                 <th
                                                     class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
@@ -80,39 +73,43 @@
                                         </thead>
                                         <tbody class="text-gray-700">
                                             @foreach ($users as $user)
-                                                <tr>
-                                                    <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $user->name }}</td>
-                                                    <td class="w-1/3 sm:w-auto text-left py-3 px-4">
-                                                        {{ $user->phone_number }}</td>
-                                                    <td class="sm:text-left py-3 px-4">
-                                                        <div>
-                                                            <form action="{{ route('transaksi_store') }}" method="POST">
-                                                                @csrf
-                                                                <input type="hidden" name="user_id"
-                                                                    value="{{ $user->id }}">
-                                                                <input type="hidden" name="administrator"
-                                                                    value="{{ auth()->user()->name }}">
-                                                                <input type="hidden" name="pay_status" value="0">
+                                                <template
+                                                    x-if="searchText === '' || '{{ strtolower($user->name) }}'.includes(searchText.toLowerCase()) || '{{ $user->phone_number }}'.includes(searchText)">
 
-                                                                <button type="submit"
-                                                                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buat
-                                                                    Transaksi</button>
-                                                                <div
-                                                                    class="text-sm font-medium text-gray-500 dark:text-gray-300">
+                                                    <tr>
+                                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">
+                                                            {{ $user->name }}</td>
+                                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">
+                                                            {{ $user->phone_number }}</td>
+                                                        <td class="sm:text-left py-3 px-4">
+                                                            <div>
+                                                                <form action="{{ route('transaksi_store') }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <input type="hidden" name="user_id"
+                                                                        value="{{ $user->id }}">
+                                                                    <input type="hidden" name="administrator"
+                                                                        value="{{ auth()->user()->name }}">
+                                                                    <input type="hidden" name="pay_status" value="0">
 
-                                                                </div>
-                                                            </form>
+                                                                    <button type="submit"
+                                                                        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buat
+                                                                        Transaksi</button>
+                                                                    <div
+                                                                        class="text-sm font-medium text-gray-500 dark:text-gray-300">
+
+                                                                    </div>
+                                                                </form>
 
 
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </template>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
@@ -147,62 +144,10 @@
                 aria-labelledby="about-tab">
                 <div class="w-full mt-6">
                     <div class="overflow-x-auto">
-                    
-                                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    
-                                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                            <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
-                                                <tr>
-                                                    <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                                                        Nama Nasabah
-                                                    </th>
-                                                    <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                                                    
-                                                    </th>
-                    
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($transactions as $transaction)
-                                                    <tr class="border-b border-gray-200 dark:border-gray-700">
-                                                        
-                                                        <th scope="row"
-                                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                                            {{ $transaction->user->name }}
-                                                        </th>
-                                                        <th scope="row"
-                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800"><div class="flex flex-row gap-1 items-center justify-center">
-                                                        <div><a href="{{ route('transaksi_detail', ['id' => $transaction->id]) }}"
-                                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a></div>
-                                                            <div>
-                                                   <form action="{{route('finish',['id' => $transaction->id])}}" method="post">
-                                                    @csrf
-                                                    <input type="hidden" name="pay_status" value="1">
-                                                            <button type="submit" onclick="return confirm('Apakah Transaksi sudah benar? Data Tidak bisa diubah setelah anda klik selesai')" class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900">Selesai</button>
-                                                        </form></div></div>
-                                                        </th>
-                                                    </tr>
-                                                    @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                    
-                                </div>
-                    
-                            </div>
-                    </div>
-    </div>
-    <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="services" role="tabpanel"
-        aria-labelledby="services-tab">
-        
-                             
-        <div class="w-full mt-6">
-            <div class="overflow-x-auto">
-            
+
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            
-                            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                           
+                            <div class="relative overflow-auto max-h-[500px] shadow-md sm:rounded-lg">
                                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                     <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
                                         <tr>
@@ -210,48 +155,112 @@
                                                 Nama Nasabah
                                             </th>
                                             <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                                            
+
                                             </th>
-            
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($transactions as $transaction)
+                                            <tr class="border-b border-gray-200 dark:border-gray-700">
+
+                                                <th scope="row"
+                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                    {{ $transaction->user->name }}
+                                                </th>
+                                                <th scope="row"
+                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                    <div class="flex flex-row gap-1 items-center justify-center">
+                                                        <div><a href="{{ route('transaksi_detail', ['id' => $transaction->id]) }}"
+                                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+                                                        </div>
+                                                        <div>
+                                                            <form
+                                                                action="{{ route('finish', ['id' => $transaction->id]) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="pay_status" value="1">
+                                                                <button type="submit"
+                                                                    onclick="return confirm('Apakah Transaksi sudah benar? Data Tidak bisa diubah setelah anda klik selesai')"
+                                                                    class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900">Selesai</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="services" role="tabpanel"
+                aria-labelledby="services-tab">
+
+
+                <div class="w-full mt-6">
+                    <div class="overflow-x-auto">
+
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+                            <div class="relative overflow-auto max-h-[500px] shadow-md sm:rounded-lg">
+                                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                    <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                                Nama Nasabah
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+
+                                            </th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($finish as $transaction)
                                             <tr class="border-b border-gray-200 dark:border-gray-700">
-                                                
+
                                                 <th scope="row"
                                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
                                                     {{ $transaction->user->name }}
                                                 </th>
                                                 <th scope="row"
-                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                                <span
-                        class="inline-flex items-center bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                        <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
-                        Menunggu Persetujuan
-                    </span>
-                                           
-                                                   
+                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                    <span
+                                                        class="inline-flex items-center bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                                                        <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+                                                        Menunggu Persetujuan
+                                                    </span>
+                                                    <div class="flex flex-row gap-1 items-center justify-center">
+                                                        <div><a href="{{ route('transaksi_detail', ['id' => $transaction->id]) }}"
+                                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+                                                        </div>
+
+
                                                 </th>
                                             </tr>
-                                            @endforeach
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
-            
+
                         </div>
-            
+
                     </div>
+                </div>
             </div>
-    </div>
-    <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="statistics" role="tabpanel"
-        aria-labelledby="statistics-tab">
-        <div class="w-full mt-6">
-            <div class="overflow-x-auto">
-            
+            <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="statistics" role="tabpanel"
+                aria-labelledby="statistics-tab">
+                <div class="w-full mt-6">
+                    <div class="overflow-x-auto">
+
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            
-                            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+                            <div class="relative overflow-auto max-h-[500px] shadow-md sm:rounded-lg">
                                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                     <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
                                         <tr>
@@ -259,37 +268,41 @@
                                                 Nama Nasabah
                                             </th>
                                             <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                                            
+
                                             </th>
-            
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($approved as $transaction)
                                             <tr class="border-b border-gray-200 dark:border-gray-700">
-                                                
+
                                                 <th scope="row"
                                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
                                                     {{ $transaction->user->name }}
                                                 </th>
                                                 <th scope="row"
-                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                                <span
-                                                class="inline-flex items-center bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                                                <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
-                                                Selesai
-                                            </span>
+                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                    <span
+                                                        class="inline-flex items-center bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                                                        <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+                                                        Selesai
+                                                    </span>
+                                                    <div class="flex flex-row gap-1 items-center justify-center">
+                                                        <div><a href="{{ route('transaksi_detail', ['id' => $transaction->id]) }}"
+                                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+                                                        </div>
                                                 </th>
                                             </tr>
-                                            @endforeach
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
-            
-                        </div>
-            
-                    </div>
-            </div>
 
-    </div>
-@endsection
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        @endsection

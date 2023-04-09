@@ -7,6 +7,7 @@
 
         </div>
         <div class="flex md:flex-row flex-col gap-4">
+            @if($transaction->pay_status == 0)
             <div>
                 <a href="{{ route('transaksi_delete', ['id' => $transaction->id]) }}"
                     onclick="return confirm('Apa Anda Yakin Ingin Menghapus data ini?')"
@@ -50,7 +51,7 @@
                                             <select id="category" name="category_id"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->category_name }}
+                                                    <option value="{{ $category->id }}">{{ $category->category_name }} ({{ $category->uom }})
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -178,8 +179,6 @@
 
             </div>
 
-
-
             <div>
                 <form action="{{ route('finish', ['id' => $transaction->id]) }}" method="post">
                     @csrf
@@ -189,6 +188,15 @@
                         class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900">Selesai</button>
                 </form>
             </div>
+            @endif
+
+            @if($transaction->pay_status == 1 || $transaction->pay_status == 2 )
+            <div>
+                <a href="#"
+                   
+                    class="block w-40 md:w-full focus:outline-none text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-orange-600 dark:ho ver:bg-orange-700 dark:focus:ring-orange-900 mb-2">Print</a>
+            </div>
+            @endif
         </div>
 
     </div>
@@ -207,7 +215,7 @@
 
 
         <div class="w-full mt-6">
-            <div class="overflow-x-auto">
+            <div class="overflow-auto max-h-[300px]">
                 <table class="w-full bg-white ">
                     <thead class="bg-sidebar text-white w-full">
                         <tr>
