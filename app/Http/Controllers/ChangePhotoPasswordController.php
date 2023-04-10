@@ -34,7 +34,7 @@ class ChangePhotoPasswordController extends Controller
         $hashedName = $file->hashName(); // mendapatkan nama file yang di-hash
         // menyimpan file dengan nama yang di-hash
 
-        $file->move('photos', $hashedName);
+        $file->move('public/photos', $hashedName);
         
 
         $path = 'photos/' . $hashedName;
