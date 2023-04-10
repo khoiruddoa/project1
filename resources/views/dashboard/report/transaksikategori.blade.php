@@ -25,7 +25,18 @@
                 <tr>
                     <td class="font-bold">Saldo Awal : @currency($saldo_awal)</td>
                 </tr>
-                
+                @if($kode > 0 )
+                <tr>
+                    <td class="font-bold">Kategori : @if($kode == 1)
+                        Umum
+                        @elseif($kode == 2)
+                        TK
+                        @else
+                        Bimbel
+                        @endif
+                    </td>
+                </tr>
+                @endif
 
 
             </table>
@@ -34,8 +45,8 @@
                     <tr>
                         <th class="px-4 py-2">Tgl</th>
                         <th class="px-4 py-2">Nama Transaksi</th>
-                        <th class="px-4 py-2">Debet</th>
-                        <th class="px-4 py-2">Kredit</th>
+                        <th class="px-4 py-2">Harga Beli</th>
+                        <th class="px-4 py-2">Harga Jual</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,37 +55,14 @@
                             <td class="border px-4 py-2">{{ $transaction->updated_at->format('d-m-Y') }}</td>
 
                             <td class="border px-4 py-2">
-                                @if ($transaction->origin == 'keluar')
-                                    @if ($transaction->information == 1)
-                                        Penyelarasan Saldo
-                                    @elseif($transaction->information == 2)
-                                        Jasa Angkut Sampah
-                                    @else
-                                        Setor Sampah
-                                    @endif
-                                @elseif ($transaction->origin == 'masuk')
-                                @if ($transaction->information == 1)
-                                        Penyelarasan Saldo Nasabah
-                                    @else
-                                    Jual Ke Pengepul
-                                    @endif
-                                @else
-                                    Bagi Keuntungan
-                                @endif
+                               Penimbangan Sampah dari {{$transaction->user->name}}
                             </td>
                             <td class="border px-4 py-2">
-                                @if ($transaction->origin == 'masuk')
-                                    @currency($transaction->pay_total)
-                                @endif
-
+                              @currency($transaction->pay_total)
                             </td>
                             <td class="border px-4 py-2">
-                                @if ($transaction->origin == 'keluar')
-                                    @currency($transaction->pay_total)
-                                @endif
-                                @if ($transaction->origin == 'profit')
-                                    @currency($transaction->pay_total)
-                                @endif
+                                @currency($transaction->sell_total)
+                                
                             </td>
 
                         </tr>
@@ -85,15 +73,7 @@
                         <td class=""></td>
 
                         <th class="border px-4 py-2">Pendapatan :</th>
-                        <td class="border px-4 py-2">@currency($pendapatan)</td>
-                    </tr>
-                    <tr>
-
-                        <td class=""></td>
-                        <td class=""></td>
-
-                        <th class="border px-4 py-2">Total Saldo :</th>
-                        <td class="border px-4 py-2">@currency($total_saldo)</td>
+                        <td class="border px-4 py-2">@currency($transaction->sell_total - $transaction->pay_total)</td>
                     </tr>
 
 

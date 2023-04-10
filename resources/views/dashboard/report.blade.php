@@ -11,7 +11,7 @@
 
                 <div class="text-center bg-blue-600 hover:bg-blue-800 rounded-xl p-4">
                     <div>
-                        <p class="text-sm text-gray-100 mb-2">Laporan Transaksi</p>
+                        <p class="text-sm text-gray-100 mb-2">Laporan Transaksi Keseluruhan</p>
                     </div>
                     <ul class="text-sm text-white dark:text-gray-300">
 
@@ -28,12 +28,59 @@
 
                                 </div>
                                
+                                
+                                <button type="submit"
+                                class="w-full mt-4 flex items-center px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white">
+                                <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-sm font-medium">Print</span>
+                            </button>
+                            </form>
+
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="flex items-center px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white">
+                                <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd"
+                                        d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-5L9 4H4zm7 5a1 1 0 00-2 0v1.586l-.293-.293a.999.999 0 10-1.414 1.414l2 2a.999.999 0 001.414 0l2-2a.999.999 0 10-1.414-1.414l-.293.293V9z"
+                                        fill-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-sm font-medium">Save</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="text-center bg-blue-600 hover:bg-blue-800 rounded-xl p-4">
+                    <div>
+                        <p class="text-sm text-gray-100 mb-2">Laporan Transaksi PerKategori</p>
+                    </div>
+                    <ul class="text-sm text-white dark:text-gray-300">
+
+                    <li>
+
+                            <form action="{{ route('print_transaction_category') }}" target="_blank" method="GET" class="mb-3 mt-3">
+                                <div class="flex space-x-2">
+                                    <input type="date" required
+                                        class="bg-blue-500 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-500"
+                                        name="start_date">
+                                    <input type="date" required
+                                        class="bg-blue-500 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-500"
+                                        name="end_date">
+
+                                </div>
+                               
                                 <div>
-                                    <label for="type"
-                                        class="block my-2 text-sm font-medium text-white">Kategori</label>
+                                    
                                     <select id="type" name="type"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option value="null">Semua</option>
+                                        class="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option value="1">UMUM</option>
                                         <option value="2">TK</option>
                                         <option value="3">BIMBEL</option>
@@ -67,6 +114,7 @@
 
                     </ul>
                 </div>
+
                 <div class="text-center bg-blue-600 hover:bg-blue-800 rounded-xl p-4">
                     <div>
                         <p class="text-sm text-gray-100 mb-2">Laporan Konversi</p>

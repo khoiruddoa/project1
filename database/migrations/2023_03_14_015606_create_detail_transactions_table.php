@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('transaction_id');
             $table->foreignId('category_id'); 
             $table->integer('price');
+            $table->integer('sell');
             $table->float('qty', 10, 3);
         });
     }

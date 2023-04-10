@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('information')->nullable();
             $table->integer('source')->nullable();
             $table->integer('relate')->nullable();
+            $table->float('sell_total', 10 , 3)->nullable();
+
             $table->timestamps();
         });
     }

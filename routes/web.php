@@ -52,6 +52,7 @@ Route::get('/dashboard/report', function () {
     return view('dashboard.report');
 });
 Route::get('/dashboard/report/transaksi', [ReportController::class, 'transaksi'])->name('print_transaction');
+Route::get('/dashboard/report/transaksi/kategori', [ReportController::class, 'transaksi_kategori'])->name('print_transaction_category');
 Route::get('/dashboard/report/konversi', [ReportController::class, 'konversi'])->name('print_convertion');
 Route::get('/dashboard/report/Pengeluaran', [ReportController::class, 'pengeluaran'])->name('print_expend');
 Route::get('/dashboard/report/emas', [ReportController::class, 'emas'])->name('print_gold');

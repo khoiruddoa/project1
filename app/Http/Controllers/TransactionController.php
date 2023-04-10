@@ -63,13 +63,15 @@ class TransactionController extends Controller
     public function storedetail(Request $request)
     {
         $request->merge([
-            'price' => str_replace('.', '', $request->price)
+            'price' => str_replace('.', '', $request->price),
+            'sell' => str_replace('.', '', $request->sell)
         ]);
 
         $validatedData = $request->validate([
             'transaction_id' => 'required',
             'category_id' => 'required',
             'price' => 'required',
+            'sell' => 'required',
             'qty' => 'required'
         ]);
 
@@ -77,12 +79,15 @@ class TransactionController extends Controller
         $v = $validatedData['transaction_id'];
         $transaction = Transaction::find($v);
         $debet = $validatedData['price'] * $validatedData['qty'];
+        $kredit = $validatedData['sell'] * $validatedData['qty'];
+
 
         if ($transaction->pay_status > 0) {
             Alert::warning('Gagal', 'Tidak bisa transaksi karena transaksi sudah selesai');
             return back();
         }
-        $payloadtransaction = ['pay_total' => $transaction['pay_total'] + $debet];
+        $payloadtransaction = ['pay_total' => $transaction['pay_total'] + $debet,
+        'sell_total' => $transaction['sell_total'] + $kredit];
         $transaction->fill($payloadtransaction);
         $transaction->save();
         DetailTransaction::create($validatedData);

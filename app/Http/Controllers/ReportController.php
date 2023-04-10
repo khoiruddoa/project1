@@ -60,7 +60,7 @@ class ReportController extends Controller
             return back();
         }
 
-        $kode = $request->type;
+        
 
         $transaksiNasabah = Transaction::where('pay_status', 2)->get();
 
@@ -68,7 +68,7 @@ class ReportController extends Controller
         $pengepul = CollectorTransaction::where('pay_status', 2)->get();
         $income = Income::all();
 
-        if ($request->type == null) {
+       
             $pengepul = CollectorTransaction::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw("'masuk' as origin"))
                 ->where('pay_status', 3)
                 ->whereBetween('updated_at', [$start_date, $end_date])
@@ -97,47 +97,47 @@ class ReportController extends Controller
 
             $total_saldo = $transaksiPengepul->sum('pay_total') - $transaksiNasabah->sum('pay_total') - $income->sum('pay_total');
             $saldo_awal = $total_saldo - $pendapatan;
-        } else {
-            $pengepul = CollectorTransaction::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw("'masuk' as origin"))
-                ->where('pay_status', 3)->where('type', $kode)
-                ->whereBetween('updated_at', [$start_date, $end_date])
-                ->get();
-
-            $nasabah = Transaction::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw(" 'keluar' as origin"))
-                ->where('pay_status', 2)->where('type', $kode)
-                ->whereBetween('updated_at', [$start_date, $end_date])
-                ->get();
-
-            $profit = Income::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw(" 'profit' as origin"))
-                ->whereBetween('updated_at', [$start_date, $end_date])
-                ->get();
-
-            $transaksi = $pengepul->concat($nasabah)->sortBy('updated_at');
-
-            // Menghitung pendapatan dan total saldo
-            $pendapatan = 0;
-            foreach ($transaksi as $transaction) {
-                if ($transaction->origin == 'masuk') {
-                    $pendapatan += $transaction->pay_total;
-                } else if ($transaction->origin == 'keluar') {
-                    $pendapatan -= $transaction->pay_total;
-                }
-            }
-
-            $total_saldo = 0;
-             $saldo_awal = 0;
-        }
+       
         return view('dashboard.report.transaksi', [
             'transactions' => $transaksi,
             'saldo_awal' => $saldo_awal,
             'pendapatan' => $pendapatan,
             'total_saldo' => $total_saldo,
             'start' => $start_date,
-            'end' => $end_date,
-            'kode' => $kode
+            'end' => $end_date
         ]);
     }
 
+    public function transaksi_kategori(Request $request)
+    {
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+        
+        
+        if ($end_date < $start_date) {
+            Alert::warning('Gagal', 'Tanggal Akhir tidak boleh lebih dulu dari tanggal awal');
+            return back();
+        }
+        $kode = $request->input('type');
+        $transaction = Transaction::where('pay_status', 2)
+        ->whereHas('user', function($query) use ($kode) {
+            $query->where('type', $kode);
+        })
+        ->whereBetween('updated_at', [$start_date, $end_date])
+        ->get();
+    
+    
+
+  
+return view('dashboard.report.transaksikategori', [
+    'transactions' => $transaction,
+    'start' => $start_date,
+    'end' => $end_date,
+    'kode' => $kode
+]);
+
+
+    }
     public function konversi(Request $request)
     {
 
