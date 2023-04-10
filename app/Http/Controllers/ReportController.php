@@ -60,49 +60,81 @@ class ReportController extends Controller
             return back();
         }
 
-        
+        $kode = $request->type;
+
         $transaksiNasabah = Transaction::where('pay_status', 2)->get();
 
         $transaksiPengepul = CollectorTransaction::where('pay_status', 3)->get();
         $pengepul = CollectorTransaction::where('pay_status', 2)->get();
         $income = Income::all();
 
-        if($request->type == null){
-        $pengepul = CollectorTransaction::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw("'masuk' as origin"))
-            ->where('pay_status', 3)
-            ->whereBetween('updated_at', [$start_date, $end_date])
-            ->get();
+        if ($request->type == null) {
+            $pengepul = CollectorTransaction::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw("'masuk' as origin"))
+                ->where('pay_status', 3)
+                ->whereBetween('updated_at', [$start_date, $end_date])
+                ->get();
 
-        $nasabah = Transaction::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw(" 'keluar' as origin"))
-            ->where('pay_status', 2)
-            ->whereBetween('updated_at', [$start_date, $end_date])
-            ->get();
+            $nasabah = Transaction::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw(" 'keluar' as origin"))
+                ->where('pay_status', 2)
+                ->whereBetween('updated_at', [$start_date, $end_date])
+                ->get();
 
-        $profit = Income::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw(" 'profit' as origin"))
-            ->whereBetween('updated_at', [$start_date, $end_date])
-            ->get();
+            $profit = Income::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw(" 'profit' as origin"))
+                ->whereBetween('updated_at', [$start_date, $end_date])
+                ->get();
 
-        $transaksi = $pengepul->concat($nasabah)->concat($profit)->sortBy('updated_at');
+            $transaksi = $pengepul->concat($nasabah)->concat($profit)->sortBy('updated_at');
 
-        // Menghitung pendapatan dan total saldo
-        $pendapatan = 0;
-        foreach ($transaksi as $transaction) {
-            if ($transaction->origin == 'masuk') {
-                $pendapatan += $transaction->pay_total;
-            } else if ($transaction->origin == 'keluar' || $transaction->origin == 'profit') {
-                $pendapatan -= $transaction->pay_total;
+            // Menghitung pendapatan dan total saldo
+            $pendapatan = 0;
+            foreach ($transaksi as $transaction) {
+                if ($transaction->origin == 'masuk') {
+                    $pendapatan += $transaction->pay_total;
+                } else if ($transaction->origin == 'keluar' || $transaction->origin == 'profit') {
+                    $pendapatan -= $transaction->pay_total;
+                }
             }
-        }
 
-        $total_saldo = $transaksiPengepul->sum('pay_total') - $transaksiNasabah->sum('pay_total') - $income->sum('pay_total');
-        $saldo_awal = $total_saldo - $pendapatan;
+            $total_saldo = $transaksiPengepul->sum('pay_total') - $transaksiNasabah->sum('pay_total') - $income->sum('pay_total');
+            $saldo_awal = $total_saldo - $pendapatan;
+        } else {
+            $pengepul = CollectorTransaction::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw("'masuk' as origin"))
+                ->where('pay_status', 3)->where('type', $kode)
+                ->whereBetween('updated_at', [$start_date, $end_date])
+                ->get();
+
+            $nasabah = Transaction::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw(" 'keluar' as origin"))
+                ->where('pay_status', 2)->where('type', $kode)
+                ->whereBetween('updated_at', [$start_date, $end_date])
+                ->get();
+
+            $profit = Income::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw(" 'profit' as origin"))
+                ->whereBetween('updated_at', [$start_date, $end_date])
+                ->get();
+
+            $transaksi = $pengepul->concat($nasabah)->sortBy('updated_at');
+
+            // Menghitung pendapatan dan total saldo
+            $pendapatan = 0;
+            foreach ($transaksi as $transaction) {
+                if ($transaction->origin == 'masuk') {
+                    $pendapatan += $transaction->pay_total;
+                } else if ($transaction->origin == 'keluar') {
+                    $pendapatan -= $transaction->pay_total;
+                }
+            }
+
+            $total_saldo = 0;
+             $saldo_awal = 0;
+        }
         return view('dashboard.report.transaksi', [
             'transactions' => $transaksi,
             'saldo_awal' => $saldo_awal,
             'pendapatan' => $pendapatan,
             'total_saldo' => $total_saldo,
             'start' => $start_date,
-            'end' => $end_date
+            'end' => $end_date,
+            'kode' => $kode
         ]);
     }
 
@@ -136,9 +168,9 @@ class ReportController extends Controller
     {
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
-        
+
         // Mendapatkan saldo awal dari tanggal sebelumnya
-        
+
         // Memastikan end_date tidak lebih kecil dari start_date
         if ($end_date < $start_date) {
             Alert::warning('Gagal', 'Tanggal Akhir tidak boleh lebih dulu dari tanggal awal');
@@ -148,14 +180,14 @@ class ReportController extends Controller
         $ex = Expend::sum('pay_total');
         // Mengambil data dari tabel BankProfit yang tanggal updated_at-nya antara start_date dan end_date
         $profit = BankProfit::select('pay_total', 'information', 'updated_at', DB::raw("'masuk' as origin"))
-                            ->whereBetween('updated_at', [$start_date, $end_date])
-                            ->get();
-        
+            ->whereBetween('updated_at', [$start_date, $end_date])
+            ->get();
+
         // Mengambil data dari tabel Expend yang tanggal updated_at-nya antara start_date dan end_date
         $expend = Expend::select('pay_total', 'information', 'updated_at', DB::raw(" 'keluar' as origin"))
-                            ->whereBetween('updated_at', [$start_date, $end_date])
-                            ->get();
-        
+            ->whereBetween('updated_at', [$start_date, $end_date])
+            ->get();
+
         $expenders = $profit->concat($expend)->sortBy('updated_at');
 
         $sisa_saldo = $bank - $ex;
@@ -165,24 +197,25 @@ class ReportController extends Controller
             if ($expend->origin == 'masuk') {
                 $saldo_sekarang += $expend->pay_total;
             } else if ($expend->origin == 'keluar') {
-                $saldo_sekarang -= $expend->pay_total;}
-           
+                $saldo_sekarang -= $expend->pay_total;
+            }
         }
         $pengeluaran = 0;
         foreach ($expenders as $expend) {
             if ($expend->origin == 'keluar') {
-                $pengeluaran += $expend->pay_total;}
-           
+                $pengeluaran += $expend->pay_total;
+            }
         }
         $saldo_awal = $sisa_saldo - $saldo_sekarang;
-        
-        return view('dashboard.report.pengeluaran', ['expends' => $expenders,
-        'pengeluaran' => $pengeluaran,
-        'saldo_awal' => $saldo_awal,
-        'sisa_saldo' => $sisa_saldo,
+
+        return view('dashboard.report.pengeluaran', [
+            'expends' => $expenders,
+            'pengeluaran' => $pengeluaran,
+            'saldo_awal' => $saldo_awal,
+            'sisa_saldo' => $sisa_saldo,
             'start' => $start_date,
-            'end' => $end_date]);
-        
+            'end' => $end_date
+        ]);
     }
 
     public function emas()
@@ -195,22 +228,24 @@ class ReportController extends Controller
     {
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
-    
+
         // Memastikan end_date tidak lebih kecil dari start_date
         if ($end_date < $start_date) {
             Alert::warning('Gagal', 'Tanggal Akhir tidak boleh lebih dulu dari tanggal awal');
             return back();
         }
-    
+
         // Mengambil data dari tabel Manage yang tanggal updated_at-nya antara start_date dan end_date
         $manages = Manage::orderBy('updated_at', 'asc')
-                            ->whereBetween('updated_at', [$start_date, $end_date])
-                            ->get();
-    
-        return view('dashboard.report.pengurus', ['manages' => $manages, 'start' => $start_date,
-        'end' => $end_date,]);
+            ->whereBetween('updated_at', [$start_date, $end_date])
+            ->get();
+
+        return view('dashboard.report.pengurus', [
+            'manages' => $manages, 'start' => $start_date,
+            'end' => $end_date,
+        ]);
     }
-    
+
 
     public function keuntungan(Request $request)
     {
@@ -228,7 +263,7 @@ class ReportController extends Controller
         $manage = Manage::select('pay_total', 'updated_at', DB::raw("'pengurus' as origin"));
         $bank = BankProfit::select('pay_total', 'updated_at', DB::raw("'bank' as origin"));
         $totalprofit = $income->sum('pay_total') + $gold->sum('pay_total') - $manage->sum('pay_total') - $bank->sum('pay_total');
-        
+
 
         // Filter untuk rentang tanggal tertentu
         if ($request->has('start_date') && $request->has('end_date')) {
@@ -263,15 +298,14 @@ class ReportController extends Controller
             }
         }
 
-$saldo_awal = $totalprofit - $pendapatan;
-            return view('dashboard.report.keuntungan', [
-                'profits' => $profits,
-                'start' => $start_date,
-                'end' => $end_date,
-                'pendapatan' => $pendapatan,
-                'saldo_awal' => $saldo_awal, 
-                'total_profit' => $totalprofit
-            ]);
-        
+        $saldo_awal = $totalprofit - $pendapatan;
+        return view('dashboard.report.keuntungan', [
+            'profits' => $profits,
+            'start' => $start_date,
+            'end' => $end_date,
+            'pendapatan' => $pendapatan,
+            'saldo_awal' => $saldo_awal,
+            'total_profit' => $totalprofit
+        ]);
     }
 }

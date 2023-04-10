@@ -21,7 +21,7 @@
 
                     </div>
                     <div class="flex flex-col items-center">
-                        <img class="w-16 h-16 rounded-full item-center mb-2" src="{{asset(auth()->user()->photo )}}" alt="user photo">
+                        <img class="w-16 h-16 rounded-full item-center mb-2" src="{{asset('public/' . auth()->user()->photo )}}" alt="user photo">
                          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 font-mono ">
                             {{ auth()->user()->name }}</p>
                          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 font-mono ">

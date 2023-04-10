@@ -20,7 +20,7 @@
                         @endif
                     </div>
                     <div>
-                        <img class="w-16 h-16 rounded-full" src="{{ asset('/public/img/dumy.png')}}" alt="user photo">
+                        <img class="w-16 h-16 rounded-full" src="{{asset('public/' . auth()->user()->photo )}}" alt="user photo">
                         <p class="mb-3 font-extrabold text-center text-gray-700 lg:text-xl text-md  font-mono ">
                             {{ $user->name }}</p>
                     </div>

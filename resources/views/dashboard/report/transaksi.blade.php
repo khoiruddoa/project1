@@ -25,6 +25,18 @@
                 <tr>
                     <td class="font-bold">Saldo Awal : @currency($saldo_awal)</td>
                 </tr>
+                @if($kode > 0 )
+                <tr>
+                    <td class="font-bold">Kategori : @if($kode == 1)
+                        Umum
+                        @elseif($kode == 2)
+                        TK
+                        @else
+                        Bimbel
+                        @endif
+                    </td>
+                </tr>
+                @endif
 
 
             </table>
