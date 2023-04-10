@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
             'address' => 'tangerang',
             'role' => '3',
-            'photo' => 'storage/photos/dumy.png',
+            'photo' => 'photos/dumy.png',
 
         ]);
         User::create([
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
             'address' => 'tangerang',
             'role' => '4',
-            'photo' => 'storage/photos/dumy.png',
+            'photo' => 'photos/dumy.png',
 
         ]);
         User::create([
@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'tangerang',
             'role' => '1',
             'manage' => '1',
-            'photo' => 'storage/photos/dumy.png',
+            'photo' => 'photos/dumy.png',
 
         ]);
         User::create([
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
             'address' => 'tangerang',
             'role' => '2',
-            'photo' => 'storage/photos/dumy.png',
+            'photo' => 'photos/dumy.png',
 
         ]);
 
@@ -74,7 +74,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
             'address' => 'tangerang',
             'role' => '1',
-            'photo' => 'storage/photos/dumy.png',
+            'photo' => 'photos/dumy.png',
 
         ]);
         for ($i = 0; $i < 100; $i++) {
@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('password'),
                 'address' => 'tangerang',
                 'role' => '1',
-                'photo' => 'storage/photos/dumy.png',
+                'photo' => 'photos/dumy.png',
             ]);
         }
         Category::create([
