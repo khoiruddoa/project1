@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             'phone_number' => '0123',
             'password' => bcrypt('password'),
             'address' => 'tangerang',
-            'role' => '3'
+            'role' => '3',
+            'photo' => 'storage/photos/dumy.png',
 
         ]);
         User::create([
@@ -30,7 +31,8 @@ class DatabaseSeeder extends Seeder
             'phone_number' => '00',
             'password' => bcrypt('password'),
             'address' => 'tangerang',
-            'role' => '4'
+            'role' => '4',
+            'photo' => 'storage/photos/dumy.png',
 
         ]);
         User::create([
@@ -40,7 +42,8 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
             'address' => 'tangerang',
             'role' => '1',
-            'manage' => '1'
+            'manage' => '1',
+            'photo' => 'storage/photos/dumy.png',
 
         ]);
         User::create([
@@ -59,7 +62,8 @@ class DatabaseSeeder extends Seeder
             'phone_number' => '0644344',
             'password' => bcrypt('password'),
             'address' => 'tangerang',
-            'role' => '2'
+            'role' => '2',
+            'photo' => 'storage/photos/dumy.png',
 
         ]);
 
@@ -69,7 +73,8 @@ class DatabaseSeeder extends Seeder
             'phone_number' => '0022',
             'password' => bcrypt('password'),
             'address' => 'tangerang',
-            'role' => '1'
+            'role' => '1',
+            'photo' => 'storage/photos/dumy.png',
 
         ]);
         for ($i = 0; $i < 100; $i++) {
@@ -79,7 +84,8 @@ class DatabaseSeeder extends Seeder
                 'phone_number' => '0022' . $i,
                 'password' => bcrypt('password'),
                 'address' => 'tangerang',
-                'role' => '1'
+                'role' => '1',
+                'photo' => 'storage/photos/dumy.png',
             ]);
         }
         Category::create([
