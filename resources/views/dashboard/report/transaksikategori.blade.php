@@ -22,9 +22,7 @@
                     <td class="font-bold">Periode</td>
                     <td>{{ date('d-m-Y', strtotime($start)) }} s/d {{ date('d-m-Y', strtotime($end)) }}</td>
                 </tr>
-                <tr>
-                    <td class="font-bold">Saldo Awal : @currency($saldo_awal)</td>
-                </tr>
+               
                 @if($kode > 0 )
                 <tr>
                     <td class="font-bold">Kategori : @if($kode == 1)
@@ -73,7 +71,7 @@
                         <td class=""></td>
 
                         <th class="border px-4 py-2">Pendapatan :</th>
-                        <td class="border px-4 py-2">@currency($transaction->sell_total - $transaction->pay_total)</td>
+                        <td class="border px-4 py-2">@currency($transactions->sum('sell_total') - $transactions->sum('pay_total'))</td>
                     </tr>
 
 
