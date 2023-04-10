@@ -60,11 +60,14 @@ class ReportController extends Controller
             return back();
         }
 
+        
         $transaksiNasabah = Transaction::where('pay_status', 2)->get();
 
         $transaksiPengepul = CollectorTransaction::where('pay_status', 3)->get();
         $pengepul = CollectorTransaction::where('pay_status', 2)->get();
         $income = Income::all();
+
+        if($request->type == null){
         $pengepul = CollectorTransaction::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw("'masuk' as origin"))
             ->where('pay_status', 3)
             ->whereBetween('updated_at', [$start_date, $end_date])

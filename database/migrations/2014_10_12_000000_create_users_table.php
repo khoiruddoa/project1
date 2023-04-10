@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('role');
             $table->text('address');
             $table->text('photo')->nullable();
+            $table->integer('type')->nullable();
             $table->integer('manage')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

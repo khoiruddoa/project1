@@ -15,7 +15,7 @@
                     </div>
                     <ul class="text-sm text-white dark:text-gray-300">
 
-                        <li>
+                    <li>
 
                             <form action="{{ route('print_transaction') }}" target="_blank" method="GET" class="mb-3 mt-3">
                                 <div class="flex space-x-2">
@@ -27,16 +27,28 @@
                                         name="end_date">
 
                                 </div>
+                               
+                                <div>
+                                    <label for="type"
+                                        class="block my-2 text-sm font-medium text-white">Kategori</label>
+                                    <select id="type" name="type"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option value="null">Semua</option>
+                                        <option value="1">UMUM</option>
+                                        <option value="2">TK</option>
+                                        <option value="3">BIMBEL</option>
+                                    </select>
+                                </div>
                                 <button type="submit"
-                                    class="w-full mt-4 flex items-center px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white">
-                                    <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z"
-                                            clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span class="text-sm font-medium">Print</span>
-                                </button>
+                                class="w-full mt-4 flex items-center px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white">
+                                <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-sm font-medium">Print</span>
+                            </button>
                             </form>
 
                         </li>

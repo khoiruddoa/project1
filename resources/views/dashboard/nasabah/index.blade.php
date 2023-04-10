@@ -5,24 +5,24 @@
         <div class="">
             <h1 class="text-3xl text-black pb-6">Tabel Anggota</h1>
             <div class="m-4">
-            @error('name')
-                <p class="text-red-500 text-lg italic">{{ $message }}</p>
-            @enderror
-            @error('email')
-                <p class="text-red-500 text-lg italic">{{ $message }}</p>
-            @enderror
-            @error('phone_number')
-                <p class="text-red-500 text-lg italic">{{ $message }}</p>
-            @enderror
-            @error('address')
-                <p class="text-red-500 text-lg italic">{{ $message }}</p>
-            @enderror
-            @error('password')
-                <p class="text-red-500 text-lg italic">{{ $message }}</p>
-            @enderror
-            @error('role')
-                <p class="text-red-500 text-lg italic">{{ $message }}</p>
-            @enderror
+                @error('name')
+                    <p class="text-red-500 text-lg italic">{{ $message }}</p>
+                @enderror
+                @error('email')
+                    <p class="text-red-500 text-lg italic">{{ $message }}</p>
+                @enderror
+                @error('phone_number')
+                    <p class="text-red-500 text-lg italic">{{ $message }}</p>
+                @enderror
+                @error('address')
+                    <p class="text-red-500 text-lg italic">{{ $message }}</p>
+                @enderror
+                @error('password')
+                    <p class="text-red-500 text-lg italic">{{ $message }}</p>
+                @enderror
+                @error('role')
+                    <p class="text-red-500 text-lg italic">{{ $message }}</p>
+                @enderror
             </div>
 
         </div>
@@ -101,17 +101,30 @@
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required></textarea>
 
+                                <div class="flex flex-row gap-4">
+                                    <div>
+                                        <label for="role"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
+                                        <select id="role" name="role"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
-                                <label for="role"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
-                                <select id="role" name="role"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <option value="1">Nasabah</option>
+                                            <option value="2">Pengepul</option>
+                                            <option value="3">Admin</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="type"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori</label>
+                                        <select id="type" name="type"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
-                                    <option value="1">Nasabah</option>
-                                    <option value="2">Pengepul</option>
-                                    <option value="3">Admin</option>
-                                </select>
-
+                                            <option value="1">UMUM</option>
+                                            <option value="2">TK</option>
+                                            <option value="3">BIMBEL</option>
+                                        </select>
+                                    </div>
+                                </div>
 
                                 <button type="submit"
                                     class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Daftarkan</button>
@@ -149,8 +162,8 @@
         </ul>
         <div id="defaultTabContent">
             <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-sidebar
-            " id="about" role="tabpanel"
-                aria-labelledby="about-tab">
+            " id="about"
+                role="tabpanel" aria-labelledby="about-tab">
                 <div class="w-full mt-6">
                     <div class="overflow-auto max-h-[300px]">
                         <table class="w-full bg-white">
@@ -172,23 +185,38 @@
                                     <tr>
                                         <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $user->name }}</td>
 
-                                        @if(isset($user->transactions()->latest('created_at')->first()->created_at))
-                                        @if (strtotime($user->transactions()->latest('created_at')->first()->created_at) < strtotime('-3 months'))
-                                        <td class="w-1/3 sm:w-auto bg-red-700 text-white text-left py-3 px-4">Aktif {{ $user->transactions()->latest('created_at')->first()->created_at->diffForHumans()}}</td>
-                                        @elseif(strtotime($user->transactions()->latest('created_at')->first()->created_at) < strtotime('-2 months'))
-                                        <td class="w-1/3 sm:w-auto bg-purple-600 text-white text-left py-3 px-4">Aktif {{ $user->transactions()->latest('created_at')->first()->created_at->diffForHumans()}}</td>
+                                        @if (isset(
+                                                $user->transactions()->latest('created_at')->first()->created_at))
+                                            @if (strtotime(
+                                                    $user->transactions()->latest('created_at')->first()->created_at) < strtotime('-3 months'))
+                                                <td class="w-1/3 sm:w-auto bg-red-700 text-white text-left py-3 px-4">Aktif
+                                                    {{ $user->transactions()->latest('created_at')->first()->created_at->diffForHumans() }}
+                                                </td>
+                                            @elseif(strtotime(
+                                                    $user->transactions()->latest('created_at')->first()->created_at) < strtotime('-2 months'))
+                                                <td class="w-1/3 sm:w-auto bg-purple-600 text-white text-left py-3 px-4">
+                                                    Aktif
+                                                    {{ $user->transactions()->latest('created_at')->first()->created_at->diffForHumans() }}
+                                                </td>
+                                            @else
+                                                <td class="w-1/3 sm:w-auto text-left py-3 px-4 bg-green-600 text-white">
+                                                    Aktif
+                                                    {{ $user->transactions()->latest('created_at')->first()->created_at->diffForHumans() }}
+                                                </td>
+                                            @endif
                                         @else
-                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4 bg-green-600 text-white">Aktif {{ $user->transactions()->latest('created_at')->first()->created_at->diffForHumans()}}</td>
-                                        @endif
-                                        
-                                        @else
-                                        @if (strtotime($user->created_at) < strtotime('-3 months'))
-                                        <td class="w-1/3 sm:w-auto bg-red-700 text-left text-white py-3 px-4">Belum Melakukan Transaksi dari {{ $user->created_at->diffForHumans()}}</td>
-                                        @elseif(strtotime($user->created_at) < strtotime('-2 months'))
-                                        <td class="w-1/3 sm:w-auto bg-Purpel-700 text-left text-white py-3 px-4">Belum Melakukan Transaksi dari {{ $user->created_at->diffForHumans()}}</td>
-                                        @else
-                                        <td class="w-1/3 sm:w-auto bg-green-700 text-left text-white py-3 px-4">Belum Melakukan Transaksi dari {{ $user->created_at->diffForHumans()}}</td>
-                                        @endif
+                                            @if (strtotime($user->created_at) < strtotime('-3 months'))
+                                                <td class="w-1/3 sm:w-auto bg-red-700 text-left text-white py-3 px-4">Belum
+                                                    Melakukan Transaksi dari {{ $user->created_at->diffForHumans() }}</td>
+                                            @elseif(strtotime($user->created_at) < strtotime('-2 months'))
+                                                <td class="w-1/3 sm:w-auto bg-Purpel-700 text-left text-white py-3 px-4">
+                                                    Belum Melakukan Transaksi dari {{ $user->created_at->diffForHumans() }}
+                                                </td>
+                                            @else
+                                                <td class="w-1/3 sm:w-auto bg-green-700 text-left text-white py-3 px-4">
+                                                    Belum Melakukan Transaksi dari {{ $user->created_at->diffForHumans() }}
+                                                </td>
+                                            @endif
                                         @endif
 
 
@@ -202,15 +230,15 @@
                                 @endforeach
                             </tbody>
                         </table>
-                       
+
                     </div>
 
 
                 </div>
             </div>
             <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-sidebar
-            " id="services" role="tabpanel"
-                aria-labelledby="services-tab">
+            " id="services"
+                role="tabpanel" aria-labelledby="services-tab">
                 <div class="w-full mt-6">
                     <div class="overflow-auto max-h-[300px]">
                         <table class="w-full bg-white">
@@ -219,7 +247,7 @@
                                     <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
                                         Nama</th>
 
-                                    
+
                                 </tr>
                             </thead>
                             <tbody class="text-gray-700">
@@ -227,7 +255,7 @@
                                     <tr>
                                         <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $collector->name }}</td>
 
-                                       
+
                                     </tr>
                                 @endforeach
 
@@ -239,8 +267,8 @@
                 </div>
             </div>
             <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-sidebar
-            " id="statistics" role="tabpanel"
-                aria-labelledby="statistics-tab">
+            " id="statistics"
+                role="tabpanel" aria-labelledby="statistics-tab">
                 <div class="w-full mt-6">
                     <div class="overflow-auto max-h-[300px]">
                         <table class="w-full bg-white">
@@ -249,7 +277,7 @@
                                     <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
                                         Nama</th>
 
-                                    
+
                                 </tr>
                             </thead>
                             <tbody class="text-gray-700">

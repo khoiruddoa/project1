@@ -173,11 +173,12 @@ class OwnerReviewController extends Controller
 
 
             $data = 2;
+            $data2 = 3;
 
             $transaction = Transaction::findOrFail($validatedData['id'][$key]);
-
             $transaction->update(['pay_status' => $data]);
-
+            $collector_transaction = CollectorTransaction::where('relate', $transaction->id)->first();
+            $collector_transaction->update(['pay_status' => $data2]);
             Alert::info('Berhasil', 'Sukses disetujui');
         }
 

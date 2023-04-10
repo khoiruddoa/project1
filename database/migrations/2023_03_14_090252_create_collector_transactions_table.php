@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('pay_status');
             $table->integer('information')->nullable();
             $table->integer('source')->nullable();
+            $table->integer('relate')->nullable();
             $table->timestamps();
         });
     }

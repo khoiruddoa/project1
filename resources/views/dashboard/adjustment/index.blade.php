@@ -52,13 +52,17 @@
                                 <div>
                                     <label for="price"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Saldo</label>
-                                    <div x-data="{ number: null }">
-                                        <input type="text" name="pay_total" x-model="number"
-                                            x-on:input="number = parseFloat($event.target.value)"
-                                            x-on:blur="$event.target.value = number.toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0})"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                            required>
-                                    </div>
+                                        <div x-data="{ number: null }">
+                                            <input type="text" name="pay_total" x-model="number"
+                                                x-on:input="
+                                                     number = $event.target.value.replace(/[^0-9]/g, '');
+                                                   "
+                                                x-on:blur="
+                                                     $event.target.value = parseInt(number).toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+                                                   "
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                                required>
+                                        </div>
 
                                 </div>
 
@@ -146,32 +150,22 @@
                                                                 <label for="user"
                                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
                                                                     User</label>
-                                                                <select id="user_id" name="user_id"
-                                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                                    @foreach ($users as $user)
-                                                                        @if ($transaction->user_id == $user->id)
-                                                                            <option value="{{ $user->id }}" selected>
-                                                                                {{ $user->name }}</option>
-                                                                        @else
-                                                                            <option value="{{ $user->id }}">
-                                                                                {{ $user->name }}</option>
-                                                                        @endif
-            
-                                                                    @endforeach
-
-                                                                </select>
+                                                                
                                                             </div>
                                                             <div>
                                                                 <label for="price"
                                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Saldo</label>
-                                                                <div x-data="{ number: null }">
-                                                                    <input type="text" name="pay_total" value="$transaction->pay_total"
-                                                                        x-model="number"
-                                                                        x-on:input="number = parseFloat($event.target.value)"
-                                                                        x-on:blur="$event.target.value = number.toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0})"
-                                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                                                        required>
-                                                                </div>
+                                                                    <div x-data="{ number: null }">
+                                                                        <input type="text" name="pay_total" x-model="number"
+                                                                            x-on:input="
+                                                                                 number = $event.target.value.replace(/[^0-9]/g, '');
+                                                                               "
+                                                                            x-on:blur="
+                                                                                 $event.target.value = parseInt(number).toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+                                                                               "
+                                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                                                            required>
+                                                                    </div>
 
                                                             </div>
 
