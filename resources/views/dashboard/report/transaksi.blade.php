@@ -84,6 +84,14 @@
                         <td class=""></td>
                         <td class=""></td>
 
+                        <th class="border px-4 py-2">Total Setor Sampah :</th>
+                        <td class="border px-4 py-2">@currency($keluar)</td>
+                    </tr>
+                    <tr>
+
+                        <td class=""></td>
+                        <td class=""></td>
+
                         <th class="border px-4 py-2">Pendapatan :</th>
                         <td class="border px-4 py-2">@currency($pendapatan)</td>
                     </tr>

@@ -87,6 +87,7 @@ class ReportController extends Controller
 
             $transaksi = $pengepul->concat($nasabah)->concat($profit)->sortBy('updated_at');
 
+            $keluar = $transaksi->where('origin', 'keluar')->sum('pay_total');
             // Menghitung pendapatan dan total saldo
             $pendapatan = 0;
             foreach ($transaksi as $transaction) {
@@ -97,6 +98,9 @@ class ReportController extends Controller
                 }
             }
 
+         
+                
+
             $total_saldo = $transaksiPengepul->sum('pay_total') - $transaksiNasabah->sum('pay_total') - $income->sum('pay_total');
             $saldo_awal = $total_saldo - $pendapatan;
        
@@ -106,7 +110,8 @@ class ReportController extends Controller
             'pendapatan' => $pendapatan,
             'total_saldo' => $total_saldo,
             'start' => $start_date,
-            'end' => $end_date
+            'end' => $end_date,
+            'keluar' => $keluar
         ]);
     }
 

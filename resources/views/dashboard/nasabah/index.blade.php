@@ -165,6 +165,9 @@
             " id="about"
                 role="tabpanel" aria-labelledby="about-tab">
                 <div x-data="{ searchText: '' }" class="w-full mt-6">
+                    <input type="text" id="simple-search" x-model="searchText"
+                                            class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder="Search">
 
                     <div class="overflow-auto max-h-[300px]">
                         <table class="w-full bg-white">
@@ -183,6 +186,8 @@
                             </thead>
                             <tbody class="text-gray-700">
                                 @foreach ($users as $user)
+                                <template
+                                x-if="searchText === '' || '{{ strtolower($user->name) }}'.includes(searchText.toLowerCase()) || '{{ $user->phone_number }}'.includes(searchText)">
                                     <tr>
                                         <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $user->name }}</td>
 
@@ -228,6 +233,7 @@
                                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
                                         </td>
                                     </tr>
+                                </template>
                                 @endforeach
                             </tbody>
                         </table>
