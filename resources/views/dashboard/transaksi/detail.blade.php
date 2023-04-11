@@ -45,17 +45,26 @@
                                 <form class="space-y-6" action="{{ route('store_detail') }}" method="POST">
                                     @csrf
                                     <div>
-                                        <div>
+                                        <div x-data="{ searchText: '' }">
                                             <label for="category"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori</label>
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori</label>
+                                            <input type="text" id="simple-search" x-model="searchText"
+                                            class="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder="Search">
+                                          
                                             <select id="category" name="category_id"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 @foreach ($categories as $category)
+                                                <template
+                                                x-if="searchText === '' || '{{ strtolower($category->category_name) }}'.includes(searchText.toLowerCase())">
                                                     <option value="{{ $category->id }}">{{ $category->category_name }} ({{ $category->uom }})
                                                     </option>
+                                                </template>
                                                 @endforeach
                                             </select>
                                         </div>
+                                        
+                                        
                                     </div>
                                     <input type="hidden" name="transaction_id" value="{{ $transaction->id }}">
                                     <div class="flex flex-row gap-2">

@@ -85,6 +85,8 @@
                 </tbody>
             </table>
             <h2 class="text-left text-lg font-bold mb-4">Print By : {{ auth()->user()->name }}</h2>
+            <h2 class="text-left text-lg font-bold mb-4">  {{ date('d F Y') }}
+            </h2>
         </div>
     </div>
     <script type="text/javascript">

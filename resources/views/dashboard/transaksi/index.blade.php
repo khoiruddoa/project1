@@ -75,7 +75,6 @@
                                             @foreach ($users as $user)
                                                 <template
                                                     x-if="searchText === '' || '{{ strtolower($user->name) }}'.includes(searchText.toLowerCase()) || '{{ $user->phone_number }}'.includes(searchText)">
-
                                                     <tr>
                                                         <td class="w-1/3 sm:w-auto text-left py-3 px-4">
                                                             {{ $user->name }}</td>

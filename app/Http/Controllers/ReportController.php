@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\BankProfit;
+use App\Models\Category;
 use App\Models\CollectorTransaction;
 use App\Models\Convertion;
+use App\Models\DetailCollectorTransaction;
 use App\Models\Expend;
 use App\Models\Gold;
 use App\Models\Income;
@@ -308,4 +310,22 @@ return view('dashboard.report.transaksikategori', [
             'total_profit' => $totalprofit
         ]);
     }
+
+    public function print_transaksi_pengepul($id)
+    {
+        $transaction = CollectorTransaction::find($id);
+       
+
+        $categories = Category::all();
+        $detail_transactions = DetailCollectorTransaction::where('collector_transaction_id', $id)->get();
+
+        return view('dashboard.report.collectorprint', [
+            'transaction' => $transaction,
+            'categories' => $categories,
+            'detail_transactions' => $detail_transactions
+
+        ]); 
+
+    }
+
 }

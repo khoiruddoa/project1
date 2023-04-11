@@ -149,6 +149,7 @@ Route::get('/dashboard/pengurus', [ManageController::class, 'index'])->name('pen
 Route::post('/dashboard/pengurus', [ManageController::class, 'update'])->name('pengurus_update');
 Route::post('/dashboard/pengurus/bagihasil', [ManageController::class, 'bagihasil'])->name('bagihasil');
 Route::get('/dashboard/pengurus/delete/{id}', [ManageController::class, 'delete'])->name('pengurus_delete');
+Route::get('/dashboard/print/transaksikolektor/{id}', [ReportController::class, 'print_transaksi_pengepul'])->name('print_transaction_collector');
 });
 
 
