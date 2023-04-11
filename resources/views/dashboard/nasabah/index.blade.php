@@ -164,7 +164,8 @@
             <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-sidebar
             " id="about"
                 role="tabpanel" aria-labelledby="about-tab">
-                <div class="w-full mt-6">
+                <div x-data="{ searchText: '' }" class="w-full mt-6">
+
                     <div class="overflow-auto max-h-[300px]">
                         <table class="w-full bg-white">
                             <thead class="bg-sidebar

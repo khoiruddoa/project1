@@ -50,7 +50,7 @@
                                     @elseif($transaction->information == 2)
                                         Jasa Angkut Sampah
                                     @else
-                                        Setor Sampah
+                                        Setor Sampah {{$transaction->user->name}}
                                     @endif
                                 @elseif ($transaction->origin == 'masuk')
                                 @if ($transaction->information == 1)
