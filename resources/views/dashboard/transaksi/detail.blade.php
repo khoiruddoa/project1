@@ -245,12 +245,15 @@
                     <thead class="bg-sidebar text-white w-full">
                         <tr>
                             <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">
+                                id</th>
+                            <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">
                                 Kategori</th>
                             <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">
                                 QTY</th>
                             <th class="sm:text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">Harga beli</th>
                             <th class="sm:text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">Harga Jual</th>
                             <th class="sm:text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">Jumlah</th>
+                            <th class="sm:text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">Jumlah jual</th>
                             <th class="sm:text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs"></th>
                         </tr>
                     </thead>
@@ -259,13 +262,14 @@
                             $total = 0;
                         @endphp
                         @foreach ($detail_transactions as $item)
-                            <tr>
+                            <tr> <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($item->id)</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">{{ preg_replace('/\d+\./', '', $item->category->category_name) }}</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">{{ number_format($item->qty, 3, ',', '.') }}
                                     {{ $item->category->uom }}</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($item->price)</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($item->sell)</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($item->price * $item->qty)</td>
+                                <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($item->sell * $item->qty)</td>
                                 <td class="sm:text-left py-3 px-4 md:text-sm text-xs">
 
                                     <a href="{{ route('delete_detail', ['id' => $item->id]) }}"
