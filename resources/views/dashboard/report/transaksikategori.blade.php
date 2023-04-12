@@ -70,6 +70,24 @@
                         <td class=""></td>
                         <td class=""></td>
 
+                        <th class="border px-4 py-2">Total harga jual :</th>
+                        <td class="border px-4 py-2">@currency($transactions->sum('sell_total'))</td>
+                    </tr>
+                    <tr>
+
+                        <td class=""></td>
+                        <td class=""></td>
+
+                        <th class="border px-4 py-2">Total harga Beli :</th>
+                        <td class="border px-4 py-2">@currency($tr$transactions->sum('pay_total'))</td>
+                    </tr>
+
+
+                    <tr>
+
+                        <td class=""></td>
+                        <td class=""></td>
+
                         <th class="border px-4 py-2">Pendapatan :</th>
                         <td class="border px-4 py-2">@currency($transactions->sum('sell_total') - $transactions->sum('pay_total'))</td>
                     </tr>
