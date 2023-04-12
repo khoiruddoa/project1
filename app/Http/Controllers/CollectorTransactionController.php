@@ -73,10 +73,10 @@ class CollectorTransactionController extends Controller
 
         $stock = $category->detailTransactions->sum('qty') - $category->detailCollectorTransactions->sum('qty');
     
-        if ($request->qty >  $stock) {
-            Alert::Warning('Gagal', 'Stock Tidak Mencukupi');
-            return redirect()->back();
-        }
+        // if ($stock <= $request->qty) {
+        //     Alert::Warning('Gagal', 'Stock Tidak Mencukupi');
+        //     return redirect()->back();
+        // }
     
         $v = $validatedData['collector_transaction_id'];
         $transaction = CollectorTransaction::find($v);
