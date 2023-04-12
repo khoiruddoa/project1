@@ -263,6 +263,7 @@
                     <tbody class="text-gray-700">
                         @php
                             $total = 0;
+                            $total1 = 0;
                         @endphp
                         @foreach ($detail_transactions as $item)
                             <tr> <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($item->id)</td>
@@ -280,7 +281,8 @@
                                 </td>
                             </tr>
                             @php
-                                $total += $item->price * $item->qty; // tambahkan nilai baru ke total
+                                $total += $item->price * $item->qty; 
+                                $total1 += $item->sell * $item->qty; // tambahkan nilai baru ke total
                             @endphp
                         @endforeach
                         <tr>
@@ -288,6 +290,14 @@
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs"></td>
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs font-extrabold">Total</td>
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($total)</td>
+                            <td class="sm:text-left py-3 px-4 md:text-sm text-xs">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs"></td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs"></td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs font-extrabold">Total2</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($total1)</td>
                             <td class="sm:text-left py-3 px-4 md:text-sm text-xs">
                             </td>
                         </tr>
