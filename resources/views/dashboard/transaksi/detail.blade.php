@@ -260,7 +260,7 @@
                         @foreach ($detail_transactions as $item)
                             <tr>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">{{ preg_replace('/\d+\./', '', $item->category->category_name) }}</td>
-                                <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">{{ $item->qty }}
+                                <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">{{ number_format($item->qty, 3, ',', '.') }}
                                     {{ $item->category->uom }}</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($item->price)</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($item->price * $item->qty)</td>

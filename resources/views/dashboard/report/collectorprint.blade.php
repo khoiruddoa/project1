@@ -47,7 +47,7 @@
                         <tr>
                             <td class="border px-4 py-2">{{ $loop->iteration }}</td>
                             <td class="border px-4 py-2">{{ preg_replace('/\d+\./', '', $item->category->category_name) }}</td>
-                            <td class="border px-4 py-2">{{ $item->qty }}
+                            <td class="border px-4 py-2">{{ number_format($item->qty, 3, ',', '.') }}
                                 {{ $item->category->uom }}</td>
                             <td class="border px-4 py-2">@currency($item->price)</td>
                             <td class="border px-4 py-2">@currency($item->price * $item->qty)</td>
