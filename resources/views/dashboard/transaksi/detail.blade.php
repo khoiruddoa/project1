@@ -248,7 +248,8 @@
                                 Kategori</th>
                             <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">
                                 QTY</th>
-                            <th class="sm:text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">Harga</th>
+                            <th class="sm:text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">Harga beli</th>
+                            <th class="sm:text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">Harga Jual</th>
                             <th class="sm:text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">Jumlah</th>
                             <th class="sm:text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs"></th>
                         </tr>
@@ -263,6 +264,7 @@
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">{{ number_format($item->qty, 3, ',', '.') }}
                                     {{ $item->category->uom }}</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($item->price)</td>
+                                <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($item->sell)</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($item->price * $item->qty)</td>
                                 <td class="sm:text-left py-3 px-4 md:text-sm text-xs">
 
