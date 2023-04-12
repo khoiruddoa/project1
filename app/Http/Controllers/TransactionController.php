@@ -8,6 +8,7 @@ use App\Models\DetailTransaction;
 use App\Models\Pick;
 use App\Models\Transaction;
 use App\Models\User;
+use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,8 +79,10 @@ class TransactionController extends Controller
 
         $v = $validatedData['transaction_id'];
         $transaction = Transaction::find($v);
+        $category = Category::find($validatedData['category_id']);
         $debet = $validatedData['price'] * $validatedData['qty'];
         $kredit = $validatedData['sell'] * $validatedData['qty'];
+        $stock = $validatedData['qty'];
 
 
         if ($transaction->pay_status > 0) {
@@ -90,6 +93,10 @@ class TransactionController extends Controller
         'sell_total' => $transaction['sell_total'] + $kredit];
         $transaction->fill($payloadtransaction);
         $transaction->save();
+
+        $payloadcategory = ['stock' => $category['stock'] + $stock];
+        $category->fill($payloadcategory);
+        $category->save();
         DetailTransaction::create($validatedData);
         Alert::info('Berhasil', 'Transaksi Berhasil');
         return back();
@@ -197,8 +204,12 @@ class TransactionController extends Controller
 
         $detail = DetailTransaction::findOrFail($id);
         $transaction = Transaction::find($detail->transaction_id);
+
+       
         $debet = $detail->price * $detail->qty;
         $kredit = $detail->sell * $detail->qty;
+        $category = Category::find($detail->category_id);
+        $stock = $detail->qty;
         if ($transaction->pay_status > 0) {
             Alert::warning('Gagal', 'Tidak bisa hapus karena transaksi sudah selesai');
             return back();
@@ -209,8 +220,14 @@ class TransactionController extends Controller
         'sell_total' => $transaction['sell_total'] - $kredit];
         $transaction->fill($payloadtransaction);
         $transaction->save();
+        $payloadcategory = ['stock' => $category['stock'] - $stock];
+        $category->fill($payloadcategory);
+        $category->save();
+
+
         $detail->delete();
         Alert::info('Berhasil', 'Hapus Data Berhasil');
         return back();
     }
 }
+

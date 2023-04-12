@@ -243,10 +243,15 @@
                         <i class="fas fa-align-left mr-3"></i>
                         Penyelarasan Saldo
                     </a>
+                    <a href="{{route('pengurus')}}" class="flex items-center {{ Request::is('dashboard/pengurus*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                        <i class="fas fa-user mr-3"></i>
+                        Pengurus
+                    </a>
+                   
                 </div>
             </div>
 
-
+            
             <a href="{{ route('jadwal') }}"
                 class="flex items-center {{ Request::is('dashboard/jadwal*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
 
@@ -258,18 +263,18 @@
                 <i class="fas fa-table mr-3"></i>
                 Laporan
             </a>
-            <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                <i class="fas fa-cogs mr-3"></i>
-                Ganti Password
-            </a>
-            <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+           
+            <a href="/profil" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                 <i class="fas fa-user mr-3"></i>
-                Ganti Photo
+                Profil
             </a>
-            <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item ">
-                <i class="fas fa-sign-out-alt mr-3"></i>
-                Keluar
-            </a>
+            <form action="{{route('logout')}}" method="post">
+                @csrf
+                <button type="submit" class="w-full flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item ">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    Keluar
+                </button>
+            </form>
 
         </nav>
     </header>

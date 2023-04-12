@@ -3,7 +3,7 @@
 @section('container')
     <div class="flex flex-col">
         <div class="">
-            <h1 class="text-3xl text-black pb-6">Transaksi Nasabah</h1>
+            <h1 class="text-3xl text-black pb-6">Transaksi Nasabah</h1> 
         </div>
 
         <div>
@@ -142,6 +142,7 @@
             <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="about" role="tabpanel"
                 aria-labelledby="about-tab">
                 <div class="w-full mt-6">
+                
                     <div class="overflow-x-auto">
 
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">

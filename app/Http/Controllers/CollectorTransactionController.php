@@ -68,21 +68,27 @@ class CollectorTransactionController extends Controller
             'qty' => 'required'
         ]);
 
-        $category = Category::find($request->category_id);
-        
+      
+        $category = Category::find($validatedData['category_id']);
 
-        $stock = $category->detailTransactions->sum('qty') - $category->detailCollectorTransactions->sum('qty');
+
+       $stocknya = $category->stock;
     
-        // if ($stock <= $request->qty) {
-        //     Alert::Warning('Gagal', 'Stock Tidak Mencukupi');
-        //     return redirect()->back();
-        // }
-    
+        if ($request->qty > $stocknya) {
+            Alert::Warning('Gagal', 'Stock Tidak Mencukupi');
+            return redirect()->back();
+        }
+        $stock = $validatedData['qty'];
+        
         $v = $validatedData['collector_transaction_id'];
         $transaction = CollectorTransaction::find($v);
-
+        $category = Category::find($validatedData['category_id']);
 
         $debet = $validatedData['price'] * $validatedData['qty'];
+
+        $payloadcategory = ['stock' => $category['stock'] - $stock];
+        $category->fill($payloadcategory);
+        $category->save();
 
         $payloadtransaction = ['pay_total' => $transaction['pay_total'] + $debet];
         $transaction->fill($payloadtransaction);
@@ -143,6 +149,12 @@ $detail_collector_transactions = DetailCollectorTransaction::where('collector_tr
     return back();
 }
 
+$category = Category::find($detail->category_id);
+        $stock = $detail->qty;
+
+ $payloadcategory = ['stock' => $category['stock'] + $stock];
+        $category->fill($payloadcategory);
+        $category->save();
 
         $payloadtransaction = ['pay_total' => $transaction['pay_total'] - $debet];
         $transaction->fill($payloadtransaction);

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('category_name');
             $table->string('uom');
+            $table->float('stock', 10 , 3)->nullable();
         });
     }
 
