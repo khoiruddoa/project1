@@ -79,7 +79,7 @@
                         <td class=""></td>
 
                         <th class="border px-4 py-2">Total harga Beli :</th>
-                        <td class="border px-4 py-2">@currency($tr$transactions->sum('pay_total'))</td>
+                        <td class="border px-4 py-2">@currency($transactions->sum('pay_total'))</td>
                     </tr>
 
 
