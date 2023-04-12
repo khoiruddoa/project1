@@ -198,13 +198,15 @@ class TransactionController extends Controller
         $detail = DetailTransaction::findOrFail($id);
         $transaction = Transaction::find($detail->transaction_id);
         $debet = $detail->price * $detail->qty;
+        $kredit = $detail->sell * $detail->qty;
         if ($transaction->pay_status > 0) {
             Alert::warning('Gagal', 'Tidak bisa hapus karena transaksi sudah selesai');
             return back();
         }
 
         
-        $payloadtransaction = ['pay_total' => $transaction['pay_total'] - $debet];
+        $payloadtransaction = ['pay_total' => $transaction['pay_total'] - $debet,
+        'sell_total' => $transaction['sell_total'] - $kredit];
         $transaction->fill($payloadtransaction);
         $transaction->save();
         $detail->delete();
