@@ -45,7 +45,7 @@ class CollectorTransactionController extends Controller
         $transaction = CollectorTransaction::find($id);
        
 
-        $categories = Category::orderBy('category_name', 'asc')->get();
+        $categories = Category::orderBy('id', 'asc')->get();
         $detail_transactions = DetailCollectorTransaction::where('collector_transaction_id', $id)->get();
 
         return view('dashboard.transaksipengepul.detail', [

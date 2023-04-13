@@ -48,7 +48,7 @@ class TransactionController extends Controller
     {
         $users = User::where('manage', 1)->get();
         $transaction = Transaction::find($id);
-        $categories = Category::orderBy('category_name', 'asc')->get();
+        $categories = Category::orderBy('id', 'asc')->get();
         $picks = Pick::where('transaction_id', $id)->get();
         $detail_transactions = DetailTransaction::where('transaction_id', $id)->get();
 
