@@ -164,6 +164,8 @@
                 <thead class="bg-sidebar text-white w-full">
                     <tr>
                         <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Kategori Sampah</th>
+                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Harga Beli Terakhir</th>
+                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Harga Jual Terakhir</th>
                         
                         <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">action</th>
                     </tr>
@@ -172,6 +174,10 @@
                     @foreach ($categories as $category)
                         <tr>
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $category->category_name }}</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $category->categoryPrice->last()->buy}}</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $category->categoryPrice->last()->sell}}</td>
+                            
+                            
                             <td class="sm:text-left py-3 px-4">
                                 <div class="flex flex-row justify-center items-center gap-2">
                                 <div>
