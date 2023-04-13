@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::orderBy('category_name', 'asc')->get();
+        $categories = Category::orderBy('id', 'asc')->get();
         return view('dashboard.sampah.index', [
             'categories' => $categories
         ]);
