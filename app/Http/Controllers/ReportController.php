@@ -333,4 +333,37 @@ return view('dashboard.report.transaksikategori', [
 
     }
 
+
+    public function transaksi_item(Request $request)
+    {
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+        
+        
+        if ($end_date < $start_date) {
+            Alert::warning('Gagal', 'Tanggal Akhir tidak boleh lebih dulu dari tanggal awal');
+            return back();
+        }
+        $kode = $request->input('type');
+
+        $kategori = Category::find($kode);
+        $tran = Transaction::where('pay_status', 2) ->with('user')
+        ->whereHas('detailTransactions', function($query) use ($kode) {
+            $query->where('category_id', $kode);
+        })
+        ->whereBetween('updated_at', [$start_date, $end_date])
+        ->get();
+    
+    
+
+  
+return view('dashboard.report.transaksiitem', [
+    'transactions' => $tran,
+    'start' => $start_date,
+    'end' => $end_date,
+    'kode' => $kode,
+    'category' => $kategori
+]);
+
+}
 }

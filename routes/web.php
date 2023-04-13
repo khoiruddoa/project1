@@ -16,6 +16,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserTransactionController;
+use App\Models\Category;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Route;
 
@@ -49,10 +50,12 @@ Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
 
 Route::middleware(['both'])->group(function () {
 Route::get('/dashboard/report', function () {
-    return view('dashboard.report');
+    $categories = Category::orderBy('id', 'asc')->get();
+    return view('dashboard.report', ['categories' => $categories]);
 });
 Route::get('/dashboard/report/transaksi', [ReportController::class, 'transaksi'])->name('print_transaction');
 Route::get('/dashboard/report/transaksi/kategori', [ReportController::class, 'transaksi_kategori'])->name('print_transaction_category');
+Route::get('/dashboard/report/transaksi/item', [ReportController::class, 'transaksi_item'])->name('print_transaction_item');
 Route::get('/dashboard/report/konversi', [ReportController::class, 'konversi'])->name('print_convertion');
 Route::get('/dashboard/report/Pengeluaran', [ReportController::class, 'pengeluaran'])->name('print_expend');
 Route::get('/dashboard/report/emas', [ReportController::class, 'emas'])->name('print_gold');

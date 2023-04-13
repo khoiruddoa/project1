@@ -92,6 +92,10 @@ $category_id = $validatedData['category_id'];
             Alert::warning('Gagal', 'Tidak bisa transaksi karena transaksi sudah selesai');
             return back();
         }
+        if ($buy == 0) {
+            Alert::warning('Gagal', 'Harga masih Kosong');
+            return back();
+        }
         $payloadtransaction = ['pay_total' => $transaction['pay_total'] + $debet,
         'sell_total' => $transaction['sell_total'] + $kredit];
         $transaction->fill($payloadtransaction);
