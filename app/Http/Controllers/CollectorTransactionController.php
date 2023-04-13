@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\CategoryPrice;
 use App\Models\CollectorTransaction;
 use App\Models\DetailCollectorTransaction;
 use App\Models\User;
@@ -44,7 +45,7 @@ class CollectorTransactionController extends Controller
         $transaction = CollectorTransaction::find($id);
        
 
-        $categories = Category::all();
+        $categories = Category::orderBy('category_name', 'asc')->get();
         $detail_transactions = DetailCollectorTransaction::where('collector_transaction_id', $id)->get();
 
         return view('dashboard.transaksipengepul.detail', [
@@ -57,20 +58,23 @@ class CollectorTransactionController extends Controller
 
     public function storedetail(Request $request)
     {
-        $request->merge([
-            'price' => str_replace('.', '', $request->price)
-        ]);
+       
 
         $validatedData = $request->validate([
             'collector_transaction_id' => 'required',
             'category_id' => 'required',
-            'price' => 'required',
+           
             'qty' => 'required'
         ]);
 
-      
+        $category_id = $validatedData['category_id'];
         $category = Category::find($validatedData['category_id']);
+        $category_prices = CategoryPrice::where('category_id', $category_id)->latest()->first();
+    
+        $price = $category_prices->sell;
 
+
+        $validatedData['price'] = $price;
 
        $stocknya = $category->stock;
     

@@ -17,4 +17,9 @@ class Category extends Model
     {
         return $this->hasMany(DetailCollectorTransaction::class);
     }
+
+    public function categoryPrices()
+    {
+        return $this->hasMany(CategoryPrice::class);
+    }
 }

@@ -119,6 +119,7 @@ Route::get('/dashboard/sampah', [CategoryController::class, 'index'])->name('sam
 Route::post('/dashboard/sampah', [CategoryController::class, 'store'])->name('sampahStore');
 Route::post('/dashboard/sampah/update/{id}', [CategoryController::class, 'update'])->name('sampah_update');
 Route::get('/dashboard/sampah/delete/{id}', [CategoryController::class, 'destroy'])->name('sampah_delete');
+Route::post('/dashboard/update/harga', [CategoryController::class, 'prices'])->name('updateharga');
 Route::get('/dashboard/jadwal', [ScheduleController::class, 'index'])->name('jadwal');
 Route::post('/dashboard/jadwal', [ScheduleController::class, 'store'])->name('jadwalStore');
 Route::get('/dashboard/jadwal/delete/{id}', [ScheduleController::class, 'destroy'])->name('jadwal_delete');

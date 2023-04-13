@@ -76,42 +76,8 @@
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                                 required>
                                         </div>
-                                        <div>
-                                            <label for="price"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga
-                                                Beli</label>
-                                                <div x-data="{ number: null }">
-                                                    <input type="text" name="price" x-model="number"
-                                                        x-on:input="
-                                                             number = $event.target.value.replace(/[^0-9]/g, '');
-                                                           "
-                                                        x-on:blur="
-                                                             $event.target.value = parseInt(number).toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
-                                                           "
-                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                                        required>
-                                                </div>
-        
-                                        </div>
-                                        <div>
-                                            <label for="price"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga
-                                                Jual</label>
-                                                <div x-data="{ number: null }">
-                                                    <input type="text" name="sell" x-model="number"
-                                                        x-on:input="
-                                                             number = $event.target.value.replace(/[^0-9]/g, '');
-                                                           "
-                                                        x-on:blur="
-                                                             $event.target.value = parseInt(number).toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
-                                                           "
-                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                                        required>
-                                                </div>
-        
-                                        </div>
+                                        
                                     </div>
-
 
 
                                     <button type="submit" onclick="this.disabled=true; this.form.submit();"
@@ -247,8 +213,7 @@
                 <table class="w-full bg-white ">
                     <thead class="bg-sidebar text-white w-full">
                         <tr>
-                            <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">
-                                id</th>
+                            
                             <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">
                                 Kategori</th>
                             <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold md:text-sm text-xs">
@@ -266,7 +231,7 @@
                             $total1 = 0;
                         @endphp
                         @foreach ($detail_transactions as $item)
-                            <tr> <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($item->id)</td>
+                            <tr> 
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">{{ preg_replace('/\d+\./', '', $item->category->category_name) }}</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">{{ number_format($item->qty, 3, ',', '.') }}
                                     {{ $item->category->uom }}</td>
@@ -288,7 +253,7 @@
                         <tr>
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs"></td>
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs"></td>
-                            <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs font-extrabold">Total</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs font-extrabold">Total Beli</td>
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($total)</td>
                             <td class="sm:text-left py-3 px-4 md:text-sm text-xs">
                             </td>
@@ -296,7 +261,7 @@
                         <tr>
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs"></td>
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs"></td>
-                            <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs font-extrabold">Total2</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs font-extrabold">Total Jual</td>
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4 md:text-sm text-xs">@currency($total1)</td>
                             <td class="sm:text-left py-3 px-4 md:text-sm text-xs">
                             </td>

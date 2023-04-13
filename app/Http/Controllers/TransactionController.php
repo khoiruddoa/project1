@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\Category;
+use App\Models\CategoryPrice;
 use App\Models\DetailTransaction;
 use App\Models\Pick;
 use App\Models\Transaction;
@@ -47,7 +48,7 @@ class TransactionController extends Controller
     {
         $users = User::where('manage', 1)->get();
         $transaction = Transaction::find($id);
-        $categories = Category::all();
+        $categories = Category::orderBy('category_name', 'asc')->get();
         $picks = Pick::where('transaction_id', $id)->get();
         $detail_transactions = DetailTransaction::where('transaction_id', $id)->get();
 
@@ -63,25 +64,27 @@ class TransactionController extends Controller
 
     public function storedetail(Request $request)
     {
-        $request->merge([
-            'price' => str_replace('.', '', $request->price),
-            'sell' => str_replace('.', '', $request->sell)
-        ]);
-
+       
         $validatedData = $request->validate([
             'transaction_id' => 'required',
             'category_id' => 'required',
-            'price' => 'required',
-            'sell' => 'required',
             'qty' => 'required'
         ]);
 
+$category_id = $validatedData['category_id'];
 
         $v = $validatedData['transaction_id'];
         $transaction = Transaction::find($v);
         $category = Category::find($validatedData['category_id']);
-        $debet = $validatedData['price'] * $validatedData['qty'];
-        $kredit = $validatedData['sell'] * $validatedData['qty'];
+        $category_prices = CategoryPrice::where('category_id', $category_id)->latest()->first();
+        $buy = $category_prices->buy;
+        $sell = $category_prices->sell;
+        
+        $validatedData['price'] = $buy;
+        $validatedData['sell'] = $sell;
+        
+        $debet = $buy * $validatedData['qty'];
+        $kredit = $sell * $validatedData['qty'];
         $stock = $validatedData['qty'];
 
 
