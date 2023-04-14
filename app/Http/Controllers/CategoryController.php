@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\Category;
 use App\Models\CategoryPrice;
+use App\Models\DetailTransaction;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -52,6 +54,10 @@ class CategoryController extends Controller
     public function destroy($id)
     {
 
+        $transaksi = DetailTransaction::where('category_id', $id)->first();
+        if($transaksi)
+        {Alert::warning('Gagal', 'Sudah ada transaksi di Data ini');
+            return redirect()->back();}
 
         $category = Category::findOrFail($id);
         $category->delete();
