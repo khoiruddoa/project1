@@ -201,7 +201,8 @@
             <h5 class="mb-2 text-xl font-semibold text-gray-900">
                 {{ $transaction->user->name }}</h5>
                 <h5 class="mb-2 text-xl font-semibold text-gray-900">
-                    {{ $transaction->id }}</h5>
+                    {{ date('d-m-Y', strtotime($transaction->created_at)) }}
+                </h5>
          
      
         
