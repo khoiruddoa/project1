@@ -41,7 +41,7 @@
 
                             @foreach ($transactions as $index => $item)
                                 <div
-                                    class="border border-gray-300 p-4 rounded-lg flex items-center mb-4 bg-[#15C972] hover:bg-[#016b38]">
+                                    class="border border-gray-300 p-4 rounded-lg flex flex-col items-center mb-4 bg-[#15C972] hover:bg-[#016b38]">
                                     <input type="checkbox" name="id[]" value="{{ $item->id }}"
                                         class="form-checkbox h-5 w-5 text-green-500"
                                         x-model="checkedItems[{{ $index }}]">
@@ -53,7 +53,7 @@
                                         <div class="ml-3 text-white font-mono">
                                             Total : @currency($item->pay_total)
                                         </div>
-
+<div>
                                         <table class="table-auto mb-4 w-full text-white">
                                             <thead>
                                                 <tr>
@@ -88,7 +88,7 @@
                                                             $jumlah = $detail->qty * $detail->price;
                                                         @endphp
                                                 @endforeach
-                                        </table>
+                                        </table></div>
 
                                                 @if ($jumlah - $item->pay_total > 0)
                                                     <div class="ml-3 text-white font-mono">
