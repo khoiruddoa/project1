@@ -45,7 +45,7 @@
                                     <input type="checkbox" name="id[]" value="{{ $item->id }}"
                                         class="form-checkbox h-5 w-5 text-green-500"
                                         x-model="checkedItems[{{ $index }}]">
-                                    <div>
+                                    
                                         <div class="ml-3 text-white font-mono">
                                             Nama : {{ $item->user->name }}
                                         </div>
@@ -53,8 +53,6 @@
                                         <div class="ml-3 text-white font-mono">
                                             Total : @currency($item->pay_total)
                                         </div>
-
-
 
                                         <table class="table-auto mb-4 w-full">
                                             <thead>
@@ -67,27 +65,30 @@
                                             <tbody>
                                                 @foreach ($item->detailTransactions as $detail)
                                                     <tr>
-                                                        <td class="border px-1 py-1">
+                                                        <td class="px-1 py-1">
                                                             {{ preg_replace('/\d+\./', '', $detail->category->category_name) }}
 
                                                         </td>
-                                                        <td class="border px-1 py-1">
+                                                        <td class="px-1 py-1">
 
                                                             {{ $detail->qty }} {{ $detail->category->uom }}
                                                         </td>
-                                                        <td class="border px-1 py-1">
+                                                        <td class="px-1 py-1">
 
                                                             @currency($detail->price)
                                                         </td>
-                                                        <td class="border px-1 py-1">
+                                                        <td class="px-1 py-1">
 
                                                             @currency($detail->qty * $detail->price)
                                                         </td>
+                                                    </tr>
+                                            </tbody>
 
                                                         @php
                                                             $jumlah = $detail->qty * $detail->price;
                                                         @endphp
                                                 @endforeach
+                                        </table>
 
                                                 @if ($jumlah - $item->pay_total > 0)
                                                     <div class="ml-3 text-white font-mono">
@@ -95,7 +96,7 @@
                                                     </div>
                                                 @endif
 
-                                    </div>
+                                    
                                 </div>
                             @endforeach
 
