@@ -141,7 +141,10 @@
         <div id="defaultTabContent">
             <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="about" role="tabpanel"
                 aria-labelledby="about-tab">
-                <div class="w-full mt-6">
+                <div x-data="{ searchText: '' }" class="w-full mt-6">
+                    <input type="text" id="simple-search" x-model="searchText"
+                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search">
                 
                     <div class="overflow-x-auto">
 
@@ -162,6 +165,9 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($transactions as $transaction)
+                                        <template
+                                        x-if="searchText === '' || '{{ strtolower($transaction->user->name) }}'.includes(searchText.toLowerCase())">
+                                         
                                             <tr class="border-b border-gray-200 dark:border-gray-700">
 
                                                 <th scope="row"
@@ -188,6 +194,7 @@
                                                     </div>
                                                 </th>
                                             </tr>
+                                        </template>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -202,7 +209,10 @@
                 aria-labelledby="services-tab">
 
 
-                <div class="w-full mt-6">
+                <div x-data="{ searchText: '' }" class="w-full mt-6">
+                    <input type="text" id="simple-search" x-model="searchText"
+                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search">
                     <div class="overflow-x-auto">
 
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -222,6 +232,9 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($finish as $transaction)
+                                        <template
+                                        x-if="searchText === '' || '{{ strtolower($transaction->user->name) }}'.includes(searchText.toLowerCase())">
+                                         
                                             <tr class="border-b border-gray-200 dark:border-gray-700">
 
                                                 <th scope="row"
@@ -243,6 +256,7 @@
 
                                                 </th>
                                             </tr>
+                                        </template>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -255,7 +269,10 @@
             </div>
             <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="statistics" role="tabpanel"
                 aria-labelledby="statistics-tab">
-                <div class="w-full mt-6">
+                <div x-data="{ searchText: '' }" class="w-full mt-6">
+                    <input type="text" id="simple-search" x-model="searchText"
+                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search">
                     <div class="overflow-x-auto">
 
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -275,6 +292,9 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($approved as $transaction)
+                                        <template
+                                        x-if="searchText === '' || '{{ strtolower($transaction->user->name) }}'.includes(searchText.toLowerCase())">
+                                         
                                             <tr class="border-b border-gray-200 dark:border-gray-700">
 
                                                 <th scope="row"
@@ -294,6 +314,8 @@
                                                         </div>
                                                 </th>
                                             </tr>
+                                        </template>
+
                                         @endforeach
                                     </tbody>
                                 </table>

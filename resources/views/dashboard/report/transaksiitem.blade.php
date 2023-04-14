@@ -25,7 +25,7 @@
 
 
                 <tr>
-                    <td class="font-bold">Kategori : {{$category->category_name}}
+                    <td class="font-bold">Kategori : {{ $category->category_name }}
 
                     </td>
                 </tr>
@@ -38,45 +38,57 @@
                         <th class="px-4 py-2">Tgl</th>
                         <th class="px-4 py-2">Nama Transaksi</th>
                         <th class="px-4 py-2">qty</th>
-                        <th class="px-4 py-2">qty</th>
-                        
+
+
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $grandTotalQty = 0;
+                    @endphp
                     @foreach ($transactions as $transaction)
-                    <tr>
-                        <td class="border px-4 py-2">{{ $transaction->updated_at->format('d-m-Y') }}</td>
+                        <tr>
+                            <td class="border px-4 py-2">{{ $transaction->updated_at->format('d-m-Y') }}</td>
 
-                        <td class="border px-4 py-2">
-                            Penimbangan Sampah dari {{$transaction->user->name}}
-                        </td>
-                        <td class="border px-4 py-2">
-                            @php
-                        $totalQty = 0;
-                            @endphp
+                            <td class="border px-4 py-2">
+                                Penimbangan Sampah dari {{ $transaction->user->name }}
+                            </td>
+
+                            @if(!$transaction->detailTransactions()->where('category_id', $category->id)->get())
+                            <td class="border px-4 py-2">
+                                tidak ada transaksi
+                            </td>
+                            @else
+                            <td class="border px-4 py-2">
+                                @php
+                                    $totalQty = 0;
+                                @endphp
 
 
-                            @foreach ($transaction->detailTransactions()->where('category_id', $category->id)->get() as $detail)
-                            
-                           
-                            <p>{{ $detail->qty }} {{$detail->category->uom}}</p>
-                            @php
-                            $totalQty += $detail->qty;
-                            @endphp
-                            @endforeach
-                            <td class="border px-4 py-2">@currency($totalQty)</td>
-                            
-                        </td>
-                       
-                    </tr>
+                                @foreach ($transaction->detailTransactions()->where('category_id', $category->id)->get() as $detail)
+                                    <p>{{ $detail->qty }} {{ $detail->category->uom }}</p>
+                                    @php
+                                        $totalQty += $detail->qty;
+                                    @endphp
+                                @endforeach
+                                @php
+                                    $grandTotalQty += $totalQty;
+                                @endphp
+
+
+
+                            </td>
+                            @endif
+
+                        </tr>
                     @endforeach
                     <tr>
 
-                        <td class=""></td>
+
                         <td class=""></td>
 
-                        <th class="border px-4 py-2">Total :</th>
-                        <td class="border px-4 py-2">@currency($totalQty)</td>
+                        <th class="border px-4 py-2">Total : </th>
+                        <td class="border px-4 py-2">{{ $grandTotalQty }}</td>
                     </tr>
                 </tbody>
             </table>

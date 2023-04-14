@@ -164,7 +164,11 @@
 
     </div>
 
-    <div class="w-full mt-6">
+    <div x-data="{ searchText: '' }"  class="w-full mt-6">
+        <input type="text" id="simple-search" x-model="searchText"
+        class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Search">
+
         <div class="overflow-auto max-h-[300px]">
             <table class="w-full bg-white">
                 <thead class="bg-sidebar text-white w-full">
@@ -173,12 +177,17 @@
                         </th>
                         <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Harga Beli Terakhir</th>
                         <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Harga Jual Terakhir</th>
+                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Tanggal Update Terakhir</th>
+
 
                         <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">action</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-700">
                     @foreach ($categories as $category)
+                    <template
+                                x-if="searchText === '' || '{{ strtolower($category->category_name) }}'.includes(searchText.toLowerCase())">
+                                  
                         <tr>
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $category->category_name }}</td>
                             @if ($category->categoryPrices->count() > 0)
@@ -192,6 +201,7 @@
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4">
                                 0</td>
                             @endif
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ date('d-m-Y', strtotime($category->categoryPrices->last()->created_at)) }}</td>
                             <td class="sm:text-left py-3 px-4">
                                 <div class="flex flex-row justify-center items-center gap-2">
                                     <div>
@@ -288,6 +298,7 @@
 
                             </td>
                         </tr>
+                    </template>
                     @endforeach
                 </tbody>
             </table>

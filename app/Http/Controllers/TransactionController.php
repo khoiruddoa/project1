@@ -22,7 +22,7 @@ class TransactionController extends Controller
             'users' => User::where('role', 1)->orderBy('name', 'asc')->get(),
             'transactions' => Transaction::where('pay_status', 0)->where('information', null)->orderBy('id', 'desc')->get(),
             'finish' => Transaction::where('pay_status', 1)->where('information', null)->orderBy('id', 'desc')->get(),
-            'approved' => Transaction::where('pay_status', 2)->where('information', null)->get(),
+            'approved' => Transaction::where('pay_status', 2)->where('information', null)->orderBy('id', 'desc')->get(),
 
         ]);
     }
