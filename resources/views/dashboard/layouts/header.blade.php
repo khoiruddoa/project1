@@ -185,7 +185,7 @@
                         <i class="fas fa-sticky-note mr-3"></i>
                         Data Pengguna
                     </a>
-                    <a href="{{ route('nasabah') }}"
+                    <a href="{{ route('sampah') }}"
                         class="flex items-center {{ Request::is('dashboard/sampah*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                         <i class="fas fa-sticky-note mr-3"></i>
                         Data Kategori Sampah
