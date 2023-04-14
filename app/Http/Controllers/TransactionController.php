@@ -71,7 +71,7 @@ class TransactionController extends Controller
             'qty' => 'required'
         ]);
 
-$category_id = $validatedData['category_id'];
+        $category_id = $validatedData['category_id'];
 
         $v = $validatedData['transaction_id'];
         $transaction = Transaction::find($v);
@@ -86,7 +86,9 @@ $category_id = $validatedData['category_id'];
         $debet = $buy * $validatedData['qty'];
         $kredit = $sell * $validatedData['qty'];
         $stock = $validatedData['qty'];
+        $detail_transactions = DetailTransaction::where('transaction_id', $v)->where('category_id', $category_id)->first();
 
+       
 
         if ($transaction->pay_status > 0) {
             Alert::warning('Gagal', 'Tidak bisa transaksi karena transaksi sudah selesai');
@@ -96,6 +98,12 @@ $category_id = $validatedData['category_id'];
             Alert::warning('Gagal', 'Harga masih Kosong');
             return back();
         }
+
+        if ($detail_transactions) {
+            Alert::warning('Gagal', 'Item sudah diinput sebelumnya');
+            return back();
+        }
+
         $payloadtransaction = ['pay_total' => $transaction['pay_total'] + $debet,
         'sell_total' => $transaction['sell_total'] + $kredit];
         $transaction->fill($payloadtransaction);
