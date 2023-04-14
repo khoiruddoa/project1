@@ -54,7 +54,7 @@
                                             Total : @currency($item->pay_total)
                                         </div>
 
-                                        <table class="table-auto mb-4 w-full">
+                                        <table class="table-auto mb-4 w-full text-white">
                                             <thead>
                                                 <tr>
                                                     <th class="px-1 py-1"></th>
