@@ -40,37 +40,62 @@
                             </div>
 
                             @foreach ($transactions as $index => $item)
-                            
                                 <div
                                     class="border border-gray-300 p-4 rounded-lg flex items-center mb-4 bg-[#15C972] hover:bg-[#016b38]">
-                                    <input type="checkbox" name="id[]" value="{{$item->id}}"
+                                    <input type="checkbox" name="id[]" value="{{ $item->id }}"
                                         class="form-checkbox h-5 w-5 text-green-500"
                                         x-model="checkedItems[{{ $index }}]">
-                                        <div>
-                                    <div class="ml-3 text-white font-mono">
-                                         Nama : {{ $item->user->name }}
-                                    </div>
-                                   
-                                    <div class="ml-3 text-white font-mono">
-                                        Total Penimbangan : @currency($item->pay_total)
-                                    </div>
-                                    
-                                        @foreach($item->detailTransactions as $detail)
+                                    <div>
                                         <div class="ml-3 text-white font-mono">
-                                        {{ preg_replace('/\d+\./', '',$detail->category->category_name) }} {{$detail->qty}} {{$detail->category->uom}} @currency($detail->price) Jumlah @currency($detail->qty * $detail->price)
-                                    </div>
-                                    @php
-                                        $jumlah = $detail->qty * $detail->price
-                                    @endphp
-                                        @endforeach
-
-                                        @if($jumlah - $item->pay_total > 0)
-                                        <div class="ml-3 text-white font-mono">
-                                        Jasa Angkut @currency($jumlah - $item->pay_total)
+                                            Nama : {{ $item->user->name }}
                                         </div>
-                                        @endif
-                                   
-                                </div>
+
+                                        <div class="ml-3 text-white font-mono">
+                                            Total : @currency($item->pay_total)
+                                        </div>
+
+
+
+                                        <table class="table-auto mb-4 w-full">
+                                            <thead>
+                                                <tr>
+                                                    <th class="px-1 py-1"></th>
+                                                    <th class="px-1 py-1"></th>
+                                                    <th class="px-1 py-1"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($item->detailTransactions as $detail)
+                                                    <tr>
+                                                        <td class="border px-1 py-1">
+                                                            {{ preg_replace('/\d+\./', '', $detail->category->category_name) }}
+
+                                                        </td>
+                                                        <td class="border px-1 py-1">
+
+                                                            {{ $detail->qty }} {{ $detail->category->uom }}
+                                                        </td>
+                                                        <td class="border px-1 py-1">
+
+                                                            @currency($detail->price)
+                                                        </td>
+                                                        <td class="border px-1 py-1">
+
+                                                            @currency($detail->qty * $detail->price)
+                                                        </td>
+
+                                                        @php
+                                                            $jumlah = $detail->qty * $detail->price;
+                                                        @endphp
+                                                @endforeach
+
+                                                @if ($jumlah - $item->pay_total > 0)
+                                                    <div class="ml-3 text-white font-mono">
+                                                        Jasa Angkut @currency($jumlah - $item->pay_total)
+                                                    </div>
+                                                @endif
+
+                                    </div>
                                 </div>
                             @endforeach
 
@@ -108,6 +133,7 @@
                 </div>
             </div>
 
-            <a href="/menu" class="mt-4 text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Kembali</a>
+            <a href="/menu"
+                class="mt-4 text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Kembali</a>
         </div>
     @endsection
