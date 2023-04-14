@@ -18,7 +18,7 @@
                         </div>
                     </div>
 
-                    <div x-data="{ allChecked: false }" class="">
+                    <div x-data="{ allChecked: false }" class="max-h-screen overflow-y-scroll">
                         <form action="{{ route('transaction_review_store') }}" method="post">
                             @csrf
                             <div class="flex flex-row items-center justify-center gap-2">
@@ -26,7 +26,7 @@
                                     class="border border-gray-300 p-2 rounded-lg flex items-center bg-[#15C972] hover:bg-[#016b38]">
                                     <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500" x-model="allChecked"
                                         x-on:click="allChecked ? uncheckAll() : checkAll()">
-                                    <div class="ml-3 text-gray-700 font-mono">
+                                    <div class="ml-3 text-white font-mono">
                                         Pilih Semua
                                     </div>
 
@@ -47,16 +47,16 @@
                                         class="form-checkbox h-5 w-5 text-green-500"
                                         x-model="checkedItems[{{ $index }}]">
                                         <div>
-                                    <div class="ml-3 text-gray-700 font-mono">
+                                    <div class="ml-3 text-white font-mono">
                                          Nama : {{ $item->user->name }}
                                     </div>
                                    
-                                    <div class="ml-3 text-gray-700 font-mono">
+                                    <div class="ml-3 text-white font-mono">
                                         Total Penimbangan : @currency($item->pay_total)
                                     </div>
                                     
                                         @foreach($item->detailTransactions as $detail)
-                                        <div class="ml-3 text-gray-700 font-mono">
+                                        <div class="ml-3 text-white font-mono">
                                         {{ preg_replace('/\d+\./', '',$detail->category->category_name) }} {{$detail->qty}} {{$detail->category->uom}} @currency($detail->price) Jumlah @currency($detail->qty * $detail->price)
                                     </div>
                                     @php
@@ -65,7 +65,7 @@
                                         @endforeach
 
                                         @if($jumlah - $item->pay_total > 0)
-                                        <div class="ml-3 text-gray-700 font-mono">
+                                        <div class="ml-3 text-white font-mono">
                                         Jasa Angkut @currency($jumlah - $item->pay_total)
                                         </div>
                                         @endif
