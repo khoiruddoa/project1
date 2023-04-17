@@ -54,6 +54,10 @@
                 <i class="fas fa-table mr-3"></i>
                 Laporan
             </a>
+            <a href="/dashboard/graphic" class="flex items-center {{ Request::is('dashboard/graphic*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-table mr-3"></i>
+                Chart
+            </a>
             
         </nav>
        

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdjustmentController;
 use App\Http\Controllers\AdminConvertionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChangePhotoPasswordController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\CollectorTransactionController;
 use App\Http\Controllers\ConvertionController;
 use App\Http\Controllers\DashboardController;
@@ -37,6 +38,10 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/fluktuasi', function () {
+    return view('dashboard.graphic.fluktuasiharga');
+});
+
 Route::get('/home', function () {
     return view('home');
 });
@@ -61,6 +66,9 @@ Route::get('/dashboard/report/Pengeluaran', [ReportController::class, 'pengeluar
 Route::get('/dashboard/report/emas', [ReportController::class, 'emas'])->name('print_gold');
 Route::get('/dashboard/report/pengurus', [ReportController::class, 'pengurus'])->name('print_manage');
 Route::get('/dashboard/report/keuntungan', [ReportController::class, 'keuntungan'])->name('print_profit');
+Route::get('/dashboard/graphic', [ChartController::class, 'index'])->name('chart');
+Route::get('/dashboard/graphic/category', [ChartController::class, 'fluktuasi'])->name('fluktuasi_harga');
+Route::get('/dashboard/graphic/transaction', [ChartController::class, 'jumlahtransaksi'])->name('jumlah_transaksi');
 });
 
 
