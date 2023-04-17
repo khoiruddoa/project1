@@ -15,11 +15,11 @@
         <div class="table-responsive lg:w-3/4 mx-auto">
             <br>
 
-            <h2 class="text-center text-2xl font-bold mb-4">NOTA TRANSAKSI</h2>
+            <h2 class="text-center text-2xl font-bold mb-4">NOTA TRANSAKSI PENJUALAN</h2>
             <table class="mb-4">
 
                 <tr>
-                    <td class="font-bold">Tanggal Transaksi</td>
+                    <td class="font-bold">Tanggal</td>
                     <td>{{ date('d-m-Y', strtotime($transaction->created_at)) }}</td>
                 </tr>
                 <tr>

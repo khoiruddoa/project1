@@ -15,7 +15,7 @@
         <div class="table-responsive lg:w-3/4 mx-auto">
             <br>
 
-            <h2 class="text-center text-2xl font-bold mb-4">LAPORAN TRANSAKSI</h2>
+            <h2 class="text-center text-2xl font-bold mb-4">LAPORAN TRANSAKSI PER NASABAH</h2>
             <table class="mb-4">
 
                 <tr>
@@ -33,7 +33,7 @@
                 <thead>
                     <tr>
                         <th class="px-4 py-2">Tgl</th>
-                        <th class="px-4 py-2">Nama Transaksi</th>
+                        <th class="px-4 py-2">Nama Nasabah</th>
                         <th class="px-4 py-2">Debet</th>
                         <th class="px-4 py-2">Kredit</th>
                     </tr>
