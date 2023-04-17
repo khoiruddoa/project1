@@ -25,7 +25,7 @@
 
 
                 <tr>
-                    <td class="font-bold">Kategori : {{ $category->category_name }}
+                    <td class="font-bold">Kategori : {{ preg_replace('/\d+\./', '', $category->category_name) }}
 
                     </td>
                 </tr>
