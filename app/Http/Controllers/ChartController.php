@@ -73,10 +73,10 @@ class ChartController extends Controller
         
         $year = $request->year;
 
-        $transactionsPerMonth = Transaction::select(DB::raw('MONTHNAME(created_at) as month'), DB::raw('COUNT(*) as total_transactions'))
+        $transactionsPerMonth = Transaction::select(DB::raw('MONTH(created_at) as angka'), DB::raw('MONTHNAME(created_at) as month'), DB::raw('COUNT(*) as total_transactions'))
         ->whereYear('created_at', $year)
         ->groupBy('month')
-        ->orderBy('month', 'asc')
+        ->orderBy('angka', 'asc')
         ->get();
 
      
