@@ -9,6 +9,7 @@ use App\Models\DetailTransaction;
 use App\Models\Pick;
 use App\Models\Transaction;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +40,11 @@ class TransactionController extends Controller
             return redirect('/dashboard/transaksi');
         }
 
-        Transaction::create($request->all());
+        $data = $request->all();
+  $data['created_at'] = $request->input('created_at');
+  
+
+        Transaction::create($data);
         Alert::info('Berhasil', 'Transaksi Nasabah dibuat');
         return redirect('/dashboard/transaksi');
     }
@@ -72,16 +77,33 @@ class TransactionController extends Controller
         ]);
 
         $category_id = $validatedData['category_id'];
+        $date = $request->input('date');
+        $parsed_date = Carbon::parse($date);
+        $year = $parsed_date->format('Y');
+        $month = $parsed_date->format('m');
+
 
         $v = $validatedData['transaction_id'];
         $transaction = Transaction::find($v);
         $category = Category::find($validatedData['category_id']);
-        $category_prices = CategoryPrice::where('category_id', $category_id)->latest()->first();
+        $category_prices = CategoryPrice::where('category_id', $category_id)
+        ->whereYear('created_at', $year)
+        ->whereMonth('created_at', $month)
+        ->latest()->first();
+
+
+        if (!$category_prices) {
+            Alert::warning('Gagal', 'Harga Belum diupdate untuk bulan tersebut');
+            return back();
+        }
+
         $buy = $category_prices->buy;
         $sell = $category_prices->sell;
         
         $validatedData['price'] = $buy;
         $validatedData['sell'] = $sell;
+        
+        $validatedData['created_at'] = $request->input('date');
         
         $debet = $buy * $validatedData['qty'];
         $kredit = $sell * $validatedData['qty'];

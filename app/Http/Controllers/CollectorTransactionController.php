@@ -7,6 +7,7 @@ use App\Models\CategoryPrice;
 use App\Models\CollectorTransaction;
 use App\Models\DetailCollectorTransaction;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -28,13 +29,15 @@ class CollectorTransactionController extends Controller
         $collectortransaction = CollectorTransaction::where('user_id', $request->input('user_id'))->whereDate('created_at', '=', now()->toDateString())->get();
 
 
-
         if (count($collectortransaction) > 0) {
             Alert::warning('Gagal', 'Pengepul sudah bertransaksi di tanggal yang sama');
             return redirect('/dashboard/pengepul');
         } 
-
-            CollectorTransaction::create($request->all());
+        $data = $request->all();
+        $data['created_at'] = $request->input('created_at');
+        
+      
+            CollectorTransaction::create($data);
             Alert::info('Berhasil', 'Transaksi dibuat');
             return redirect('/dashboard/pengepul');
         
@@ -68,13 +71,30 @@ class CollectorTransactionController extends Controller
         ]);
 
         $category_id = $validatedData['category_id'];
+        $date = $request->input('date');
+        $parsed_date = Carbon::parse($date);
+        $year = $parsed_date->format('Y');
+        $month = $parsed_date->format('m');
+
+
+
+
         $category = Category::find($validatedData['category_id']);
-        $category_prices = CategoryPrice::where('category_id', $category_id)->latest()->first();
-    
+        $category_prices = CategoryPrice::where('category_id', $category_id)
+        ->whereYear('created_at', $year)
+        ->whereMonth('created_at', $month)
+        ->latest()->first();
+
+        if (!$category_prices) {
+            Alert::warning('Gagal', 'Harga Belum diupdate untuk bulan tersebut');
+            return back();
+        }
+
         $price = $category_prices->sell;
 
 
         $validatedData['price'] = $price;
+        $validatedData['created_at'] = $request->input('date');
 
        $stocknya = $category->stock;
     

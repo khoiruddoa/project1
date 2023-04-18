@@ -60,6 +60,7 @@
                                     </div>
                                 </div>
                                 <input type="hidden" name="collector_transaction_id" value="{{ $transaction->id }}">
+                                <input type="hidden" name="date" value="{{ $transaction->created_at }}">
                                 <div class="flex flex-row gap-2">
                                     <div>
                                         <label for="qty"

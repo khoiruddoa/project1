@@ -65,6 +65,7 @@ Route::get('/dashboard/report/konversi', [ReportController::class, 'konversi'])-
 Route::get('/dashboard/report/Pengeluaran', [ReportController::class, 'pengeluaran'])->name('print_expend');
 Route::get('/dashboard/report/emas', [ReportController::class, 'emas'])->name('print_gold');
 Route::get('/dashboard/report/pengurus', [ReportController::class, 'pengurus'])->name('print_manage');
+Route::get('/dashboard/report/sampah', [ReportController::class, 'sampah'])->name('print_sampah');
 Route::get('/dashboard/report/keuntungan', [ReportController::class, 'keuntungan'])->name('print_profit');
 Route::get('/dashboard/graphic', [ChartController::class, 'index'])->name('chart');
 Route::get('/dashboard/graphic/category', [ChartController::class, 'fluktuasi'])->name('fluktuasi_harga');

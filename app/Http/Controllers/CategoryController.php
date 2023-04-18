@@ -73,6 +73,7 @@ class CategoryController extends Controller
             'sell.*' => 'required'
         ]);
 
+        $created_at = $request->created_at;
         foreach ($validatedData['category_id'] as $key => $value) {
 
 
@@ -80,6 +81,7 @@ class CategoryController extends Controller
                 'category_id' => $validatedData['category_id'][$key],
                 'buy' => $validatedData['buy'][$key],
                 'sell' => $validatedData['sell'][$key],
+                'created_at' => $created_at
 
             ]);
             $harga->save();

@@ -34,6 +34,12 @@
                         @endif
                     </td>
                 </tr>
+                @else
+                <tr>
+                    <td class="font-bold">Kategori : 
+                      Keseluruhan
+                    </td>
+                </tr>
                 @endif
 
 

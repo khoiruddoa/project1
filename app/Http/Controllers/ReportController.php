@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BankProfit;
 use App\Models\Category;
+use App\Models\CategoryPrice;
 use App\Models\CollectorTransaction;
 use App\Models\Convertion;
 use App\Models\DetailCollectorTransaction;
@@ -126,12 +127,19 @@ class ReportController extends Controller
             return back();
         }
         $kode = $request->input('type');
+
+        if($kode == null){
+            $transaction = Transaction::where('pay_status', 2)->whereBetween('created_at', [$start_date, $end_date])
+            ->get();
+
+        }
+        else{
         $transaction = Transaction::where('pay_status', 2)
         ->whereHas('user', function($query) use ($kode) {
             $query->where('type', $kode);
         })
         ->whereBetween('created_at', [$start_date, $end_date])
-        ->get();
+        ->get();}
     
     
 
@@ -366,4 +374,38 @@ return view('dashboard.report.transaksiitem', [
 ]);
 
 }
+
+
+public function sampah(Request $request)
+{
+    $start_date = $request->input('start_date');
+    $end_date = $request->input('end_date');
+    
+    
+    if ($end_date < $start_date) {
+        Alert::warning('Gagal', 'Tanggal Akhir tidak boleh lebih dulu dari tanggal awal');
+        return back();
+    }
+    
+   
+    $categoryPrice = CategoryPrice::whereBetween('created_at', [$start_date, $end_date])
+    ->get();
+
+
+
+
+return view('dashboard.report.sampah', [
+'categoryprices' => $categoryPrice,
+'start' => $start_date,
+'end' => $end_date
+]);
+
+
+}
+
+
+
+
+
+
 }
