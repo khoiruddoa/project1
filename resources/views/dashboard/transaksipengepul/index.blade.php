@@ -157,6 +157,7 @@
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
 
+                                        {{ date('d-m-Y', strtotime($transaction->created_at)) }}
                                     </th>
 
                                     <th scope="row"
