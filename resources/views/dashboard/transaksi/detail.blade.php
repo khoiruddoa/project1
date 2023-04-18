@@ -45,6 +45,8 @@
                                 <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Masukkan Transaksi</h3>
                                 <form class="space-y-6" action="{{ route('store_detail') }}" method="POST">
                                     @csrf
+
+                                    <input type="hidden" name="date" value="{{$transaction->created_at}}">
                                     <div>
                                         <div x-data="{ searchText: '' }">
                                             <label for="category"

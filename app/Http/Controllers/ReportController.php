@@ -31,21 +31,21 @@ class ReportController extends Controller
     //         return back();
     //     }
 
-    //     $pengepul = CollectorTransaction::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw("'masuk' as origin"))
+    //     $pengepul = CollectorTransaction::select('user_id', 'pay_total', 'information', 'created_at', DB::raw("'masuk' as origin"))
     //         ->where('pay_status', 3)
-    //         ->whereBetween('updated_at', [$start_date, $end_date]) // menambahkan kondisi whereBetween
+    //         ->whereBetween('created_at', [$start_date, $end_date]) // menambahkan kondisi whereBetween
     //         ->get();
 
-    //     $nasabah = Transaction::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw(" 'keluar' as origin"))
+    //     $nasabah = Transaction::select('user_id', 'pay_total', 'information', 'created_at', DB::raw(" 'keluar' as origin"))
     //         ->where('pay_status', 2)
-    //         ->whereBetween('updated_at', [$start_date, $end_date]) // menambahkan kondisi whereBetween
+    //         ->whereBetween('created_at', [$start_date, $end_date]) // menambahkan kondisi whereBetween
     //         ->get();
 
-    //     $profit = Income::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw(" 'profit' as origin"))
-    //         ->whereBetween('updated_at', [$start_date, $end_date]) // menambahkan kondisi whereBetween
+    //     $profit = Income::select('user_id', 'pay_total', 'information', 'created_at', DB::raw(" 'profit' as origin"))
+    //         ->whereBetween('created_at', [$start_date, $end_date]) // menambahkan kondisi whereBetween
     //         ->get();
 
-    //     $transaksi = $pengepul->concat($nasabah)->concat($profit)->sortBy('updated_at');
+    //     $transaksi = $pengepul->concat($nasabah)->concat($profit)->sortBy('created_at');
     //     return view('dashboard.report.transaksi', ['transactions' => $transaksi]);
     // }
 
@@ -71,21 +71,21 @@ class ReportController extends Controller
         $income = Income::all();
 
        
-            $pengepul = CollectorTransaction::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw("'masuk' as origin"))
+            $pengepul = CollectorTransaction::select('user_id', 'pay_total', 'information', 'created_at', DB::raw("'masuk' as origin"))
                 ->where('pay_status', 3)
-                ->whereBetween('updated_at', [$start_date, $end_date])
+                ->whereBetween('created_at', [$start_date, $end_date])
                 ->get();
 
-            $nasabah = Transaction::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw(" 'keluar' as origin"))
+            $nasabah = Transaction::select('user_id', 'pay_total', 'information', 'created_at', DB::raw(" 'keluar' as origin"))
                 ->where('pay_status', 2)
-                ->whereBetween('updated_at', [$start_date, $end_date])
+                ->whereBetween('created_at', [$start_date, $end_date])
                 ->get();
 
-            $profit = Income::select('user_id', 'pay_total', 'information', 'updated_at', DB::raw(" 'profit' as origin"))
-                ->whereBetween('updated_at', [$start_date, $end_date])
+            $profit = Income::select('user_id', 'pay_total', 'information', 'created_at', DB::raw(" 'profit' as origin"))
+                ->whereBetween('created_at', [$start_date, $end_date])
                 ->get();
 
-            $transaksi = $pengepul->concat($nasabah)->concat($profit)->sortBy('updated_at');
+            $transaksi = $pengepul->concat($nasabah)->concat($profit)->sortBy('created_at');
 
             $keluar = $transaksi->where('origin', 'keluar')->sum('pay_total');
             // Menghitung pendapatan dan total saldo
@@ -130,7 +130,7 @@ class ReportController extends Controller
         ->whereHas('user', function($query) use ($kode) {
             $query->where('type', $kode);
         })
-        ->whereBetween('updated_at', [$start_date, $end_date])
+        ->whereBetween('created_at', [$start_date, $end_date])
         ->get();
     
     
@@ -185,17 +185,17 @@ return view('dashboard.report.transaksikategori', [
         }
         $bank = BankProfit::sum('pay_total');
         $ex = Expend::sum('pay_total');
-        // Mengambil data dari tabel BankProfit yang tanggal updated_at-nya antara start_date dan end_date
-        $profit = BankProfit::select('pay_total', 'information', 'updated_at', DB::raw("'masuk' as origin"))
-            ->whereBetween('updated_at', [$start_date, $end_date])
+        // Mengambil data dari tabel BankProfit yang tanggal created_at-nya antara start_date dan end_date
+        $profit = BankProfit::select('pay_total', 'information', 'created_at', DB::raw("'masuk' as origin"))
+            ->whereBetween('created_at', [$start_date, $end_date])
             ->get();
 
-        // Mengambil data dari tabel Expend yang tanggal updated_at-nya antara start_date dan end_date
-        $expend = Expend::select('pay_total', 'information', 'updated_at', DB::raw(" 'keluar' as origin"))
-            ->whereBetween('updated_at', [$start_date, $end_date])
+        // Mengambil data dari tabel Expend yang tanggal created_at-nya antara start_date dan end_date
+        $expend = Expend::select('pay_total', 'information', 'created_at', DB::raw(" 'keluar' as origin"))
+            ->whereBetween('created_at', [$start_date, $end_date])
             ->get();
 
-        $expenders = $profit->concat($expend)->sortBy('updated_at');
+        $expenders = $profit->concat($expend)->sortBy('created_at');
 
         $sisa_saldo = $bank - $ex;
 
@@ -242,9 +242,9 @@ return view('dashboard.report.transaksikategori', [
             return back();
         }
 
-        // Mengambil data dari tabel Manage yang tanggal updated_at-nya antara start_date dan end_date
-        $manages = Manage::orderBy('updated_at', 'asc')
-            ->whereBetween('updated_at', [$start_date, $end_date])
+        // Mengambil data dari tabel Manage yang tanggal created_at-nya antara start_date dan end_date
+        $manages = Manage::orderBy('created_at', 'asc')
+            ->whereBetween('created_at', [$start_date, $end_date])
             ->get();
 
         return view('dashboard.report.pengurus', [
@@ -265,10 +265,10 @@ return view('dashboard.report.transaksikategori', [
 
             return back();
         }
-        $income = Income::select('pay_total', 'updated_at', DB::raw("'masuk' as origin"));
-        $gold = Gold::select('pay_total', 'updated_at', DB::raw("'gold' as origin"));
-        $manage = Manage::select('pay_total', 'updated_at', DB::raw("'pengurus' as origin"));
-        $bank = BankProfit::select('pay_total', 'updated_at', DB::raw("'bank' as origin"));
+        $income = Income::select('pay_total', 'created_at', DB::raw("'masuk' as origin"));
+        $gold = Gold::select('pay_total', 'created_at', DB::raw("'gold' as origin"));
+        $manage = Manage::select('pay_total', 'created_at', DB::raw("'pengurus' as origin"));
+        $bank = BankProfit::select('pay_total', 'created_at', DB::raw("'bank' as origin"));
         $totalprofit = $income->sum('pay_total') + $gold->sum('pay_total') - $manage->sum('pay_total') - $bank->sum('pay_total');
 
 
@@ -276,10 +276,10 @@ return view('dashboard.report.transaksikategori', [
         if ($request->has('start_date') && $request->has('end_date')) {
             $start_date = $request->input('start_date');
             $end_date = $request->input('end_date');
-            $income->whereBetween('updated_at', [$start_date, $end_date]);
-            $manage->whereBetween('updated_at', [$start_date, $end_date]);
-            $bank->whereBetween('updated_at', [$start_date, $end_date]);
-            $gold->whereBetween('updated_at', [$start_date, $end_date]);
+            $income->whereBetween('created_at', [$start_date, $end_date]);
+            $manage->whereBetween('created_at', [$start_date, $end_date]);
+            $bank->whereBetween('created_at', [$start_date, $end_date]);
+            $gold->whereBetween('created_at', [$start_date, $end_date]);
         }
 
 
@@ -290,7 +290,7 @@ return view('dashboard.report.transaksikategori', [
         $gold = $gold->get();
 
 
-        $profits = $income->concat($manage)->concat($bank)->concat($gold)->sortBy('updated_at');
+        $profits = $income->concat($manage)->concat($bank)->concat($gold)->sortBy('created_at');
 
         $pendapatan = 0;
         foreach ($profits as $profit) {
@@ -351,7 +351,7 @@ return view('dashboard.report.transaksikategori', [
         ->whereHas('detailTransactions', function($query) use ($kode) {
             $query->where('category_id', $kode);
         })
-        ->whereBetween('updated_at', [$start_date, $end_date])
+        ->whereBetween('created_at', [$start_date, $end_date])
         ->get();
     
     

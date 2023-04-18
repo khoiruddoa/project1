@@ -36,9 +36,9 @@
                             <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Cari Data Pengepul</h3>
                             <div>
                                 <input type="text" id="simple-search" x-model="searchText"
-                                class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Search">
-                               
+                                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Search">
+
 
                             </div>
 
@@ -58,38 +58,47 @@
                                         </thead>
                                         <tbody class="text-gray-700">
                                             @foreach ($users as $user)
-                                            <template
-                                            x-if="searchText === '' || '{{ strtolower($user->name) }}'.includes(searchText.toLowerCase())">
-                                             
-                                                <tr>
-                                                    <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $user->name }}</td>
-                                                    <td class="w-1/3 sm:w-auto text-left py-3 px-4">
-                                                        {{ $user->phone_number }}</td>
-                                                    <td class="sm:text-left py-3 px-4">
-                                                        <div>
+                                                <template
+                                                    x-if="searchText === '' || '{{ strtolower($user->name) }}'.includes(searchText.toLowerCase())">
+
+                                                    <tr>
+                                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $user->name }}
+                                                        </td>
+                                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">
+                                                            {{ $user->phone_number }}</td>
+                                                        <td class="sm:text-left py-3 px-4">
+
                                                             <form action="{{ route('transaksipengepul_store') }}"
                                                                 method="POST">
                                                                 @csrf
-                                                                <input type="hidden" name="user_id"
-                                                                    value="{{ $user->id }}">
-                                                                <input type="hidden" name="administrator"
-                                                                    value="{{ auth()->user()->name }}">
-                                                                <input type="hidden" name="pay_status" value="0">
+                                                                <div class="flex flex-col gap-1">
+                                                                    <div>
+                                                                        <input type="date" name="created_at"
+                                                                            value="{{ date('Y-m-d') }}">
+                                                                    </div>
+                                                                    <input type="hidden" name="user_id"
+                                                                        value="{{ $user->id }}">
+                                                                    <input type="hidden" name="administrator"
+                                                                        value="{{ auth()->user()->name }}">
+                                                                    <input type="hidden" name="pay_status" value="0">
 
-                                                                <button type="submit" onclick="this.disabled=true; this.form.submit();"
-                                                                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buat
-                                                                    Transaksi Pengepul</button>
-                                                                <div
-                                                                    class="text-sm font-medium text-gray-500 dark:text-gray-300">
 
+                                                                    <div
+                                                                        class="text-sm font-medium text-gray-500 dark:text-gray-300">
+
+                                                                        <button type="submit"
+                                                                            onclick="this.disabled=true; this.form.submit();"
+                                                                            class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buat
+                                                                            Transaksi Pengepul</button>
+                                                                    </div>
                                                                 </div>
                                                             </form>
 
 
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </template>
+
+                                                        </td>
+                                                    </tr>
+                                                </template>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -147,7 +156,7 @@
                                 <tr class="border-b border-gray-200 dark:border-gray-700">
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
-                                        
+
                                     </th>
 
                                     <th scope="row"
@@ -208,7 +217,8 @@
                                                     <input type="hidden" name="pay_status" value="3">
                                                     <input type="hidden" name="administrator"
                                                         value="{{ auth()->user()->name }}">
-                                                    <button type="submit" onclick="this.disabled=true; this.form.submit();"
+                                                    <button type="submit"
+                                                        onclick="this.disabled=true; this.form.submit();"
                                                         onclick="return confirm('Apakah Transaksi sudah dibayar? Data Tidak bisa diubah setelah anda klik selesai')"
                                                         class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900">Sudah
                                                         dibayar?</button>
@@ -217,13 +227,12 @@
                                         @endif
                                     </th>
                                     <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
-                                    <div>
-                                        <a href="{{route('print_transaction_collector',['id' => $transaction->id])}}"
-                                           
-                                            class="block w-40 md:w-full focus:outline-none text-white text-center bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-orange-600 dark:ho ver:bg-orange-700 dark:focus:ring-orange-900 mb-2">Print</a>
-                                    </div>
-                                </th>
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
+                                        <div>
+                                            <a href="{{ route('print_transaction_collector', ['id' => $transaction->id]) }}"
+                                                class="block w-40 md:w-full focus:outline-none text-white text-center bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-orange-600 dark:ho ver:bg-orange-700 dark:focus:ring-orange-900 mb-2">Print</a>
+                                        </div>
+                                    </th>
                                 </tr>
                             @endforeach
                         </tbody>

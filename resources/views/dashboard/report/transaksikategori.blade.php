@@ -40,7 +40,7 @@
             </table>
             <table class="table-auto mb-4 w-full">
                 <thead>
-                    <tr>
+                    <tr> <th class="px-4 py-2">No</th>
                         <th class="px-4 py-2">Tgl</th>
                         <th class="px-4 py-2">Nama Transaksi</th>
                         <th class="px-4 py-2">Harga Beli</th>
@@ -50,7 +50,9 @@
                 <tbody>
                     @foreach ($transactions as $transaction)
                         <tr>
-                            <td class="border px-4 py-2">{{ $transaction->updated_at->format('d-m-Y') }}</td>
+                            <td class="border px-4 py-2">{{ $loop->iteration }}</td>
+
+                            <td class="border px-4 py-2">{{ $transaction->created_at->format('d-m-Y') }}</td>
 
                             <td class="border px-4 py-2">
                                Penimbangan Sampah dari {{$transaction->user->name}}

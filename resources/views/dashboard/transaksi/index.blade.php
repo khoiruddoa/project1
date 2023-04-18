@@ -3,7 +3,7 @@
 @section('container')
     <div class="flex flex-col">
         <div class="">
-            <h1 class="text-3xl text-black pb-6">Transaksi Nasabah</h1> 
+            <h1 class="text-3xl text-black pb-6">Transaksi Nasabah</h1>
         </div>
 
         <div>
@@ -68,6 +68,8 @@
                                                 <th
                                                     class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
                                                     No.HP</th>
+                                                <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Tanggal
+                                                    Transaksi</th>
                                                 <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm"></th>
                                             </tr>
                                         </thead>
@@ -80,29 +82,39 @@
                                                             {{ $user->name }}</td>
                                                         <td class="w-1/3 sm:w-auto text-left py-3 px-4">
                                                             {{ $user->phone_number }}</td>
+
+
                                                         <td class="sm:text-left py-3 px-4">
-                                                            <div>
-                                                                <form action="{{ route('transaksi_store') }}"
+                                                            <form action="{{ route('transaksi_store') }}"
                                                                     method="POST">
+                                                            <div class="flex flex-col gap-1">
+                                                        
                                                                     @csrf
+                                                                    <div>
+                                                                        <input type="date" name="created_at"
+                                                                            value="{{ date('Y-m-d') }}">
+                                                                    </div>
                                                                     <input type="hidden" name="user_id"
                                                                         value="{{ $user->id }}">
                                                                     <input type="hidden" name="administrator"
                                                                         value="{{ auth()->user()->name }}">
                                                                     <input type="hidden" name="pay_status" value="0">
 
-                                                                    <button type="submit" onclick="this.disabled=true; this.form.submit();"
-                                                                        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buat
-                                                                        Transaksi</button>
+                                                                  
                                                                     <div
                                                                         class="text-sm font-medium text-gray-500 dark:text-gray-300">
-
+                                                                        <button type="submit"
+                                                                        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buat
+                                                                        Transaksi</button>
                                                                     </div>
-                                                                </form>
+                                                              
 
 
                                                             </div>
+                                                        </form>
+
                                                         </td>
+
                                                     </tr>
                                                 </template>
                                             @endforeach
@@ -143,13 +155,13 @@
                 aria-labelledby="about-tab">
                 <div x-data="{ searchText: '' }" class="w-full mt-6">
                     <input type="text" id="simple-search" x-model="searchText"
-                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search">
-                
+                        class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search">
+
                     <div class="overflow-x-auto">
 
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                           
+
                             <div class="relative overflow-auto max-h-[500px] shadow-md sm:rounded-lg">
                                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                     <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
@@ -158,6 +170,7 @@
                                                 Nama Nasabah
                                             </th>
                                             <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                                Tgl Transaksi
 
                                             </th>
 
@@ -165,36 +178,42 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($transactions as $transaction)
-                                        <template
-                                        x-if="searchText === '' || '{{ strtolower($transaction->user->name) }}'.includes(searchText.toLowerCase())">
-                                         
-                                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                            <template
+                                                x-if="searchText === '' || '{{ strtolower($transaction->user->name) }}'.includes(searchText.toLowerCase())">
 
-                                                <th scope="row"
+                                                <tr class="border-b border-gray-200 dark:border-gray-700">
+
+                                                    <th scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                        {{ $transaction->user->name }}
+                                                    </th>
+                                                    <th scope="row"
                                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                                    {{ $transaction->user->name }}
+                                                    {{ date('d-m-Y', strtotime($transaction->created_at)) }}
                                                 </th>
-                                                <th scope="row"
-                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                                    <div class="flex flex-row gap-1 items-center justify-center">
-                                                        <div><a href="{{ route('transaksi_detail', ['id' => $transaction->id]) }}"
-                                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+                                                    <th scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                        <div class="flex flex-row gap-1 items-center justify-center">
+                                                            <div><a href="{{ route('transaksi_detail', ['id' => $transaction->id]) }}"
+                                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+                                                            </div>
+                                                            <div>
+                                                                <form
+                                                                    action="{{ route('finish', ['id' => $transaction->id]) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    <input type="hidden" name="pay_status"
+                                                                        value="1">
+                                                                    <button type="submit"
+                                                                        onclick="this.disabled=true; this.form.submit();"
+                                                                        onclick="return confirm('Apakah Transaksi sudah benar? Data Tidak bisa diubah setelah anda klik selesai')"
+                                                                        class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900">Selesai</button>
+                                                                </form>
+                                                            </div>
                                                         </div>
-                                                        <div>
-                                                            <form
-                                                                action="{{ route('finish', ['id' => $transaction->id]) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                <input type="hidden" name="pay_status" value="1">
-                                                                <button type="submit" onclick="this.disabled=true; this.form.submit();"
-                                                                    onclick="return confirm('Apakah Transaksi sudah benar? Data Tidak bisa diubah setelah anda klik selesai')"
-                                                                    class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900">Selesai</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </template>
+                                                    </th>
+                                                </tr>
+                                            </template>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -211,8 +230,8 @@
 
                 <div x-data="{ searchText: '' }" class="w-full mt-6">
                     <input type="text" id="simple-search" x-model="searchText"
-                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search">
+                        class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search">
                     <div class="overflow-x-auto">
 
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -227,36 +246,43 @@
                                             <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
 
                                             </th>
+                                            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+
+                                            </th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($finish as $transaction)
-                                        <template
-                                        x-if="searchText === '' || '{{ strtolower($transaction->user->name) }}'.includes(searchText.toLowerCase())">
-                                         
-                                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                            <template
+                                                x-if="searchText === '' || '{{ strtolower($transaction->user->name) }}'.includes(searchText.toLowerCase())">
 
-                                                <th scope="row"
+                                                <tr class="border-b border-gray-200 dark:border-gray-700">
+
+                                                    <th scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                        {{ $transaction->user->name }}
+                                                    </th>
+                                                    <th scope="row"
                                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                                    {{ $transaction->user->name }}
+                                                    {{ date('d-m-Y', strtotime($transaction->created_at)) }}
                                                 </th>
-                                                <th scope="row"
-                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                                    <span
-                                                        class="inline-flex items-center bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                                                        <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
-                                                        Menunggu Persetujuan
-                                                    </span>
-                                                    <div class="flex flex-row gap-1 items-center justify-center">
-                                                        <div><a href="{{ route('transaksi_detail', ['id' => $transaction->id]) }}"
-                                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
-                                                        </div>
+                                                    <th scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                        <span
+                                                            class="inline-flex items-center bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                                                            <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+                                                            Menunggu Persetujuan
+                                                        </span>
+                                                        <div class="flex flex-row gap-1 items-center justify-center">
+                                                            <div><a href="{{ route('transaksi_detail', ['id' => $transaction->id]) }}"
+                                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+                                                            </div>
 
 
-                                                </th>
-                                            </tr>
-                                        </template>
+                                                    </th>
+                                                </tr>
+                                            </template>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -271,8 +297,8 @@
                 aria-labelledby="statistics-tab">
                 <div x-data="{ searchText: '' }" class="w-full mt-6">
                     <input type="text" id="simple-search" x-model="searchText"
-                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search">
+                        class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search">
                     <div class="overflow-x-auto">
 
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -287,35 +313,42 @@
                                             <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
 
                                             </th>
+                                            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+
+                                            </th>
+
 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($approved as $transaction)
-                                        <template
-                                        x-if="searchText === '' || '{{ strtolower($transaction->user->name) }}'.includes(searchText.toLowerCase())">
-                                         
-                                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                            <template
+                                                x-if="searchText === '' || '{{ strtolower($transaction->user->name) }}'.includes(searchText.toLowerCase())">
 
-                                                <th scope="row"
-                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                                    {{ $transaction->user->name }}
-                                                </th>
-                                                <th scope="row"
-                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                                    <span
-                                                        class="inline-flex items-center bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                                                        <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
-                                                        Selesai
-                                                    </span>
-                                                    <div class="flex flex-row gap-1 items-center justify-center">
-                                                        <div><a href="{{ route('transaksi_detail', ['id' => $transaction->id]) }}"
-                                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
-                                                        </div>
-                                                </th>
-                                            </tr>
-                                        </template>
+                                                <tr class="border-b border-gray-200 dark:border-gray-700">
 
+                                                    <th scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                        {{ $transaction->user->name }}
+                                                    </th>
+                                                    <th scope="row"
+                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                    {{ date('d-m-Y', strtotime($transaction->created_at)) }}
+                                                </th>
+                                                    <th scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                        <span
+                                                            class="inline-flex items-center bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                                                            <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+                                                            Selesai
+                                                        </span>
+                                                        <div class="flex flex-row gap-1 items-center justify-center">
+                                                            <div><a href="{{ route('transaksi_detail', ['id' => $transaction->id]) }}"
+                                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+                                                            </div>
+                                                    </th>
+                                                </tr>
+                                            </template>
                                         @endforeach
                                     </tbody>
                                 </table>

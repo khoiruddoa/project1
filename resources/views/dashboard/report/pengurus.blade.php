@@ -40,7 +40,7 @@
                 <tbody>
                     @foreach ($manages as $manage)
                         <tr>
-                            <td class="border px-4 py-2">{{ $manage->updated_at->format('d-m-Y') }}</td>
+                            <td class="border px-4 py-2">{{ $manage->created_at->format('d-m-Y') }}</td>
 
                             <td class="border px-4 py-2">
                                 {{$manage->user->name}}

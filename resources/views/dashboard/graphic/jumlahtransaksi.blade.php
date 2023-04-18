@@ -6,7 +6,7 @@
 
         </div>
         <div class="bg-grey-500 text-grey rounded-lg p-6">
-            <h2 class="text-lg font-semibold mb-4">Transaksi</h2>
+            <h2 class="text-lg font-semibold mb-4">Jumlah Transaksi Nasabah Per Bulan</h2>
             <div>
                 <canvas id="myChart"></canvas>
                 <script>

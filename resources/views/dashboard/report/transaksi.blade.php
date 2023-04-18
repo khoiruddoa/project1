@@ -32,6 +32,7 @@
             <table class="table-auto mb-4 w-full">
                 <thead>
                     <tr>
+                        <th class="px-4 py-2">No</th>
                         <th class="px-4 py-2">Tgl</th>
                         <th class="px-4 py-2">Nama Nasabah</th>
                         <th class="px-4 py-2">Debet</th>
@@ -41,7 +42,8 @@
                 <tbody>
                     @foreach ($transactions as $transaction)
                         <tr>
-                            <td class="border px-4 py-2">{{ $transaction->updated_at->format('d-m-Y') }}</td>
+                            <td class="border px-4 py-2">{{ $loop->iteration }}</td>
+                            <td class="border px-4 py-2">{{ $transaction->created_at->format('d-m-Y') }}</td>
 
                             <td class="border px-4 py-2">
                                 @if ($transaction->origin == 'keluar')
