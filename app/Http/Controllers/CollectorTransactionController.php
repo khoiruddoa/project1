@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\CategoryPrice;
 use App\Models\CollectorTransaction;
 use App\Models\DetailCollectorTransaction;
+use App\Models\Payment;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,24 +30,23 @@ class CollectorTransactionController extends Controller
         $collectortransaction = CollectorTransaction::where('user_id', $request->input('user_id'))->whereDate('created_at', '=', now()->toDateString())->get();
 
 
-        if (count($collectortransaction) > 0) {
-            Alert::warning('Gagal', 'Pengepul sudah bertransaksi di tanggal yang sama');
-            return redirect('/dashboard/pengepul');
-        } 
+        // if (count($collectortransaction) > 0) {
+        //     Alert::warning('Gagal', 'Pengepul sudah bertransaksi di tanggal yang sama');
+        //     return redirect('/dashboard/pengepul');
+        // } 
         $data = $request->all();
         $data['created_at'] = $request->input('created_at');
-        
-      
-            CollectorTransaction::create($data);
-            Alert::info('Berhasil', 'Transaksi dibuat');
-            return redirect('/dashboard/pengepul');
-        
+
+
+        CollectorTransaction::create($data);
+        Alert::info('Berhasil', 'Transaksi dibuat');
+        return redirect('/dashboard/pengepul');
     }
 
     public function detail($id)
     {
         $transaction = CollectorTransaction::find($id);
-       
+
 
         $categories = Category::orderBy('id', 'asc')->get();
         $detail_transactions = DetailCollectorTransaction::where('collector_transaction_id', $id)->get();
@@ -61,12 +61,12 @@ class CollectorTransactionController extends Controller
 
     public function storedetail(Request $request)
     {
-       
+
 
         $validatedData = $request->validate([
             'collector_transaction_id' => 'required',
             'category_id' => 'required',
-           
+
             'qty' => 'required'
         ]);
 
@@ -81,9 +81,9 @@ class CollectorTransactionController extends Controller
 
         $category = Category::find($validatedData['category_id']);
         $category_prices = CategoryPrice::where('category_id', $category_id)
-        ->whereYear('created_at', $year)
-        ->whereMonth('created_at', $month)
-        ->latest()->first();
+            ->whereYear('created_at', $year)
+            ->whereMonth('created_at', $month)
+            ->latest()->first();
 
         if (!$category_prices) {
             Alert::warning('Gagal', 'Harga Belum diupdate untuk bulan tersebut');
@@ -96,14 +96,14 @@ class CollectorTransactionController extends Controller
         $validatedData['price'] = $price;
         $validatedData['created_at'] = $request->input('date');
 
-       $stocknya = $category->stock;
-    
+        $stocknya = $category->stock;
+
         if ($request->qty > $stocknya) {
             Alert::Warning('Gagal', 'Stock Tidak Mencukupi');
             return redirect()->back();
         }
         $stock = $validatedData['qty'];
-        
+
         $v = $validatedData['collector_transaction_id'];
         $transaction = CollectorTransaction::find($v);
         $category = Category::find($validatedData['category_id']);
@@ -124,19 +124,19 @@ class CollectorTransactionController extends Controller
 
     public function finish(Request $request, $id)
     {
-        
-$detail_collector_transactions = DetailCollectorTransaction::where('collector_transaction_id', $id)->get();
-        
+
+        $detail_collector_transactions = DetailCollectorTransaction::where('collector_transaction_id', $id)->get();
+
         $transaction = CollectorTransaction::find($id);
-        if(count($detail_collector_transactions) == 0){
+        if (count($detail_collector_transactions) == 0) {
             Alert::warning('Gagal', 'Belum ada transaksi yang diisi');
             return back();
         }
-           
-      
+
+
         $transaction->fill($request->all());
         $transaction->save();
-        
+
         Alert::info('Berhasil', 'Transaksi Selesai');
         return redirect('/dashboard/pengepul');
     }
@@ -145,7 +145,7 @@ $detail_collector_transactions = DetailCollectorTransaction::where('collector_tr
     public function destroy($id)
     {
 
-        
+
         $detail = DetailCollectorTransaction::where('collector_transaction_id', $id)->get();
         $transaction = CollectorTransaction::find($id);
 
@@ -167,16 +167,15 @@ $detail_collector_transactions = DetailCollectorTransaction::where('collector_tr
         $detail = DetailCollectorTransaction::findOrFail($id);
         $transaction = CollectorTransaction::find($detail->collector_transaction_id);
         $debet = $detail->price * $detail->qty;
-        if($transaction->pay_status > 0)
-{
-    Alert::warning('Gagal', 'Tidak bisa hapus karena transaksi sudah selesai');
-    return back();
-}
+        if ($transaction->pay_status > 0) {
+            Alert::warning('Gagal', 'Tidak bisa hapus karena transaksi sudah selesai');
+            return back();
+        }
 
-$category = Category::find($detail->category_id);
+        $category = Category::find($detail->category_id);
         $stock = $detail->qty;
 
- $payloadcategory = ['stock' => $category['stock'] + $stock];
+        $payloadcategory = ['stock' => $category['stock'] + $stock];
         $category->fill($payloadcategory);
         $category->save();
 
@@ -186,5 +185,19 @@ $category = Category::find($detail->category_id);
         $detail->delete();
         Alert::info('Berhasil', 'Hapus Data Berhasil');
         return back();
+    }
+
+
+    public function payment(Request $request){
+
+
+        $data = $request->all();
+        $data['created_at'] = $request->input('created_at');
+        
+      
+            Payment::create($data);
+            Alert::info('Berhasil', 'Pembayaran sukses');
+            return redirect('/dashboard/pengepul');
+        
     }
 }

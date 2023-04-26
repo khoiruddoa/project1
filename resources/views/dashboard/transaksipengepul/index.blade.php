@@ -111,6 +111,9 @@
                 </div>
             </div>
 
+
+           
+
         </div>
 
     </div>
@@ -178,7 +181,7 @@
                                                 <span class="w-2 h-2 mr-1 bg-yellow-500 rounded-full"></span>
                                                 Proses
                                             </span>
-                                        @elseif($transaction->pay_status == 1)
+                                        @elseif($transaction->pay_status == 2)
                                             <span
                                                 class="inline-flex items-center bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
                                                 <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
@@ -199,34 +202,114 @@
                                         @endif
                                     </th>
 
-
-
-
-
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
                                         @if ($transaction->pay_status == 0)
                                             <a href="{{ route('transaksipengepul_detail', ['id' => $transaction->id]) }}"
                                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail
                                                 Transaksi Pengepul</a>
-                                        @endif
-                                        @if ($transaction->pay_status == 2)
-                                            <div>
+                                        @else
+                                            {{-- <div>
                                                 <form action="{{ route('finishpengepul', ['id' => $transaction->id]) }}"
                                                     method="post">
                                                     @csrf
                                                     <input type="hidden" name="pay_status" value="3">
                                                     <input type="hidden" name="administrator"
                                                         value="{{ auth()->user()->name }}">
+
                                                     <button type="submit"
                                                         onclick="this.disabled=true; this.form.submit();"
                                                         onclick="return confirm('Apakah Transaksi sudah dibayar? Data Tidak bisa diubah setelah anda klik selesai')"
                                                         class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900">Sudah
                                                         dibayar?</button>
                                                 </form>
-                                            </div>
+                                            </div> --}}
+
+
+                                            <!-- Modal toggle -->
+                                            <button data-modal-target="authentication-modal2"
+                                                data-modal-toggle="authentication-modal2"
+                                                class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                                type="button">
+                                                Pembayaran
+                                            </button>
+                                             <!-- Main modal -->
+            <div id="authentication-modal2" tabindex="-1" aria-hidden="true"
+            class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
+            <div class="relative w-full h-full max-w-md md:h-auto">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <button type="button"
+                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-sidebar dark:hover:text-white"
+                        data-modal-hide="authentication-modal2">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <div class="px-6 py-6 lg:px-8">
+                        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Masukkan Nominal Pembayaran
+                        </h3>
+                        <form class="space-y-6" action="" method="POST">
+                            @csrf
+                            <input type="hidden" name="collector_transaction_id" value="" >
+
+                            <div>
+                                <input type="date" name="created_at" value="{{ date('Y-m-d') }}">
+                            </div>
+
+                            <div class="flex flex-row gap-2">
+                                <div>
+                                    <label for="qty"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah</label>
+                                </div>
+                                <div x-data="{ number: null }">
+                                    <input type="text" name="pay_total" x-model="number"
+                                        x-on:input="
+                                         number = $event.target.value.replace(/[^0-9]/g, '');
+                                       "
+                                        x-on:blur="
+                                         $event.target.value = parseInt(number).toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+                                       "
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                </div>
+                                <div>
+                                    <div>
+
+
+                                        <select id="information" name="information"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                                            <option value="tunai">Tunai
+                                            </option>
+                                            <option value="transfer">Transfer
+                                            </option>
+
+                                        </select>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                            <button type="submit" onclick="this.disabled=true; this.form.submit();"
+                                class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Simpan</button>
+                            <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
                                         @endif
                                     </th>
+
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
                                         <div>

@@ -150,6 +150,7 @@ Route::post('/dashboard/pengepul/detail', [CollectorTransactionController::class
 Route::get('/dashboard/pengepul/detail/delete/{id}', [CollectorTransactionController::class, 'destroydetail'])->name('deletepengepul_detail');
 Route::get('/dashboard/pengepul/delete/{id}', [CollectorTransactionController::class, 'destroy'])->name('transaksipengepul_delete');
 Route::post('/dashboard/pengepul/finish/{id}', [CollectorTransactionController::class, 'finish'])->name('finishpengepul');
+Route::post('/dashboard/pengepul/payment', [CollectorTransactionController::class, 'payment'])->name('paymentpengepul');
 Route::get('/dashboard/konversi', [AdminConvertionController::class, 'index'])->name('pengajuan_konversi');
 Route::post('/dashboard/konversi/update/{id}', [AdminConvertionController::class, 'store'])->name('store_konversi');
 Route::get('/dashboard/expend', [ExpendController::class, 'index'])->name('expend');
