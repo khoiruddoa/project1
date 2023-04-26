@@ -188,16 +188,31 @@ class CollectorTransactionController extends Controller
     }
 
 
-    public function payment(Request $request){
+    public function payment(Request $request)
+    {
+        $request->merge([
+            'pay_total' => str_replace('.', '', $request->pay_total)
+        ]);
+
+        $id = $request->collector_transaction_id;
+
+
+       
+        $transaction = CollectorTransaction::find($id);
+        
+
+        $payload = ['pay_status' => '3'];
+
+        $transaction->fill($payload);
+        $transaction->save();
 
 
         $data = $request->all();
         $data['created_at'] = $request->input('created_at');
-        
-      
-            Payment::create($data);
-            Alert::info('Berhasil', 'Pembayaran sukses');
-            return redirect('/dashboard/pengepul');
-        
+
+
+        Payment::create($data);
+        Alert::info('Berhasil', 'Pembayaran sukses');
+        return redirect('/dashboard/pengepul');
     }
 }

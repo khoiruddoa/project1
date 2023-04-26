@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('collector_transaction_id');
-            $table->string('administrator'); 
             $table->float('pay_total', 15, 3)->nullable();
             $table->text('information')->nullable();
             $table->timestamps();
