@@ -18,4 +18,8 @@ class CollectorTransaction extends Model
     {
         return $this->hasMany(DetailCollectorTransaction::class);
     }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

@@ -8,10 +8,12 @@ use App\Models\CategoryPrice;
 use App\Models\CollectorTransaction;
 use App\Models\Convertion;
 use App\Models\DetailCollectorTransaction;
+use App\Models\DetailTransaction;
 use App\Models\Expend;
 use App\Models\Gold;
 use App\Models\Income;
 use App\Models\Manage;
+use App\Models\Payment;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -327,6 +329,8 @@ return view('dashboard.report.transaksikategori', [
     public function print_transaksi_pengepul($id)
     {
         $transaction = CollectorTransaction::find($id);
+
+        $payments = Payment::where('collector_transaction_id', $id)->get();
        
 
         $categories = Category::all();
@@ -335,7 +339,8 @@ return view('dashboard.report.transaksikategori', [
         return view('dashboard.report.collectorprint', [
             'transaction' => $transaction,
             'categories' => $categories,
-            'detail_transactions' => $detail_transactions
+            'detail_transactions' => $detail_transactions,
+            'payments' => $payments
 
         ]); 
 
@@ -403,6 +408,53 @@ return view('dashboard.report.sampah', [
 
 }
 
+
+public function pendapatan(Request $request)
+{
+   
+    $jan = DetailTransaction::whereYear('created_at', $request->year)
+    ->whereMonth('created_at', 1)->get();
+    $feb = DetailTransaction::whereYear('created_at', $request->year)
+    ->whereMonth('created_at', 2)->get();
+    $mar = DetailTransaction::whereYear('created_at', $request->year)
+    ->whereMonth('created_at', 3)->get();
+    $apr = DetailTransaction::whereYear('created_at', $request->year)
+    ->whereMonth('created_at', 4)->get();
+    $mei = DetailTransaction::whereYear('created_at', $request->year)
+    ->whereMonth('created_at', 5)->get();
+    $jun = DetailTransaction::whereYear('created_at', $request->year)
+    ->whereMonth('created_at', 6)->get();
+    $jul = DetailTransaction::whereYear('created_at', $request->year)
+    ->whereMonth('created_at', 7)->get();
+    $aug = DetailTransaction::whereYear('created_at', $request->year)
+    ->whereMonth('created_at', 8)->get();
+    $sep = DetailTransaction::whereYear('created_at', $request->year)
+    ->whereMonth('created_at', 9)->get();
+    $okt = DetailTransaction::whereYear('created_at', $request->year)
+    ->whereMonth('created_at', 10)->get();
+    $nov = DetailTransaction::whereYear('created_at', $request->year)
+    ->whereMonth('created_at', 11)->get();
+    $des = DetailTransaction::whereYear('created_at', $request->year)
+    ->whereMonth('created_at', 12)->get();
+
+return view('dashboard.report.pendapatan', [
+'jan' => $jan,
+'feb' => $feb,
+'mar' => $mar,
+'apr' => $apr,
+'mei' => $mei,
+'jun' => $jun,
+'jul' => $jul,
+'aug' => $aug,
+'sep' => $sep,
+'okt' => $okt,
+'nov' => $nov,
+'des' => $des
+
+]);
+
+
+}
 
 
 

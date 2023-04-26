@@ -68,6 +68,34 @@
                     </tr>
                 </tbody>
             </table>
+
+
+
+            <table class="table-auto mb-4 w-full">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2">Tgl</th>
+                        <th class="px-4 py-2">Jumlah Bayar</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                    @foreach ($payments as $payment)
+                        <tr>
+                            <td class="text-center">{{ date('d-m-Y', strtotime($transaction->created_at)) }}</td>
+                            <td class="border px-4 py-2">@currency($payment->pay_total)</td>
+                           
+                        </tr>
+                    @endforeach
+                    <tr>
+
+                        
+                        <th>Total Bayar :</th>
+                        <td class="border px-4 py-2">@currency($payments->sum('pay_total'))</td>
+                    </tr>
+                </tbody>
+            </table>
             <h2 class="text-left text-lg font-bold mb-4">Print By : {{ auth()->user()->name }}</h2>
             <h2 class="text-left text-lg font-bold mb-4">  {{ date('d F Y') }}
             </h2>

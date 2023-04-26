@@ -9,4 +9,8 @@ class Payment extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    public function collectorTransaction()
+    {
+        return $this->belongsTo(collectorTransaction::class);
+    }
 }
