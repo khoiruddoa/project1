@@ -24,14 +24,14 @@
                             </div>
                             @if (count($convertion) > 0)
                                 <div class="">
-                                    <h5 class="mb-2 text-2xl font-bold font-mono text-[#a38c08]">Anda Sedang Mengajukan
+                                    <h5 class="mb-2 text-2xl font-bold font-mono text-[#a38c08]">Anda Sedang dalam pengajuan
                                         Konversi Emas</h5>
                                 </div>
                             @endif
                         </div>
 
                     </div>
-                    <div class="flex flex-col gap-2">
+                    <div class="flex flex-col gap-2 max-h-60 overflow-y-auto">
                         @if (count($convertions) < 1)
                             <div
                                 class="bg-[#15C972] hover:bg-[#016b38] font-mono text-md font-bold p-2 w-full text-white rounded-xl">
