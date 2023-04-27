@@ -13,4 +13,9 @@ class Convertion extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function detailConvertions()
+    {
+        return $this->hasMany(DetailConvertion::class);
+    }
+
 }

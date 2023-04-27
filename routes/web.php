@@ -109,7 +109,7 @@ Route::middleware(['customer'])->group(function () {
 Route::get('/transaction', [UserTransactionController::class, 'index'])->name('transaction');
 Route::get('/transaction/{id}', [UserTransactionController::class, 'detail'])->name('detail_transaction');
 Route::get('/convertion', [ConvertionController::class, 'index'])->name('konversi');
-Route::post('/convertion', [ConvertionController::class, 'store'])->name('store_convertion');
+// Route::post('/convertion', [ConvertionController::class, 'store'])->name('store_convertion');
 Route::get('/dashboard', [ScheduleController::class, 'dashboard'])->name('dashboard');
 
 });
@@ -160,6 +160,9 @@ Route::get('/dashboard/pengepul/delete/{id}', [CollectorTransactionController::c
 Route::post('/dashboard/pengepul/finish/{id}', [CollectorTransactionController::class, 'finish'])->name('finishpengepul');
 Route::post('/dashboard/pengepul/payment', [CollectorTransactionController::class, 'payment'])->name('paymentpengepul');
 Route::get('/dashboard/konversi', [AdminConvertionController::class, 'index'])->name('pengajuan_konversi');
+Route::post('/dashboard/konversi/tambah', [AdminConvertionController::class, 'tambahemas'])->name('tambahemas');
+Route::post('/dashboard/konversi/konversi', [AdminConvertionController::class, 'konversiemas'])->name('konversiemas');
+Route::post('/dashboard/konversi/update', [AdminConvertionController::class, 'updateemas'])->name('updateemas');
 Route::post('/dashboard/konversi/update/{id}', [AdminConvertionController::class, 'store'])->name('store_konversi');
 Route::get('/dashboard/expend', [ExpendController::class, 'index'])->name('expend');
 Route::post('/dashboard/expend', [ExpendController::class, 'store'])->name('expend_store');

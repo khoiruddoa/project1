@@ -11,6 +11,199 @@
         </div>
 
 
+
+        <div class="flex flex-row gap-2">
+
+
+            <div>
+
+                <!-- Modal toggle -->
+                <button data-modal-target="authentication-modalupdate" data-modal-toggle="authentication-modalupdate"
+                    class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="button">
+                    Update Harga
+                </button>
+    
+                <!-- Main modal -->
+                <div id="authentication-modalupdate" tabindex="-1" aria-hidden="true"
+                    class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
+                    <div class="relative w-full h-full max-w-md md:h-auto">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                            <button type="button"
+                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-sidebar dark:hover:text-white"
+                                data-modal-hide="authentication-modalupdate">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="sr-only">Close</span>
+                            </button>
+                            <div class="px-6 py-6 lg:px-8">
+                                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Update Harga Emas</h3>
+    
+    
+                                
+    
+                                <form action="{{route('updateemas')}}" method="POST">
+                                    @csrf
+                                   
+                                    <div class="md:max-h-80 overflow-y-scroll">
+                                <table class="w-full  bg-white">
+                                    <thead class="bg-sidebar text-white w-full">
+                                        <tr>
+                                            <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Berat Emas</th>
+                                            
+                                            <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Harga</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-gray-700">
+                                        @foreach ($goldweights as $gold)
+                                       
+                                        <input type="hidden" name="id[]" value="{{$gold->id}}">
+                                            <tr>
+                                                <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $gold->gram }} Gram</td>
+                                                <td class="sm:text-left py-3 px-4">
+                                                    <div x-data="{ number: null }">
+                                                        <label for="name"
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga</label>
+                    
+                                                        <input type="text" name="price[]" x-model="number"
+                                                            x-on:input=" number = $event.target.value.replace(/[^0-9]/g, '');
+                    "
+                                                            x-on:blur=" $event.target.value = parseInt(number).toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+                    "
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                                            required>
+                                                    </div>
+                    
+                                                    
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                    </div>
+                                    <button type="submit"
+                                        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update Harga</button>
+                                   
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+
+
+
+<!-- Modal toggle -->
+<button data-modal-target="authentication-modalshow" data-modal-toggle="authentication-modalshow" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+    Lihat item emas
+  </button>
+  
+  <!-- Main modal -->
+  <div id="authentication-modalshow" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+      <div class="relative w-full max-w-md max-h-full">
+          <!-- Modal content -->
+          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="authentication-modalshow">
+                  <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                  <span class="sr-only">Close modal</span>
+              </button>
+              <div class="px-6 py-6 lg:px-8">
+                  <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Data Harga Emas</h3>
+                  <table class="w-full  bg-white">
+                    <thead class="bg-sidebar text-white w-full">
+                        <tr>
+                            <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Berat</th>
+                            
+                            <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Harga</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                        @foreach ($goldweights as $goldweight)
+                       
+        
+                            <tr>
+                                <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $goldweight->gram}} Gram</td>
+                                <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($goldweight->price)</td>
+                               
+                               
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+              </div>
+          </div>
+      </div>
+  </div> 
+  
+            <!-- Modal toggle -->
+            <button data-modal-target="authentication-modalTambah" data-modal-toggle="authentication-modalTambah"
+                class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                type="button">
+                Tambah item emas
+            </button>
+
+            <!-- Main modal -->
+            <div id="authentication-modalTambah" tabindex="-1" aria-hidden="true"
+                class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
+                <div class="relative w-full h-full max-w-md md:h-auto">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <button type="button"
+                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-sidebar dark:hover:text-white"
+                            data-modal-hide="authentication-modalTambah">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <div class="px-6 py-6 lg:px-8">
+                            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Masukkan item emas</h3>
+                            <form class="space-y-6" action="{{ route('tambahemas') }}" method="POST">
+                                @csrf
+
+                                <div>
+                                    <label for="name"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Berat(gram)</label>
+                                    <input type="number" name="gram" id="qty" step="0.01"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                </div>
+                                <div x-data="{ number: null }">
+                                    <label for="name"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga</label>
+
+                                    <input type="text" name="price" x-model="number"
+                                        x-on:input=" number = $event.target.value.replace(/[^0-9]/g, '');
+"
+                                        x-on:blur=" $event.target.value = parseInt(number).toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                </div>
+
+
+
+
+                                <button type="submit" onclick="this.disabled=true; this.form.submit();"
+                                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Input</button>
+                                <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="w-full mt-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-sidebar dark:border-gray-700">
         <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-sidebar"
@@ -35,6 +228,14 @@
             <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-sidebar" id="about" role="tabpanel"
                 aria-labelledby="about-tab">
                 <div class="w-full mt-6">
+                    <div> <form action="{{route('konversiemas')}}" method="POST">
+                        @csrf
+                       
+                       
+                        <button type="submit" onclick="this.disabled=true; this.form.submit();"
+                            class=" text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:focus:ring-yellow-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Konversi
+                            Emas</button>
+                    </form></div>
                     <div class="overflow-x-auto">
                         <table class="w-full bg-white">
                             <thead class="bg-sidebar text-white w-full">
@@ -135,20 +336,22 @@
                                                             <div>
                                                                 <label for="bayar"
                                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bayar</label>
-                                                                    <div x-data="{ number: null }">
-                                                                        <input type="text" name="pay_total" x-model="number"
-                                                                            x-on:input="
+                                                                <div x-data="{ number: null }">
+                                                                    <input type="text" name="pay_total"
+                                                                        x-model="number"
+                                                                        x-on:input="
                                                                                  number = $event.target.value.replace(/[^0-9]/g, '');
                                                                                "
-                                                                            x-on:blur="
+                                                                        x-on:blur="
                                                                                  $event.target.value = parseInt(number).toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
                                                                                "
-                                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                                                            required>
-                                                                    </div>
-                            
+                                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                                                        required>
+                                                                </div>
+
                                                                 <label for="bayar"
-                                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga Agen</label>
+                                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga
+                                                                    Agen</label>
                                                                 <div x-data="{ number: null }">
                                                                     <input type="text" name="buy" x-model="number"
                                                                         x-on:input="
@@ -160,7 +363,7 @@
                                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                                                         required>
                                                                 </div>
-                        
+
 
                                                             </div>
                                                             <div>
@@ -173,9 +376,11 @@
                                                                     required>
                                                             </div>
                                                             <input type="hidden" name="pay_status" value="3">
-                                                            <input type="hidden" name="administrator" value="{{auth()->user()->name}}">
+                                                            <input type="hidden" name="administrator"
+                                                                value="{{ auth()->user()->name }}">
 
-                                                            <button type="submit" onclick="this.disabled=true; this.form.submit();"
+                                                            <button type="submit"
+                                                                onclick="this.disabled=true; this.form.submit();"
                                                                 class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Bayar</button>
 
                                                         </form>
@@ -195,7 +400,8 @@
         </div>
     </div>
     <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-sidebar" id="statistics" role="tabpanel"
-        aria-labelledby="statistics-tab"><div class="w-full mt-6">
+        aria-labelledby="statistics-tab">
+        <div class="w-full mt-6">
             <div class="overflow-x-auto">
                 <table class="w-full bg-white">
                     <thead class="bg-sidebar text-white w-full">
@@ -231,5 +437,4 @@
         </div>
 
     </div>
-    
 @endsection

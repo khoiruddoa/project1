@@ -222,16 +222,15 @@
                                         @endif
                                     </th>
                                     <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
-                                @foreach($transaction->payments as $payment)
-                                <br>
-                                {{ date('d-m-Y', strtotime($payment->created_at)) }} 
-                                <br> {{$payment->information}} @currency($payment->pay_total) 
-                                
-                                @endforeach
-                                
-                                
-                                </th>
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
+                                        @foreach ($transaction->payments as $payment)
+                                            <br>
+                                            {{ date('d-m-Y', strtotime($payment->created_at)) }}
+                                            <br> {{ $payment->information }} @currency($payment->pay_total)
+                                        @endforeach
+
+
+                                    </th>
 
                                     <th scope="row"
                                         class="flex flex-col gap-2 px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
@@ -357,7 +356,7 @@
 
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-sidebar">
-                                        
+
                                     </th>
                                 </tr>
                             @endforeach
