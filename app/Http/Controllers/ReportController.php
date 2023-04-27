@@ -65,7 +65,7 @@ class ReportController extends Controller
             return back();
         }
 
-        
+
 
         $transaksiNasabah = Transaction::where('pay_status', 2)->get();
 
@@ -73,40 +73,40 @@ class ReportController extends Controller
         $pengepul = CollectorTransaction::where('pay_status', 2)->get();
         $income = Income::all();
 
-       
-            $pengepul = CollectorTransaction::select('user_id', 'pay_total', 'information', 'created_at', DB::raw("'masuk' as origin"))
-                ->where('pay_status', 3)
-                ->whereBetween('created_at', [$start_date, $end_date])
-                ->get();
 
-            $nasabah = Transaction::select('user_id', 'pay_total', 'information', 'created_at', DB::raw(" 'keluar' as origin"))
-                ->where('pay_status', 2)
-                ->whereBetween('created_at', [$start_date, $end_date])
-                ->get();
+        $pengepul = CollectorTransaction::select('user_id', 'pay_total', 'information', 'created_at', DB::raw("'masuk' as origin"))
+            ->where('pay_status', 3)
+            ->whereBetween('created_at', [$start_date, $end_date])
+            ->get();
 
-            $profit = Income::select('user_id', 'pay_total', 'information', 'created_at', DB::raw(" 'profit' as origin"))
-                ->whereBetween('created_at', [$start_date, $end_date])
-                ->get();
+        $nasabah = Transaction::select('user_id', 'pay_total', 'information', 'created_at', DB::raw(" 'keluar' as origin"))
+            ->where('pay_status', 2)
+            ->whereBetween('created_at', [$start_date, $end_date])
+            ->get();
 
-            $transaksi = $pengepul->concat($nasabah)->concat($profit)->sortBy('created_at');
+        $profit = Income::select('user_id', 'pay_total', 'information', 'created_at', DB::raw(" 'profit' as origin"))
+            ->whereBetween('created_at', [$start_date, $end_date])
+            ->get();
 
-            $keluar = $transaksi->where('origin', 'keluar')->sum('pay_total');
-            // Menghitung pendapatan dan total saldo
-            $pendapatan = 0;
-            foreach ($transaksi as $transaction) {
-                if ($transaction->origin == 'masuk') {
-                    $pendapatan += $transaction->pay_total;
-                } else if ($transaction->origin == 'keluar' || $transaction->origin == 'profit') {
-                    $pendapatan -= $transaction->pay_total;
-                }
+        $transaksi = $pengepul->concat($nasabah)->concat($profit)->sortBy('created_at');
+
+        $keluar = $transaksi->where('origin', 'keluar')->sum('pay_total');
+        // Menghitung pendapatan dan total saldo
+        $pendapatan = 0;
+        foreach ($transaksi as $transaction) {
+            if ($transaction->origin == 'masuk') {
+                $pendapatan += $transaction->pay_total;
+            } else if ($transaction->origin == 'keluar' || $transaction->origin == 'profit') {
+                $pendapatan -= $transaction->pay_total;
             }
+        }
 
-         
-                
 
-            $total_saldo = $transaksiPengepul->sum('pay_total') - $transaksiNasabah->sum('pay_total') - $income->sum('pay_total');
-            $saldo_awal = $total_saldo - $pendapatan;
-       
+
+
+        $total_saldo = $transaksiPengepul->sum('pay_total') - $transaksiNasabah->sum('pay_total') - $income->sum('pay_total');
+        $saldo_awal = $total_saldo - $pendapatan;
+
         return view('dashboard.report.transaksi', [
             'transactions' => $transaksi,
             'saldo_awal' => $saldo_awal,
@@ -122,39 +122,37 @@ class ReportController extends Controller
     {
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
-        
-        
+
+
         if ($end_date < $start_date) {
             Alert::warning('Gagal', 'Tanggal Akhir tidak boleh lebih dulu dari tanggal awal');
             return back();
         }
         $kode = $request->input('type');
 
-        if($kode == null){
+        if ($kode == null) {
             $transaction = Transaction::where('pay_status', 2)->whereBetween('created_at', [$start_date, $end_date])
-            ->get();
-
+                ->get();
+        } else {
+            $transaction = Transaction::where('pay_status', 2)
+                ->whereHas('user', function ($query) use ($kode) {
+                    $query->where('type', $kode);
+                })
+                ->whereBetween('created_at', [$start_date, $end_date])
+                ->get();
         }
-        else{
-        $transaction = Transaction::where('pay_status', 2)
-        ->whereHas('user', function($query) use ($kode) {
-            $query->where('type', $kode);
-        })
-        ->whereBetween('created_at', [$start_date, $end_date])
-        ->get();}
-    
-    
-
-  
-return view('dashboard.report.transaksikategori', [
-    'transactions' => $transaction,
-    'start' => $start_date,
-    'end' => $end_date,
-    'kode' => $kode
-]);
 
 
+
+
+        return view('dashboard.report.transaksikategori', [
+            'transactions' => $transaction,
+            'start' => $start_date,
+            'end' => $end_date,
+            'kode' => $kode
+        ]);
     }
+
     public function konversi(Request $request)
     {
 
@@ -331,7 +329,7 @@ return view('dashboard.report.transaksikategori', [
         $transaction = CollectorTransaction::find($id);
 
         $payments = Payment::where('collector_transaction_id', $id)->get();
-       
+
 
         $categories = Category::all();
         $detail_transactions = DetailCollectorTransaction::where('collector_transaction_id', $id)->get();
@@ -342,8 +340,7 @@ return view('dashboard.report.transaksikategori', [
             'detail_transactions' => $detail_transactions,
             'payments' => $payments
 
-        ]); 
-
+        ]);
     }
 
 
@@ -351,8 +348,8 @@ return view('dashboard.report.transaksikategori', [
     {
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
-        
-        
+
+
         if ($end_date < $start_date) {
             Alert::warning('Gagal', 'Tanggal Akhir tidak boleh lebih dulu dari tanggal awal');
             return back();
@@ -360,104 +357,119 @@ return view('dashboard.report.transaksikategori', [
         $kode = $request->input('type');
 
         $kategori = Category::find($kode);
-        $tran = Transaction::where('pay_status', 2) ->with('user')
-        ->whereHas('detailTransactions', function($query) use ($kode) {
-            $query->where('category_id', $kode);
-        })
-        ->whereBetween('created_at', [$start_date, $end_date])
-        ->get();
-    
-    
-
-  
-return view('dashboard.report.transaksiitem', [
-    'transactions' => $tran,
-    'start' => $start_date,
-    'end' => $end_date,
-    'kode' => $kode,
-    'category' => $kategori
-]);
-
-}
+        $tran = Transaction::where('pay_status', 2)->with('user')
+            ->whereHas('detailTransactions', function ($query) use ($kode) {
+                $query->where('category_id', $kode);
+            })
+            ->whereBetween('created_at', [$start_date, $end_date])
+            ->get();
 
 
-public function sampah(Request $request)
-{
-    $start_date = $request->input('start_date');
-    $end_date = $request->input('end_date');
-    
-    
-    if ($end_date < $start_date) {
-        Alert::warning('Gagal', 'Tanggal Akhir tidak boleh lebih dulu dari tanggal awal');
-        return back();
+
+
+        return view('dashboard.report.transaksiitem', [
+            'transactions' => $tran,
+            'start' => $start_date,
+            'end' => $end_date,
+            'kode' => $kode,
+            'category' => $kategori
+        ]);
     }
+
+
+    public function sampah(Request $request)
+    {
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+
+
+        if ($end_date < $start_date) {
+            Alert::warning('Gagal', 'Tanggal Akhir tidak boleh lebih dulu dari tanggal awal');
+            return back();
+        }
+
+
+        $categoryPrice = CategoryPrice::whereBetween('created_at', [$start_date, $end_date])
+            ->get();
+
+
+
+
+        return view('dashboard.report.sampah', [
+            'categoryprices' => $categoryPrice,
+            'start' => $start_date,
+            'end' => $end_date
+        ]);
+    }
+
+
+    public function pendapatan(Request $request)
+    {
+        $tahun = $request->year;
+
+        $monthData = [];
+
+        for ($i = 1; $i <= 12; $i++) {
+            $monthData[$i] =  DetailTransaction::whereIn('transaction_id', function ($query) use ($request, $i) {
+                $query->select('id')
+                    ->from('transactions')
+                    ->whereYear('created_at', $request->year)
+                    ->whereMonth('created_at', $i);
+            })->get()->sum(function ($detail) {
+                return $detail->sell * $detail->qty;
+            });
+        }
+
+        $profitData = [];
+
+        for ($i = 1; $i <= 12; $i++) {
+            $profitData[$i] =  DetailTransaction::whereIn('transaction_id', function ($query) use ($request, $i) {
+                $query->select('id')
+                    ->from('transactions')
+                    ->whereYear('created_at', $request->year)
+                    ->whereMonth('created_at', $i);
+            })->get()->sum(function ($detail) {
+                return ($detail->sell * $detail->qty) - ($detail->price * $detail->qty);
+            });
+        }
+
+        $sampahData = [];
+
+        for ($i = 1; $i <= 12; $i++) {
+            $sampahData[$i] =  DetailTransaction::whereHas('transaction', function ($query) use ($request, $i) {
+                $query->whereYear('created_at', $request->year)
+                ->whereMonth('created_at', $i);
+            })
+            ->whereDoesntHave('category', function ($query) {
+                $query->where('id', 29);
+            })->get()->sum(function ($detail) {
+                return $detail->sell * $detail->qty;
+            });
+        }
+
+        $jelantahData = [];
+
+        for ($i = 1; $i <= 12; $i++) {
+            $jelantahData[$i] =  DetailTransaction::whereHas('transaction', function ($query) use ($request, $i) {
+                $query->whereYear('created_at', $request->year)
+                ->whereMonth('created_at', $i);
+            })
+            ->whereHas('category', function ($query) {
+                $query->where('id', 29);
+            })->get()->sum(function ($detail) {
+                return $detail->sell * $detail->qty;
+            });
+        }
+
     
-   
-    $categoryPrice = CategoryPrice::whereBetween('created_at', [$start_date, $end_date])
-    ->get();
 
+        return view('dashboard.report.pendapatan', [
+            'monthdata' => $monthData,
+            'jelantahdata' => $jelantahData,
+            'sampahdata' => $sampahData,
+            'profitdata' => $profitData,
+            'tahun' => $tahun
 
-
-
-return view('dashboard.report.sampah', [
-'categoryprices' => $categoryPrice,
-'start' => $start_date,
-'end' => $end_date
-]);
-
-
-}
-
-
-public function pendapatan(Request $request)
-{
-   
-    $jan = DetailTransaction::whereYear('created_at', $request->year)
-    ->whereMonth('created_at', 1)->get();
-    $feb = DetailTransaction::whereYear('created_at', $request->year)
-    ->whereMonth('created_at', 2)->get();
-    $mar = DetailTransaction::whereYear('created_at', $request->year)
-    ->whereMonth('created_at', 3)->get();
-    $apr = DetailTransaction::whereYear('created_at', $request->year)
-    ->whereMonth('created_at', 4)->get();
-    $mei = DetailTransaction::whereYear('created_at', $request->year)
-    ->whereMonth('created_at', 5)->get();
-    $jun = DetailTransaction::whereYear('created_at', $request->year)
-    ->whereMonth('created_at', 6)->get();
-    $jul = DetailTransaction::whereYear('created_at', $request->year)
-    ->whereMonth('created_at', 7)->get();
-    $aug = DetailTransaction::whereYear('created_at', $request->year)
-    ->whereMonth('created_at', 8)->get();
-    $sep = DetailTransaction::whereYear('created_at', $request->year)
-    ->whereMonth('created_at', 9)->get();
-    $okt = DetailTransaction::whereYear('created_at', $request->year)
-    ->whereMonth('created_at', 10)->get();
-    $nov = DetailTransaction::whereYear('created_at', $request->year)
-    ->whereMonth('created_at', 11)->get();
-    $des = DetailTransaction::whereYear('created_at', $request->year)
-    ->whereMonth('created_at', 12)->get();
-
-return view('dashboard.report.pendapatan', [
-'jan' => $jan,
-'feb' => $feb,
-'mar' => $mar,
-'apr' => $apr,
-'mei' => $mei,
-'jun' => $jun,
-'jul' => $jul,
-'aug' => $aug,
-'sep' => $sep,
-'okt' => $okt,
-'nov' => $nov,
-'des' => $des
-
-]);
-
-
-}
-
-
-
-
-
+        ]);
+    }
 }

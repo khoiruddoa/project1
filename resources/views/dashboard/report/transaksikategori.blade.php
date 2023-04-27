@@ -15,7 +15,15 @@
         <div class="table-responsive lg:w-3/4 mx-auto">
             <br>
 
-            <h2 class="text-center text-2xl font-bold mb-4">LAPORAN TRANSAKSI PER KATEGORI</h2>
+            <h2 class="text-center text-2xl font-bold mb-4">LAPORAN TRANSAKSI KATEGORI @if($kode == 1)
+                UMUM
+                @elseif($kode == 2)
+                TK
+                @elseif($kode == 3)
+                BIMBEL
+                @else
+               KESELURUHAN
+                @endif</h2>
             <table class="mb-4">
 
                 <tr>
@@ -23,25 +31,7 @@
                     <td>{{ date('d-m-Y', strtotime($start)) }} s/d {{ date('d-m-Y', strtotime($end)) }}</td>
                 </tr>
                
-                @if($kode > 0 )
-                <tr>
-                    <td class="font-bold">Kategori : @if($kode == 1)
-                        Umum
-                        @elseif($kode == 2)
-                        TK
-                        @else
-                        Bimbel
-                        @endif
-                    </td>
-                </tr>
-                @else
-                <tr>
-                    <td class="font-bold">Kategori : 
-                      Keseluruhan
-                    </td>
-                </tr>
-                @endif
-
+               
 
             </table>
             <table class="table-auto mb-4 w-full">

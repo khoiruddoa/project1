@@ -19,6 +19,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserTransactionController;
 use App\Models\Category;
 use App\Models\Schedule;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,7 +57,13 @@ Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
 Route::middleware(['both'])->group(function () {
 Route::get('/dashboard/report', function () {
     $categories = Category::orderBy('id', 'asc')->get();
-    return view('dashboard.report', ['categories' => $categories]);
+    $tahun_data = DB::table('transactions')
+    ->selectRaw('distinct YEAR(created_at) as tahun')
+    ->orderBy('tahun', 'desc')
+    ->get();
+
+    return view('dashboard.report', ['categories' => $categories,
+    'tahuns' => $tahun_data]);
 });
 Route::get('/dashboard/report/transaksi', [ReportController::class, 'transaksi'])->name('print_transaction');
 Route::get('/dashboard/report/transaksi/kategori', [ReportController::class, 'transaksi_kategori'])->name('print_transaction_category');
@@ -67,6 +74,7 @@ Route::get('/dashboard/report/emas', [ReportController::class, 'emas'])->name('p
 Route::get('/dashboard/report/pengurus', [ReportController::class, 'pengurus'])->name('print_manage');
 Route::get('/dashboard/report/sampah', [ReportController::class, 'sampah'])->name('print_sampah');
 Route::get('/dashboard/report/keuntungan', [ReportController::class, 'keuntungan'])->name('print_profit');
+Route::get('/dashboard/report/pendapatan', [ReportController::class, 'pendapatan'])->name('pendapatan');
 Route::get('/dashboard/graphic', [ChartController::class, 'index'])->name('chart');
 Route::get('/dashboard/graphic/category', [ChartController::class, 'fluktuasi'])->name('fluktuasi_harga');
 Route::get('/dashboard/graphic/transaction', [ChartController::class, 'jumlahtransaksi'])->name('jumlah_transaksi');
