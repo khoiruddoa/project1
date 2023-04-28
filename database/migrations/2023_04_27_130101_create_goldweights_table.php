@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->float('gram',10, 2);
             $table->integer('price');
+            $table->integer('buy');
             $table->timestamps();
         });
     }

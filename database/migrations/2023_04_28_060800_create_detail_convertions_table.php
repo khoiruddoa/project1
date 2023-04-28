@@ -16,6 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId('convertion_id'); 
             $table->integer('price');
+            $table->integer('buy');
+            $table->integer('profit');
             $table->float('gram', 10, 2);
         });
     }

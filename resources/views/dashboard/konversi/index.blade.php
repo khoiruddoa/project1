@@ -56,7 +56,8 @@
                                         <tr>
                                             <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Berat Emas</th>
                                             
-                                            <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Harga</th>
+                                            <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Harga Jual</th>
+                                            <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Harga Beli</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-gray-700">
@@ -68,9 +69,25 @@
                                                 <td class="sm:text-left py-3 px-4">
                                                     <div x-data="{ number: null }">
                                                         <label for="name"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga</label>
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga Jual</label>
                     
                                                         <input type="text" name="price[]" x-model="number"
+                                                            x-on:input=" number = $event.target.value.replace(/[^0-9]/g, '');
+                    "
+                                                            x-on:blur=" $event.target.value = parseInt(number).toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+                    "
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                                            required>
+                                                    </div>
+                    
+                                                    
+                                                </td>
+                                                <td class="sm:text-left py-3 px-4">
+                                                    <div x-data="{ number: null }">
+                                                        <label for="name"
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga Beli</label>
+                    
+                                                        <input type="text" name="buy[]" x-model="number"
                                                             x-on:input=" number = $event.target.value.replace(/[^0-9]/g, '');
                     "
                                                             x-on:blur=" $event.target.value = parseInt(number).toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
@@ -120,7 +137,8 @@
                         <tr>
                             <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Berat</th>
                             
-                            <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Harga</th>
+                            <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Harga Jual</th>
+                            <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Harga Beli</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-700">
@@ -130,6 +148,8 @@
                             <tr>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $goldweight->gram}} Gram</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($goldweight->price)</td>
+                                <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($goldweight->buy)</td>
+                               
                                
                                
                             </tr>
@@ -179,9 +199,21 @@
                                 </div>
                                 <div x-data="{ number: null }">
                                     <label for="name"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga</label>
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga Jual</label>
 
                                     <input type="text" name="price" x-model="number"
+                                        x-on:input=" number = $event.target.value.replace(/[^0-9]/g, '');
+"
+                                        x-on:blur=" $event.target.value = parseInt(number).toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                </div>
+                                <div x-data="{ number: null }">
+                                    <label for="name"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga Beli</label>
+
+                                    <input type="text" name="buy" x-model="number"
                                         x-on:input=" number = $event.target.value.replace(/[^0-9]/g, '');
 "
                                         x-on:blur=" $event.target.value = parseInt(number).toLocaleString('id-ID', {minimumFractionDigits: 0, maximumFractionDigits: 0});
@@ -193,7 +225,7 @@
 
 
 
-                                <button type="submit" onclick="this.disabled=true; this.form.submit();"
+                                <button type="submit"
                                     class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Input</button>
                                 <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
 

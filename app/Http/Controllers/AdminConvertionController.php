@@ -52,6 +52,9 @@ class AdminConvertionController extends Controller
         $request->merge([
             'price' => str_replace('.', '', $request->price)
         ]);
+        $request->merge([
+            'buy' => str_replace('.', '', $request->buy)
+        ]);
 
 
         $weight = Goldweight::where('gram', $request->gram)->get();
@@ -70,14 +73,17 @@ class AdminConvertionController extends Controller
     {
         $Ids = $request->input('id');
         $prices = $request->input('price');
+        $buys = $request->input('buy');
 
         // Loop melalui id dan harga baru untuk update data produk
         foreach ($Ids as $index => $id) {
             $price = str_replace('.', '', $prices[$index]);
+            $buy = str_replace('.', '', $buys[$index]);
 
             // Update harga produk
             $gold = Goldweight::find($id);
             $gold->price = $price;
+            $gold->buy = $buy;
             $gold->save();
         }
 
@@ -127,7 +133,12 @@ class AdminConvertionController extends Controller
             // Menyimpan record konversi
             $conversion->save();
         }
-
+        // $emas = [
+        //     ['gram' => 1, 'buy' => 500, 'price' => 550],
+        //     ['gram' => 0.5, 'buy' => 400, 'price' => 450],
+        //     ['gram' => 2, 'buy' => 1000000, 'price' => 1050000],
+        // ];
+        
 
         Alert::info('Berhasil', 'Silahkan Menunggu');
         return back();
