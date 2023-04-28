@@ -25,6 +25,17 @@ class DatabaseSeeder extends Seeder
             'photo' => 'photos/dumy.png',
 
         ]);
+
+        User::create([
+            'name' => 'pengepul',
+            'email' => 'pengepul@gmail.com',
+            'phone_number' => '012322222',
+            'password' => bcrypt('password'),
+            'address' => 'tangerang',
+            'role' => '2',
+            'photo' => 'photos/dumy.png',
+
+        ]);
         User::create([
             'name' => 'owner',
             'email' => 'owner@gmail.com',

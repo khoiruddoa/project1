@@ -16,6 +16,7 @@ return new class extends Migration
             $table->float('gram',10, 2);
             $table->integer('price');
             $table->integer('buy');
+            $table->text('information')->nullable();
             $table->timestamps();
         });
     }

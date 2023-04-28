@@ -20,6 +20,12 @@ class RegisterController extends Controller
             'admins' =>  User::where('role', 3)->get(),
         ]);
     }
+    public function print()
+    {
+        return view('dashboard.nasabah.print', [
+            'users' => User::where('role', 1)->orderBy('id', 'asc')->get(),
+        ]);
+    }
     public function detail($user_id)
     {
         $user = User::find($user_id);

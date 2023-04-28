@@ -96,8 +96,8 @@ Route::get('/transaction/review', [OwnerReviewController::class, 'index'])->name
 Route::post('/transaction/review', [OwnerReviewController::class, 'store'])->name('transaction_review_store');
 Route::get('/convertion/review', [OwnerReviewController::class, 'convert'])->name('convertion_review');
 Route::post('/convertion/review', [OwnerReviewController::class, 'convertion'])->name('convertion_review_store');
-// Route::get('/collector/review', [OwnerReviewController::class, 'collect'])->name('collector_review');
-// Route::post('/collector/review', [OwnerReviewController::class, 'collector'])->name('collector_review_store');
+Route::get('/collector/review', [OwnerReviewController::class, 'collect'])->name('collector_review');
+Route::post('/collector/review', [OwnerReviewController::class, 'collector'])->name('collector_review_store');
 Route::get('/adjustment/review', [OwnerReviewController::class, 'adjust'])->name('adjust_review');
 Route::post('/adjustment/review', [OwnerReviewController::class, 'adjustment'])->name('adjustment_review_store');
 Route::get('/dashboard/review', [OwnerReviewController::class, 'admindashboard'])->name('dashboard_review');
@@ -131,6 +131,7 @@ Route::post('/change/password', [ChangePhotoPasswordController::class, 'changePa
 Route::middleware(['admin'])->group(function () {
 Route::get('/dashboard/dashboard', [DashboardController::class, 'admindashboard']);
 Route::get('/dashboard/nasabah', [RegisterController::class, 'index'])->name('nasabah');
+Route::get('/dashboard/nasabah/print', [RegisterController::class, 'print'])->name('print_nasabah');
 Route::get('/dashboard/nasabah/{user_id}', [RegisterController::class, 'detail'])->name('nasabah_detail');
 Route::post('/dashboard/nasabah/update/{user_id}', [RegisterController::class, 'update'])->name('nasabah_update');
 Route::post('/dashboard/nasabah', [RegisterController::class, 'store'])->name('nasabahStore');
@@ -161,6 +162,7 @@ Route::post('/dashboard/pengepul/finish/{id}', [CollectorTransactionController::
 Route::post('/dashboard/pengepul/payment', [CollectorTransactionController::class, 'payment'])->name('paymentpengepul');
 Route::get('/dashboard/konversi', [AdminConvertionController::class, 'index'])->name('pengajuan_konversi');
 Route::post('/dashboard/konversi/tambah', [AdminConvertionController::class, 'tambahemas'])->name('tambahemas');
+Route::post('/dashboard/konversi/simpan', [AdminConvertionController::class, 'saveemas'])->name('save_emas');
 Route::post('/dashboard/konversi/konversi', [AdminConvertionController::class, 'konversiemas'])->name('konversiemas');
 Route::post('/dashboard/konversi/update', [AdminConvertionController::class, 'updateemas'])->name('updateemas');
 Route::post('/dashboard/konversi/update/{id}', [AdminConvertionController::class, 'store'])->name('store_konversi');

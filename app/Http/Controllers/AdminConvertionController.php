@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Convertion;
+use App\Models\DetailConvertion;
 use App\Models\Goldweight;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -27,21 +28,9 @@ class AdminConvertionController extends Controller
 
     public function store(Request $request, $id)
     {
-        $request->merge([
-            'pay_total' => str_replace('.', '', $request->pay_total)
-        ]);
-        $request->merge([
-            'buy' => str_replace('.', '', $request->buy)
-        ]);
-
-        $profit = $request->pay_total - $request->buy;
-        $request->merge(['profit' => $profit]);
-
+        
         $convertions = Convertion::findOrFail($id);
-        if ($request->pay_total > $convertions->pay_total) {
-            Alert::warning('Gagal', 'Pembayaran Tidak Boleh Melebihi Saldo Nasabah');
-            return redirect()->back();
-        }
+        
         $convertions->update($request->all());
         Alert::info('Berhasil', 'Berhasil dibayarkan');
         return redirect()->back();
@@ -101,9 +90,7 @@ class AdminConvertionController extends Controller
         //cek saldo masing masing nasabah
         $users = User::with(['transactions' => function ($query) {
             $query->where('pay_status', 2);
-        }, 'convertions' => function ($query) {
-            $query->where('pay_status', 3);
-        }, 'manages'])->get();
+        }, 'convertions', 'manages'])->get();
 
         $saldo = collect();
 
@@ -133,14 +120,44 @@ class AdminConvertionController extends Controller
             // Menyimpan record konversi
             $conversion->save();
         }
-        // $emas = [
-        //     ['gram' => 1, 'buy' => 500, 'price' => 550],
-        //     ['gram' => 0.5, 'buy' => 400, 'price' => 450],
-        //     ['gram' => 2, 'buy' => 1000000, 'price' => 1050000],
-        // ];
+        
         
 
         Alert::info('Berhasil', 'Silahkan Menunggu');
         return back();
     }
+    public function saveemas(Request $request)
+    {
+
+        $id = $request->id_emas;
+        $idkonversi = $request->id;
+        $saldo = $request->saldo;
+        
+$gold = Goldweight::find($id);
+
+
+
+
+//pengecekan
+if ($gold->price > $saldo) {
+    Alert::warning('Gagal', 'Saldo tidak cukup');
+    return redirect()->back();
+}
+
+$detail = new DetailConvertion([
+    'convertion_id' => $idkonversi,
+    'price' => $gold->price,
+    'buy' => $gold->buy,
+    'profit' => $gold->price - $gold->buy,
+    'gram' => $gold->gram
+]);
+
+// Menyimpan record konversi
+$detail->save();
+
+       
+        Alert::info('Berhasil', 'Berhasil tambah item emas');
+        return redirect()->back();
+    }
+
 }

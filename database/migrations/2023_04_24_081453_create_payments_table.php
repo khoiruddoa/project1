@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('collector_transaction_id');
             $table->float('pay_total', 15, 3)->nullable();
             $table->text('information')->nullable();
+            $table->text('bank')->nullable();
             $table->timestamps();
         });
     }

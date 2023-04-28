@@ -35,7 +35,11 @@
                 type="button">
                 Tambah Anggota
             </button>
-
+            <div>
+                <a href="{{ route('print_nasabah') }}"
+                    target="blank"
+                    class="mt-2 block w-40 focus:outline-none text-white text-center bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-orange-600 dark:ho ver:bg-orange-700 dark:focus:ring-orange-900 mb-2">Print</a>
+            </div>
             <!-- Main modal -->
             <div id="authentication-modal" tabindex="-1" aria-hidden="true"
                 class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
