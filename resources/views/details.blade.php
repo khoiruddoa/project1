@@ -32,7 +32,7 @@
                             @php
                                 $total = 0;
                             @endphp
-                            @foreach ($details as $detail)
+                            {{-- @foreach ($details as $detail)
                                 <div class="flex flex-row gap-4">
                                     <div>{{ preg_replace('/\d+\./', '', $detail->category->category_name) }}</div>
                                     <div>{{ $detail->qty }} {{ $detail->category->uom }}</div>
@@ -42,8 +42,31 @@
                                 @php
                                     $total += $detail->price * $detail->qty; // tambahkan nilai baru ke total
                                 @endphp
-                            @endforeach
-
+                            @endforeach --}}
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Kategori</th>
+                                        <th>Jumlah</th>
+                                        <th>Harga Satuan</th>
+                                        <th>Jumlah Harga</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($details as $detail)
+                                    <tr>
+                                        <td>{{ preg_replace('/\d+\./', '', $detail->category->category_name) }}</td>
+                                        <td>{{ $detail->qty }} {{ $detail->category->uom }}</td>
+                                        <td>@currency($detail->price)</td>
+                                        <td>@currency($detail->price * $detail->qty)</td>
+                                        @php
+                                            $total += $detail->price * $detail->qty; // tambahkan nilai baru ke total
+                                        @endphp
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            
                             @if (empty($transaction->information))
                                 <div>Total : @currency($total)</div>
                                 @php
