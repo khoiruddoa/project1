@@ -32,26 +32,16 @@
                             @php
                                 $total = 0;
                             @endphp
-                            {{-- @foreach ($details as $detail)
-                                <div class="flex flex-row gap-4">
-                                    <div>{{ preg_replace('/\d+\./', '', $detail->category->category_name) }}</div>
-                                    <div>{{ $detail->qty }} {{ $detail->category->uom }}</div>
-                                    <div>@currency($detail->price)</div>
-                                    <div>Jumlah : @currency($detail->price * $detail->qty)</div>
-                                </div>
-                                @php
-                                    $total += $detail->price * $detail->qty; // tambahkan nilai baru ke total
-                                @endphp
-                            @endforeach --}}
+                            
                             <table>
-                                {{-- <thead>
+                                <thead>
                                     <tr>
                                         <th>Kategori</th>
-                                        <th>Jumlah</th>
-                                        <th>Harga Satuan</th>
+                                        <th>Jumlah Barang</th>
+                                        <th>Harga</th>
                                         <th>Jumlah Harga</th>
                                     </tr>
-                                </thead> --}}
+                                </thead>
                                 <tbody>
                                     @foreach ($details as $detail)
                                     <tr>
