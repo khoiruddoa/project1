@@ -3,7 +3,7 @@
 @section('container')
     <div class="flex flex-col">
         <div class="">
-            <h1 class="text-3xl text-black pb-6">Tabel Penyelarasan Saldo</h1>
+            <h1 class="text-3xl text-black pb-6">Tabel Pencairan Dana</h1>
         </div>
 
         <div>
@@ -12,7 +12,7 @@
             <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
                 class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button">
-                Input Penyelarasan Saldo
+                Input Pencairan Dana
             </button>
 
             <!-- Main modal -->
@@ -33,9 +33,9 @@
                             <span class="sr-only">Close</span>
                         </button>
                         <div class="px-6 py-6 lg:px-8">
-                            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Masukkan Penyelarasan Saldo
+                            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Masukkan Pencairan Dana
                             </h3>
-                            <form class="space-y-6" action="{{ route('adjustment_store') }}" method="POST">
+                            <form class="space-y-6" action="{{ route('withdraw_store') }}" method="POST">
                                 @csrf
                                 <div>
                                     <label for="user"
@@ -51,7 +51,7 @@
                                 </div>
                                 <div>
                                     <label for="price"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Saldo</label>
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah</label>
                                         <div x-data="{ number: null }">
                                             <input type="text" name="pay_total" x-model="number"
                                                 x-on:input="
@@ -65,20 +65,10 @@
                                         </div>
 
                                 </div>
-                                <div>
-                                    <label for="price"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan</label>
-                                        <div>
-                                            <input type="text" name="information"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                                required>
-                                        </div>
-
-                                </div>
 
                                 <input type="hidden" name="pay_status" value="1">
                                 <input type="hidden" name="administrator" value="{{ auth()->user()->name }}">
-                              
+                                <input type="hidden" name="information" value="1">
 
 
 
@@ -109,32 +99,30 @@
                         <th class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">Tgl</th>
 
                         <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Nasabah</th>
-                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Saldo</th>
-                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Action</th>
+                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Jumlah</th>
+                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Status</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-700">
-                    @foreach ($adjustments as $transaction)
+                    @foreach ($withdraws as $withdraw)
                         <tr>
-                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $transaction->created_at }}</td>
-                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $transaction->user->name }}</td>
-                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($transaction->pay_total)</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $withdraw->created_at }}</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $withdraw->user->name }}</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($withdraw->pay_total)</td>
                             <td class="sm:text-left py-3 px-4">
                                 <div class="flex flex-row justify-center items-center gap-2">
+                                   @if($withdraw->pay_status == 1)
                                     <div>
-
-                                       
-                                    <div>
-                                        @if($transaction->pay_status == 1)
-                                        <a href="{{ route('adjustment_delete', ['id' => $transaction->id]) }}"
+                                        <a href="{{ route('withdraw_delete', ['id' => $withdraw->id]) }}"
                                             onclick="return confirm('Apa Anda Yakin Ingin Menghapus data ini?')"
                                             class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Hapus</a>
-                                            @else
-                                            <a href="#"
-                                                onclick="return confirm('Apa Anda Yakin Ingin Menghapus data ini?')"
-                                                class="focus:outline-none text-white bg-green-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Disetujui</a>
-                                                @endif
                                     </div>
+                                    @else
+                                    <div>
+                                        <a href="#"
+                                            class="focus:outline-none text-white bg-green-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Disetujui</a>
+                                    </div>
+                                    @endif
 
                                 </div>
 

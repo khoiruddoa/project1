@@ -67,7 +67,9 @@ class ReportController extends Controller
 
 
 
-        $transaksiNasabah = Transaction::where('pay_status', 2)->get();
+        $transaksiNasabah = Transaction::where('pay_status', 1)
+        ->orWhere('pay_status', 2)
+        ->get();
 
         $transaksiPengepul = CollectorTransaction::where('pay_status', 3)->get();
         $pengepul = CollectorTransaction::where('pay_status', 2)->get();
@@ -80,7 +82,7 @@ class ReportController extends Controller
             ->get();
 
         $nasabah = Transaction::select('user_id', 'pay_total', 'information', 'created_at', DB::raw(" 'keluar' as origin"))
-            ->where('pay_status', 2)
+            ->where('pay_status', 1)->orWhere('pay_status', 2)
             ->whereBetween('created_at', [$start_date, $end_date])
             ->get();
 
@@ -131,10 +133,10 @@ class ReportController extends Controller
         $kode = $request->input('type');
 
         if ($kode == null) {
-            $transaction = Transaction::where('pay_status', 2)->whereBetween('created_at', [$start_date, $end_date])
+            $transaction = Transaction::where('pay_status', 1)->orWhere('pay_status', 2)->whereBetween('created_at', [$start_date, $end_date])
                 ->get();
         } else {
-            $transaction = Transaction::where('pay_status', 2)
+            $transaction = Transaction::where('pay_status', 1)->orWhere('pay_status', 2)
                 ->whereHas('user', function ($query) use ($kode) {
                     $query->where('type', $kode);
                 })
@@ -357,7 +359,7 @@ class ReportController extends Controller
         $kode = $request->input('type');
 
         $kategori = Category::find($kode);
-        $tran = Transaction::where('pay_status', 2)->with('user')
+        $tran = Transaction::where('pay_status', 1)->orWhere('pay_status', 2)->with('user')
             ->whereHas('detailTransactions', function ($query) use ($kode) {
                 $query->where('category_id', $kode);
             })

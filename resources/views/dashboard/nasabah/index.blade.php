@@ -231,7 +231,7 @@
 
 
 
-                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($user->transactions->where('pay_status', 2)->sum('pay_total') + $user->manages->sum('pay_total') - $user->convertions->where('pay_status', 3)->sum('pay_total'))</td>
+                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($user->transactions->where('pay_status', 2)->sum('pay_total') + $user->adjustments->where('pay_status', 2)->sum('pay_total') + $user->manages->sum('pay_total') - $user->convertions->where('pay_status', 3)->sum('pay_total') - $user->withdraws->where('pay_status', 2)->sum('pay_total'))</td>
                                         <td class="sm:text-left py-3 px-4">
                                             <a href="{{ route('nasabah_detail', ['user_id' => $user->id]) }}"
                                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>

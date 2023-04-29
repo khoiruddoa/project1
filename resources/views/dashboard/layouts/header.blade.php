@@ -1,7 +1,8 @@
 <div class="w-full flex flex-col h-screen overflow-y-hidden">
     <!-- Desktop Header -->
     <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
-        <div class="w-1/2"></div>
+        <div class="w-1/2"> <a href="/" class="mt-4 text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Kembali</a>
+        </div>
         <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
             <button @click="isOpen = !isOpen"
                 class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
@@ -233,6 +234,12 @@
 
                         Pengajuan Konversi
                     </a>
+                    <a href="{{route('pencairandana')}}" class="flex items-center {{ Request::is('dashboard/withdraw*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                        <i class="fas fa-align-left mr-3"></i>
+        
+                      
+                       Pencairan Dana
+                   </a>
                     <a href="{{ route('expend') }}"
                         class="flex items-center {{ Request::is('dashboard/expend*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                         <i class="fas fa-align-left mr-3"></i>

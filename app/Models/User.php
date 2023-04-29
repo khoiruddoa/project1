@@ -53,6 +53,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Convertion::class);
     }
+    public function withdraws()
+    {
+        return $this->hasMany(Withdraw::class);
+    }
     public function expends()
     {
         return $this->hasMany(Expend::class);
@@ -64,5 +68,9 @@ class User extends Authenticatable
     public function manages()
     {
         return $this->hasMany(Manage::class);
+    }
+    public function adjustments()
+    {
+        return $this->hasMany(Adjustment::class);
     }
 }

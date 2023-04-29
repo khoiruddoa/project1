@@ -17,6 +17,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserTransactionController;
+use App\Http\Controllers\WithdrawController;
 use App\Models\Category;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\DB;
@@ -100,6 +101,8 @@ Route::get('/collector/review', [OwnerReviewController::class, 'collect'])->name
 Route::post('/collector/review', [OwnerReviewController::class, 'collector'])->name('collector_review_store');
 Route::get('/adjustment/review', [OwnerReviewController::class, 'adjust'])->name('adjust_review');
 Route::post('/adjustment/review', [OwnerReviewController::class, 'adjustment'])->name('adjustment_review_store');
+Route::get('/withdraw/review', [OwnerReviewController::class, 'with'])->name('withdraw_review');
+Route::post('/withdraw/review', [OwnerReviewController::class, 'withdraw'])->name('withdraw_review_store');
 Route::get('/dashboard/review', [OwnerReviewController::class, 'admindashboard'])->name('dashboard_review');
 });
 
@@ -168,6 +171,9 @@ Route::post('/dashboard/konversi/update', [AdminConvertionController::class, 'up
 Route::post('/dashboard/konversi/update/{id}', [AdminConvertionController::class, 'store'])->name('store_konversi');
 Route::get('/dashboard/expend', [ExpendController::class, 'index'])->name('expend');
 Route::post('/dashboard/expend', [ExpendController::class, 'store'])->name('expend_store');
+Route::get('/dashboard/withdraw', [WithdrawController::class, 'index'])->name('pencairandana');
+Route::post('/dashboard/withdraw', [WithdrawController::class, 'store'])->name('withdraw_store');
+Route::get('/dashboard/withdraw/delete/{id}', [WithdrawController::class, 'delete'])->name('withdraw_delete');
 Route::get('/dashboard/adjustment', [AdjustmentController::class, 'index'])->name('adjustment');
 Route::post('/dashboard/adjustment', [AdjustmentController::class, 'store'])->name('adjustment_store');
 Route::post('/dashboard/adjustment/edit/{id}', [AdjustmentController::class, 'update'])->name('adjustment_update');

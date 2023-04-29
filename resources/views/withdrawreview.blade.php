@@ -13,13 +13,12 @@
                     <div> <img src="/public/img/kitchen-scales.png" alt="" class="w-20 h-20"></div>
                     <div>
                         <div class="">
-                            <h5 class="mb-2 text-1xl font-bold font-mono text-gray-900 dark:text-white">Transaksi
-                                Konversi Nasabah</h5>
+                            <h5 class="mb-2 text-1xl font-bold font-mono text-gray-900 dark:text-white">Pencairan Dana Nasabah</h5>
                         </div>
                     </div>
 
-                    <div x-data="{ allChecked: false }" class="max-h-screen overflow-y-scroll">
-                        <form action="{{ route('convertion_review_store') }}" method="post">
+                    <div x-data="{ allChecked: false }" class="">
+                        <form action="{{ route('withdraw_review_store') }}" method="post">
                             @csrf
                             <div class="flex flex-row items-center justify-center gap-2">
                                 <div
@@ -37,15 +36,10 @@
                                         Setujui
                                     </button>
                                 </div>
-                                <div>
-                                    <button type="submit" name="action" value="reject"
-                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                        Tolak
-                                    </button>
-                                </div>
+                               
                             </div>
 
-                            @foreach ($convertions as $index => $item)
+                            @foreach ($withdraws as $index => $item)
                             
                                 <div
                                     class="border border-gray-300 p-4 rounded-lg flex items-center mb-4 bg-[#15C972] hover:bg-[#016b38]">
@@ -53,17 +47,17 @@
                                         class="form-checkbox h-5 w-5 text-green-500"
                                         x-model="checkedItems[{{ $index }}]">
                                         <div>
-                                    <div class="ml-3 text-gray-700 font-mono">
+                                    <div class="ml-3 text-gray-700 font-mon">
                                          Nama : {{ $item->user->name }}
                                     </div>
                                    
-                                    <div class="ml-3 text-gray-700 font-mono">
+                                    <div class="ml-3 text-gray-700 font-mono ">
                                       
                                     </div>
                                     
                                        
                                         <div class="ml-3 text-gray-700 font-mono">
-                                            Konversi senilai : @currency($item->pay_total)
+                                            Pencairan Dana senilai : @currency($item->pay_total)
                                        
                                     </div>
                                         
@@ -78,7 +72,7 @@
                     </div>
 
                     <script>
-                        const checkedItems = @json(array_fill(0, count($convertions), false));
+                        const checkedItems = @json(array_fill(0, count($withdraws), false));
                         const inputs = document.querySelectorAll('.form-checkbox');
                         const submitBtn = document.getElementById('submit-btn');
 
@@ -106,7 +100,7 @@
 
                 </div>
             </div>
-            <a href="/menu" class="mt-4 text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Kembali</a>
 
+            <a href="/menu" class="mt-4 text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Kembali</a>
         </div>
     @endsection

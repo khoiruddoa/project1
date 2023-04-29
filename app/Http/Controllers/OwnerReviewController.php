@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Adjustment;
 use App\Models\BankProfit;
 use App\Models\CollectorTransaction;
 use App\Models\Convertion;
@@ -11,6 +12,7 @@ use App\Models\Income;
 use App\Models\Manage;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Withdraw;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -43,7 +45,15 @@ class OwnerReviewController extends Controller
     public function adjust()
     {
         return view('adjustmentreview', [
-            'adjustments' => Transaction::where('pay_status', 1)->where('information', 1)->get(),
+            'adjustments' => Adjustment::where('pay_status', 1)->get(),
+
+        ]);
+    }
+
+    public function with()
+    {
+        return view('withdrawreview', [
+            'withdraws' => Withdraw::where('pay_status', 1)->get(),
 
         ]);
     }
@@ -173,12 +183,38 @@ class OwnerReviewController extends Controller
 
 
             $data = 2;
-            $data2 = 3;
-
-            $transaction = Transaction::findOrFail($validatedData['id'][$key]);
+            
+            $transaction = Adjustment::findOrFail($validatedData['id'][$key]);
             $transaction->update(['pay_status' => $data]);
-            $collector_transaction = CollectorTransaction::where('relate', $transaction->id)->first();
-            $collector_transaction->update(['pay_status' => $data2]);
+          
+            Alert::info('Berhasil', 'Sukses disetujui');
+        }
+
+        return back();
+    }
+
+    public function withdraw(Request $request)
+    {
+        $validatedData = $request->validate([
+
+            'id.*' => 'required|max:150'
+
+        ]);
+
+        if ($validatedData == null) {
+            Alert::warning('Gagal', 'Tidak ada data yang dipilih');
+            return back();
+        }
+
+
+        foreach ($validatedData['id'] as $key => $value) {
+
+
+            $data = 2;
+            
+            $withdraw = Withdraw::findOrFail($validatedData['id'][$key]);
+            $withdraw->update(['pay_status' => $data]);
+           
             Alert::info('Berhasil', 'Sukses disetujui');
         }
 

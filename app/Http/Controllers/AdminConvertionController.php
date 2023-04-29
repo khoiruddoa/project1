@@ -90,14 +90,18 @@ class AdminConvertionController extends Controller
         //cek saldo masing masing nasabah
         $users = User::with(['transactions' => function ($query) {
             $query->where('pay_status', 2);
+        },'adjustments' => function ($query) {
+            $query->where('pay_status', 2);
+        }, 'withdraws' => function ($query) {
+            $query->where('pay_status', 3);
         }, 'convertions', 'manages'])->get();
 
         $saldo = collect();
 
         foreach ($users as $user) {
             $total = $user->transactions->sum('pay_total')
-                + $user->manages->sum('pay_total')
-                - $user->convertions->sum('pay_total');
+                + $user->manages->sum('pay_total')  + $user->adjustments->sum('pay_total')
+                - $user->convertions->sum('pay_total') - $user->withdraws->sum('pay_total');
 
             if ($total >= $minPrice) {
                 $saldo->push([

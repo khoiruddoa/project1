@@ -42,7 +42,7 @@
                         </button>
                         <div class="px-6 py-6 lg:px-8">
                             <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Masukkan Transaksi</h3>
-                            <form class="space-y-6" action="{{ route('storepengepul_detail') }}" method="POST">
+                            {{-- <form class="space-y-6" action="{{ route('storepengepul_detail') }}" method="POST">
                                 @csrf
                                 <div>
                                     <div>
@@ -79,7 +79,89 @@
                                 <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
 
                                 </div>
-                            </form>
+                            </form> --}}
+
+
+
+                            <div x-data="{ allChecked: false }" class="max-h-screen overflow-y-scroll">
+                                <form action="{{ route('storepengepul_detail') }}" method="post">
+                                    @csrf
+                                    <div class="flex flex-row items-center justify-center gap-2">
+                                        <div
+                                            class="mb-2 border border-gray-300 p-2 rounded-lg flex items-center bg-[#15C972] hover:bg-[#016b38]">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500"
+                                                x-model="allChecked" x-on:click="allChecked ? uncheckAll() : checkAll()">
+                                            <div class="ml-3 text-gray-700 font-mono">
+                                                Pilih Semua
+                                            </div>
+
+                                        </div>
+                                        <div>
+                                            <button type="submit"
+                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                            Simpan
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+                                    @foreach ($categories as $index => $item)
+                                        @if ($item->stock > 0)
+                                        <input type="hidden" name="collector_transaction_id"
+                                        value="{{ $transaction->id }}">
+                                            <input type="hidden" name="date[]" value="{{ $transaction->created_at }}">
+                                           
+                                            <div
+                                                class="border border-gray-300 p-4 rounded-lg flex items-center mb-2 bg-[#15C972] hover:bg-[#016b38]">
+                                                <input type="checkbox" name="category_id[]" value="{{ $item->id }}"
+                                                    class="form-checkbox h-5 w-5 text-green-500"
+                                                    x-model="checkedItems[{{ $index }}]">
+                                                <div>
+                                                    <div class="ml-3 text-gray-700 font-mono">
+                                                        {{ preg_replace('/\d+\./', '', $item->category_name) }}
+                                                         {{ $item->stock }} {{ $item->uom }}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+
+
+                                </form>
+
+                            </div>
+
+                            <script>
+                                const checkedItems = @json(array_fill(0, count($categories), false));
+                                const inputs = document.querySelectorAll('.form-checkbox');
+                                const submitBtn = document.getElementById('submit-btn');
+
+                                inputs.forEach(input => {
+                                    input.addEventListener('input', () => {
+                                        const hasValue = Array.from(inputs).some(input => input.value);
+                                        submitBtn.disabled = !hasValue;
+                                    });
+                                });
+
+
+                                function checkAll() {
+                                    checkedItems.forEach((item, i) => {
+                                        checkedItems[i] = true;
+                                    });
+                                }
+
+                                function uncheckAll() {
+                                    checkedItems.forEach((item, i) => {
+                                        checkedItems[i] = false;
+                                    });
+                                }
+                            </script>
+
+
+
+
+
                         </div>
                     </div>
                 </div>
@@ -131,7 +213,8 @@
                         @endphp
                         @foreach ($detail_transactions as $item)
                             <tr>
-                                <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ preg_replace('/\d+\./', '', $item->category->category_name) }}</td>
+                                <td class="w-1/3 sm:w-auto text-left py-3 px-4">
+                                    {{ preg_replace('/\d+\./', '', $item->category->category_name) }}</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $item->qty }}
                                     {{ $item->category->uom }}</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($item->price)</td>

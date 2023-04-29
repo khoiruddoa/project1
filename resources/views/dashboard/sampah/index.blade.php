@@ -201,7 +201,7 @@
                                     <td class="w-1/3 sm:w-auto text-left py-3 px-4">
                                         0</td>
                                 @endif
-                                {{-- <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ date('d-m-Y', strtotime($category->categoryPrices->last()->created_at)) }}</td> --}}
+                                <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ date('d-m-Y', strtotime($category->categoryPrices->last()->created_at)) }}</td>
                                 <td class="sm:text-left py-3 px-4">
                                     <div class="flex flex-row justify-center items-center gap-2">
                                         <div>

@@ -38,6 +38,12 @@
                
                 Pengajuan Konversi
             </a>
+            <a href="{{route('pencairandana')}}" class="flex items-center {{ Request::is('dashboard/withdraw*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-align-left mr-3"></i>
+
+              
+               Pencairan Dana
+           </a>
             <a href="{{route('expend')}}" class="flex items-center {{ Request::is('dashboard/expend*') ? 'active-nav-link' : '' }} text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-align-left mr-3"></i>
                 Pengeluaran Operasional

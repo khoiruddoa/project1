@@ -30,17 +30,17 @@ class ConvertionController extends Controller
         );
     }
 
-    public function store(Request $request)
-    {
+    // public function store(Request $request)
+    // {
 
-        if($request->pay_total > 0){
-        Convertion::create($request->all());
+    //     if($request->pay_total > 0){
+    //     Convertion::create($request->all());
 
-        Alert::info('Berhasil', 'Silahkan Menunggu');
-        return redirect('/convertion');
-        }
-        Alert::warning('Gagal', 'Saldo Anda 0');
-        return back();
+    //     Alert::info('Berhasil', 'Silahkan Menunggu');
+    //     return redirect('/convertion');
+    //     }
+    //     Alert::warning('Gagal', 'Saldo Anda 0');
+    //     return back();
 
-    }
+    // }
 }

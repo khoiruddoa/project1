@@ -6,11 +6,13 @@ use App\Models\Category;
 use App\Models\CategoryPrice;
 use App\Models\CollectorTransaction;
 use App\Models\DetailCollectorTransaction;
+use App\Models\DetailTransaction;
 use App\Models\Payment;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class CollectorTransactionController extends Controller
@@ -59,65 +61,131 @@ class CollectorTransactionController extends Controller
         ]);
     }
 
+    //     public function storedetail(Request $request)
+    //     {
+
+    // //validasi
+    //         $validatedData = $request->validate([
+    //             'collector_transaction_id' => 'required',
+    //             'category_id' => 'required',
+
+    //             'qty' => 'required'
+    //         ]);
+
+    //         $category_id = $validatedData['category_id'];
+    //         $date = $request->input('date');
+    //         $parsed_date = Carbon::parse($date);
+    //         $year = $parsed_date->format('Y');
+    //         $month = $parsed_date->format('m');
+
+    //         $category = Category::find($category_id);
+    //         $category_prices = CategoryPrice::where('category_id', $category_id)
+    //             ->whereYear('created_at', $year)
+    //             ->whereMonth('created_at', $month)
+    //             ->latest()->first();
+
+    //         if (!$category_prices) {
+    //             Alert::warning('Gagal', 'Harga Belum diupdate untuk bulan tersebut');
+    //             return back();
+    //         }
+
+    //         $price = $category_prices->sell;
+
+
+    //         $validatedData['price'] = $price;
+    //         $validatedData['created_at'] = $request->input('date');
+
+    //         $stocknya = $category->stock;
+
+    //         // if ($request->qty > $stocknya) {
+    //         //     Alert::Warning('Gagal', 'Stock Tidak Mencukupi');
+    //         //     return redirect()->back();
+    //         // }
+    //         $stock = $validatedData['qty'];
+
+    //         $v = $validatedData['collector_transaction_id'];
+    //         $transaction = CollectorTransaction::find($v);
+    //         $category = Category::find($category_id);
+
+    //         $debet = $validatedData['price'] * $validatedData['qty'];
+
+    //         $payloadcategory = ['stock' => $category['stock'] - $stock];
+    //         $category->fill($payloadcategory);
+    //         $category->save();
+
+    //         $payloadtransaction = ['pay_total' => $transaction['pay_total'] + $debet];
+    //         $transaction->fill($payloadtransaction);
+    //         $transaction->save();
+    //         DetailCollectorTransaction::create($validatedData);
+    //         Alert::info('Berhasil', 'Transaksi Berhasil');
+    //         return back();
+    //     }
     public function storedetail(Request $request)
     {
-
-
-        $validatedData = $request->validate([
-            'collector_transaction_id' => 'required',
-            'category_id' => 'required',
-
-            'qty' => 'required'
-        ]);
-
-        $category_id = $validatedData['category_id'];
-        $date = $request->input('date');
-        $parsed_date = Carbon::parse($date);
-        $year = $parsed_date->format('Y');
-        $month = $parsed_date->format('m');
-
-
-
-
-        $category = Category::find($validatedData['category_id']);
-        $category_prices = CategoryPrice::where('category_id', $category_id)
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
-            ->latest()->first();
-
-        if (!$category_prices) {
-            Alert::warning('Gagal', 'Harga Belum diupdate untuk bulan tersebut');
+        if (empty($request->input('category_id'))) {
+            Alert::warning('Gagal', 'Belum ada transaksi yang diisi');
             return back();
+            
+        }
+        $detail_ids = [];
+        // Loop through the selected categories
+        foreach ($request->input('category_id') as $index => $category_id) {
+            // Validate each input
+            $validatedData = Validator::make([
+                'collector_transaction_id' => $request->input('collector_transaction_id'),
+                'category_id' => $category_id,
+                'date' => $request->input('date')[$index],
+            ], [
+                'collector_transaction_id' => 'required',
+                'category_id' => 'required',
+                'date' => 'required|date',
+            ])->validate();
+
+            $category = Category::find($category_id);
+            $category_prices = CategoryPrice::where('category_id', $category_id)
+                ->whereYear('created_at', Carbon::parse($validatedData['date'])->format('Y'))
+                ->whereMonth('created_at', Carbon::parse($validatedData['date'])->format('m'))
+                ->latest()->first();
+
+            if (!$category_prices) {
+                Alert::warning('Gagal', 'Harga Belum diupdate untuk bulan tersebut');
+                return back();
+            }
+
+
+           
+
+            $price = $category_prices->sell;
+
+            $stok = $category->stock;
+            $detail = DetailCollectorTransaction::create([
+                'collector_transaction_id' => $validatedData['collector_transaction_id'],
+                'category_id' => $category_id,
+                'price' => $price,
+                'qty' => $stok,
+                'created_at' => $validatedData['date'],
+            ]);
+            $payloadcategory = ['stock' => $category->stock - $stok];
+            $category->fill($payloadcategory);
+            $category->save();
+            $detail_ids[] = $detail->id; 
         }
 
-        $price = $category_prices->sell;
 
+        $detailtransaksi = DetailCollectorTransaction::where('collector_transaction_id', $request->collector_transaction_id)->get();
+        $total = 0;
 
-        $validatedData['price'] = $price;
-        $validatedData['created_at'] = $request->input('date');
-
-        $stocknya = $category->stock;
-
-        if ($request->qty > $stocknya) {
-            Alert::Warning('Gagal', 'Stock Tidak Mencukupi');
-            return redirect()->back();
+        foreach ($detail_ids as $detail_id) {
+            $detail = DetailCollectorTransaction::find($detail_id);
+            $total += $detail->price * $detail->qty;
         }
-        $stock = $validatedData['qty'];
 
-        $v = $validatedData['collector_transaction_id'];
-        $transaction = CollectorTransaction::find($v);
-        $category = Category::find($validatedData['category_id']);
-
-        $debet = $validatedData['price'] * $validatedData['qty'];
-
-        $payloadcategory = ['stock' => $category['stock'] - $stock];
-        $category->fill($payloadcategory);
-        $category->save();
-
-        $payloadtransaction = ['pay_total' => $transaction['pay_total'] + $debet];
+        $debet = $total;
+        $transaction = CollectorTransaction::find($validatedData['collector_transaction_id']);
+        $payloadtransaction = ['pay_total' => $transaction->pay_total + $debet];
         $transaction->fill($payloadtransaction);
         $transaction->save();
-        DetailCollectorTransaction::create($validatedData);
+
         Alert::info('Berhasil', 'Transaksi Berhasil');
         return back();
     }
@@ -197,9 +265,9 @@ class CollectorTransactionController extends Controller
         $id = $request->collector_transaction_id;
 
 
-       
+
         $transaction = CollectorTransaction::find($id);
-        
+
 
         $payload = ['pay_status' => '3'];
 

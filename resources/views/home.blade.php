@@ -18,7 +18,7 @@
                     @if(auth()->user()->role == 1)
                         <a class="font-mono bg-[white] hover:bg-blue-700 text-[#3d68ff] hover:text-white text-xl sm:text-3xl py-2 px-4 sm:px-6 rounded"
                             href="/dashboard">
-                            Dashboard
+                            Menu
                         </a>
                         @elseif(auth()->user()->role == 3)
                         <a class="font-mono bg-[white] hover:bg-blue-700 text-[#3d68ff] hover:text-white text-xl sm:text-3xl py-2 px-4 sm:px-6 rounded"
@@ -28,7 +28,7 @@
                         @elseif(auth()->user()->role == 4)
                         <a class="font-mono bg-[white] hover:bg-blue-700 text-[#3d68ff] hover:text-white text-xl sm:text-3xl py-2 px-4 sm:px-6 rounded"
                         href="/menu">
-                        Dashboard
+                        Menu
                     </a>
 @else
 <a class="font-mono bg-[white] hover:bg-blue-700 text-[#3d68ff] hover:text-white text-xl sm:text-3xl py-2 px-4 sm:px-6 rounded"
