@@ -26,7 +26,7 @@
                     <div class="flex flex-col gap-2 max-h-60 overflow-y-auto">
 
                         <div
-                            class="bg-[#15C972] hover:bg-[#016b38] font-mono text-sm md:text-md font-bold p-2 w-full text-white rounded-xl">
+                            class="bg-[#15C972] hover:bg-[#016b38] font-mono text-xs md:text-md font-bold p-2 w-full text-white rounded-xl">
                             <div>
                                 Transaksi Tanggal: {{ $transaction->created_at->format('d-m-Y') }}</div>
                             @php
@@ -44,14 +44,14 @@
                                 @endphp
                             @endforeach --}}
                             <table>
-                                <thead>
+                                {{-- <thead>
                                     <tr>
                                         <th>Kategori</th>
                                         <th>Jumlah</th>
                                         <th>Harga Satuan</th>
                                         <th>Jumlah Harga</th>
                                     </tr>
-                                </thead>
+                                </thead> --}}
                                 <tbody>
                                     @foreach ($details as $detail)
                                     <tr>
