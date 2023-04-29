@@ -21,7 +21,7 @@ class Both
 
             Alert::error('forbidden', 'anda tidak memiliki akses');
 
-            return redirect('/home');
+            return back();
         }
     }
 }

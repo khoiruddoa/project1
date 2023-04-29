@@ -79,6 +79,7 @@ Route::get('/dashboard/report/pendapatan', [ReportController::class, 'pendapatan
 Route::get('/dashboard/graphic', [ChartController::class, 'index'])->name('chart');
 Route::get('/dashboard/graphic/category', [ChartController::class, 'fluktuasi'])->name('fluktuasi_harga');
 Route::get('/dashboard/graphic/transaction', [ChartController::class, 'jumlahtransaksi'])->name('jumlah_transaksi');
+Route::get('/dashboard/dashboard', [DashboardController::class, 'admindashboard'])->name('dashboardadmin');
 });
 
 
@@ -104,6 +105,7 @@ Route::post('/adjustment/review', [OwnerReviewController::class, 'adjustment'])-
 Route::get('/withdraw/review', [OwnerReviewController::class, 'with'])->name('withdraw_review');
 Route::post('/withdraw/review', [OwnerReviewController::class, 'withdraw'])->name('withdraw_review_store');
 Route::get('/dashboard/review', [OwnerReviewController::class, 'admindashboard'])->name('dashboard_review');
+
 });
 
 
@@ -132,7 +134,7 @@ Route::post('/change/password', [ChangePhotoPasswordController::class, 'changePa
     
 //admin
 Route::middleware(['admin'])->group(function () {
-Route::get('/dashboard/dashboard', [DashboardController::class, 'admindashboard']);
+
 Route::get('/dashboard/nasabah', [RegisterController::class, 'index'])->name('nasabah');
 Route::get('/dashboard/nasabah/print', [RegisterController::class, 'print'])->name('print_nasabah');
 Route::get('/dashboard/nasabah/{user_id}', [RegisterController::class, 'detail'])->name('nasabah_detail');

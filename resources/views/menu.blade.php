@@ -10,7 +10,7 @@
                             <div class="flex items-center mt-10">
                                 <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
                                     <div>
-                                        <a href="{{ route('dashboard_review') }}"
+                                        <a href="{{ route('dashboardadmin') }}"
                                             class="w-40 h-32 flex flex-col justify-center items-center hover:shadow-2xl hover:bg-blue-600 border-[2px] xl:px-[65px] xl:py-[44px] lg:px-[45px] lg:py-[24px] px-[20px] py-[10px] bg-white rounded-[35px] shadow-lg">
                                             <div><img src="{{ asset('/public/img/dashboard.png') }}" alt="" class="w-10 h-10">
                                             </div>
@@ -61,7 +61,7 @@
                                         </a>
                                     </div>
                                     <div>
-                                        <a href="{{ route('reportreview') }}"
+                                        <a href="/dashboard/report"
                                             class="w-40 h-32 flex flex-col justify-center items-center hover:shadow-2xl hover:bg-blue-600 border-[2px] xl:px-[65px] xl:py-[44px] lg:px-[45px] lg:py-[24px] px-[30px] py-[10px] bg-white rounded-[35px] shadow-lg">
                                             <div><img src="{{ asset('/public/img/schedule.png') }}" alt=""
                                                     class="w-10 h-10"></div>
