@@ -54,6 +54,12 @@ class CategoryController extends Controller
     public function destroy($id)
     {
 
+        $categoryprice = CategoryPrice::where('category_id', $id)->first();
+        if($categoryprice)
+        {Alert::warning('Gagal', 'Sudah ada transaksi di Data ini!!');
+            return redirect()->back();}
+
+
         $transaksi = DetailTransaction::where('category_id', $id)->first();
         if($transaksi)
         {Alert::warning('Gagal', 'Sudah ada transaksi di Data ini');
