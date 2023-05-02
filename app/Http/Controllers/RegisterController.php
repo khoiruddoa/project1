@@ -86,6 +86,11 @@ class RegisterController extends Controller
     public function destroy($id){
         
         $user = User::findOrFail($id);
+        $transaksi = Transaction::where('user_id', $id)->first();
+        if($transaksi){
+            Alert::warning('Gagal', 'User sudah Bertransaksi sebelumnya');
+            return back();
+        }
         $user->delete();
         Alert::info('Berhasil', 'Hapus Data Berhasil');
         return redirect('/dashboard/nasabah');
