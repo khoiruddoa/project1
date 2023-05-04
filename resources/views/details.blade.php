@@ -46,7 +46,7 @@
                                   @foreach ($details as $detail)
                                   <tr class="hover:bg-gray-100">
                                     <td class="py-2 px-4 border border-gray-400">{{ preg_replace('/\d+\./', '', $detail->category->category_name) }}</td>
-                                    <td class="py-2 px-4 border border-gray-400">{{ $detail->qty }} {{ $detail->category->uom }}</td>
+                                    <td class="py-2 px-4 border border-gray-400">{{ number_format($detail->qty, 2, ',', '.')}} {{ $detail->category->uom }}</td>
                                     <td class="py-2 px-4 border border-gray-400">@currency($detail->price)</td>
                                     <td class="py-2 px-4 border border-gray-400">@currency($detail->price * $detail->qty)</td>
                                     @php
