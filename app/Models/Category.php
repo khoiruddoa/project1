@@ -13,6 +13,10 @@ class Category extends Model
     {
         return $this->hasMany(DetailTransaction::class);
     }
+    public function cancelTransactions()
+    {
+        return $this->hasMany(cancelTransaction::class);
+    }
     public function detailCollectorTransactions()
     {
         return $this->hasMany(DetailCollectorTransaction::class);

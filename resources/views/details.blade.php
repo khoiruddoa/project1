@@ -32,33 +32,35 @@
                             @php
                                 $total = 0;
                             @endphp
-                            
-                            <table>
+                            @if(count($details) > 0)
+                            <table class="border-collapse w-full">
                                 <thead>
-                                    <tr>
-                                        <th>Kategori</th>
-                                        <th>Jumlah Barang</th>
-                                        <th>Harga</th>
-                                        <th>Jumlah Harga</th>
-                                    </tr>
+                                  <tr class="bg-gray-800 text-white">
+                                    <th class="py-2 px-4 border border-gray-400 font-bold uppercase text-sm">Kategori</th>
+                                    <th class="py-2 px-4 border border-gray-400 font-bold uppercase text-sm">Jumlah Barang</th>
+                                    <th class="py-2 px-4 border border-gray-400 font-bold uppercase text-sm">Harga</th>
+                                    <th class="py-2 px-4 border border-gray-400 font-bold uppercase text-sm">Jumlah Harga</th>
+                                  </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($details as $detail)
-                                    <tr>
-                                        <td>{{ preg_replace('/\d+\./', '', $detail->category->category_name) }}</td>
-                                        <td>{{ $detail->qty }} {{ $detail->category->uom }}</td>
-                                        <td>@currency($detail->price)</td>
-                                        <td>@currency($detail->price * $detail->qty)</td>
-                                        @php
-                                            $total += $detail->price * $detail->qty; // tambahkan nilai baru ke total
-                                        @endphp
-                                    </tr>
-                                    @endforeach
+                                  @foreach ($details as $detail)
+                                  <tr class="hover:bg-gray-100">
+                                    <td class="py-2 px-4 border border-gray-400">{{ preg_replace('/\d+\./', '', $detail->category->category_name) }}</td>
+                                    <td class="py-2 px-4 border border-gray-400">{{ $detail->qty }} {{ $detail->category->uom }}</td>
+                                    <td class="py-2 px-4 border border-gray-400">@currency($detail->price)</td>
+                                    <td class="py-2 px-4 border border-gray-400">@currency($detail->price * $detail->qty)</td>
+                                    @php
+                                        $total += $detail->price * $detail->qty; // tambahkan nilai baru ke total
+                                    @endphp
+                                  </tr>
+                                  @endforeach
                                 </tbody>
-                            </table>
+                              </table>
+                              
+                            @endif
                             
                             @if (empty($transaction->information))
-                                <div>Total : @currency($total)</div>
+                                <div class="mt-2">Total : @currency($total)</div>
                                 @php
                                     $jumlah = $detail->qty * $detail->price;
                                 @endphp
@@ -68,13 +70,16 @@
                                     <div>
                                         Jasa Angkut @currency($jumlah - $transaction->pay_total)
                                     </div>
+                                    <div>
+                                        Pengangkut : @foreach($pengangkuts as $pengangkut)
+                                        {{$pengangkut->user->name}},
+                                        @endforeach
+                                    </div>
                                 @endif
                             @else
-                                @if ($transaction->information == 1)
-                                    <div>Penyelarasan saldo sebesar @currency($transaction->pay_total)</div>
-                                @else
+                               
                                     <div>Pendapatan jasa angkut sebesar @currency($transaction->pay_total)</div>
-                                @endif
+                               
                             @endif
                         </div>
                     </div>

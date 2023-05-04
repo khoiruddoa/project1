@@ -28,6 +28,7 @@
 
         @yield('container')
     </div>
+    @include('partials.footer')
     {{-- @include('sweetalert::alert') --}}
     @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>

@@ -14,8 +14,12 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::orderBy('id', 'asc')->get();
+        $date = CategoryPrice::orderBy('id', 'desc')->latest()->first();
+
+
         return view('dashboard.sampah.index', [
-            'categories' => $categories
+            'categories' => $categories,
+            'date' => $date
         ]);
     }
 
@@ -33,6 +37,8 @@ class CategoryController extends Controller
 
         return redirect('/dashboard/sampah');
     }
+
+
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
@@ -40,7 +46,30 @@ class CategoryController extends Controller
             'uom' => ['required'],
         ]);
 
+        
+
         try {
+            //cek ada data atau tidak
+
+            $categoryprice = CategoryPrice::where('category_id', $id)->orderBy('id', 'desc')->latest()->first();
+            if ($categoryprice) {
+
+                $payload = [
+                    'buy' => $request->buy,
+                    'sell' => $request->sell
+                ];
+                $categoryprice->update($payload);
+            } else {
+                $harga = new CategoryPrice([
+                    'category_id' => $id,
+                    'buy' => $request->buy,
+                    'sell' => $request->sell,
+                    'created_at' => $request->created_at
+
+                ]);
+                $harga->save();
+            }
+
             $category = Category::findOrFail($id);
             $category->update($validatedData);
             Alert::info('Berhasil', 'Update Berhasil');
@@ -55,15 +84,17 @@ class CategoryController extends Controller
     {
 
         $categoryprice = CategoryPrice::where('category_id', $id)->first();
-        if($categoryprice)
-        {Alert::warning('Gagal', 'Sudah ada transaksi di Data ini!!');
-            return redirect()->back();}
+        if ($categoryprice) {
+            Alert::warning('Gagal', 'Sudah ada transaksi di Data ini!!');
+            return redirect()->back();
+        }
 
 
         $transaksi = DetailTransaction::where('category_id', $id)->first();
-        if($transaksi)
-        {Alert::warning('Gagal', 'Sudah ada transaksi di Data ini');
-            return redirect()->back();}
+        if ($transaksi) {
+            Alert::warning('Gagal', 'Sudah ada transaksi di Data ini');
+            return redirect()->back();
+        }
 
         $category = Category::findOrFail($id);
         $category->delete();
@@ -73,7 +104,7 @@ class CategoryController extends Controller
 
     public function prices(Request $request)
     {
-            $validatedData = $request->validate([
+        $validatedData = $request->validate([
             'category_id.*' => 'required',
             'buy.*' => 'required',
             'sell.*' => 'required'

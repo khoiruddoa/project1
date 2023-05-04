@@ -154,6 +154,7 @@ Route::post('/dashboard/transaksi', [TransactionController::class, 'store'])->na
 Route::get('/dashboard/transaksi/{id}', [TransactionController::class, 'detail'])->name('transaksi_detail');
 Route::post('/dashboard/transaksi/detail', [TransactionController::class, 'storedetail'])->name('store_detail');
 Route::get('/dashboard/transaksi/detail/delete/{id}', [TransactionController::class, 'destroydetail'])->name('delete_detail');
+Route::post('/dashboard/transaksi/detail/cancel/{id}', [TransactionController::class, 'canceldetail'])->name('cancel_detail');
 Route::get('/dashboard/transaksi/delete/{id}', [TransactionController::class, 'destroy'])->name('transaksi_delete');
 Route::post('/dashboard/transaksi/finish/{id}', [TransactionController::class, 'finish'])->name('finish');
 Route::post('/dashboard/transaksi/pick', [TransactionController::class, 'storepick'])->name('store_pick');

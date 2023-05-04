@@ -50,7 +50,7 @@
                                     @if ($transaction->information == 1)
                                         Penyelarasan Saldo
                                     @elseif($transaction->information == 2)
-                                        Jasa Angkut Sampah
+                                        Jasa Angkut Sampah {{$transaction->user->name}}
                                     @else
                                         Setor Sampah {{$transaction->user->name}}
                                     @endif

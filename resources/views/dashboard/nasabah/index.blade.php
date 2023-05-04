@@ -199,12 +199,12 @@
                                                 $user->transactions()->latest('created_at')->first()->created_at))
                                             @if (strtotime(
                                                     $user->transactions()->latest('created_at')->first()->created_at) < strtotime('-3 months'))
-                                                <td class="w-1/3 sm:w-auto bg-red-700 text-white text-left py-3 px-4">Aktif
+                                                <td class="w-1/3 sm:w-auto bg-yellow-700 text-white text-left py-3 px-4">Aktif
                                                     {{ $user->transactions()->latest('created_at')->first()->created_at->diffForHumans() }}
                                                 </td>
                                             @elseif(strtotime(
                                                     $user->transactions()->latest('created_at')->first()->created_at) < strtotime('-2 months'))
-                                                <td class="w-1/3 sm:w-auto bg-purple-600 text-white text-left py-3 px-4">
+                                                <td class="w-1/3 sm:w-auto bg-orange-600 text-white text-left py-3 px-4">
                                                     Aktif
                                                     {{ $user->transactions()->latest('created_at')->first()->created_at->diffForHumans() }}
                                                 </td>
@@ -223,7 +223,7 @@
                                                     Belum Melakukan Transaksi dari {{ $user->created_at->diffForHumans() }}
                                                 </td>
                                             @else
-                                                <td class="w-1/3 sm:w-auto bg-green-700 text-left text-white py-3 px-4">
+                                                <td class="w-1/3 sm:w-auto bg-purple-400 text-left text-white py-3 px-4">
                                                     Belum Melakukan Transaksi dari {{ $user->created_at->diffForHumans() }}
                                                 </td>
                                             @endif
@@ -243,7 +243,6 @@
                         </table>
 
                     </div>
-
 
                 </div>
             </div>

@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('picks', function (Blueprint $table) {
+        Schema::create('cancel_transactions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->foreignId('transaction_id');
-            $table->foreignId('user_id');
-            $table->integer('id_transaction')->nullable();
-            $table->float('pay',10,3)->nullable();
-        }); 
+            $table->foreignId('category_id'); 
+            $table->integer('price');
+            $table->integer('sell');
+            $table->float('qty', 10, 3);
+            $table->text('information')->nullable();
+        });
     }
 
     /**
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('picks');
+        Schema::dropIfExists('cancel_transactions');
     }
 };

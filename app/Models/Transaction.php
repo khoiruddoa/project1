@@ -18,5 +18,10 @@ class Transaction extends Model
     {
         return $this->hasMany(DetailTransaction::class);
     }
+    public function cancelTransactions()
+    {
+        return $this->hasMany(CancelTransaction::class);
+    }
+
 
 }
