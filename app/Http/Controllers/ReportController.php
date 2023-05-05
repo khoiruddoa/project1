@@ -65,13 +65,12 @@ class ReportController extends Controller
         }
         
         $pengepul = CollectorTransaction::select('user_id', 'pay_total', 'information', 'created_at', DB::raw("'masuk' as origin"))
-            ->where('pay_status', 3)
+            
             ->whereDate('created_at', '>=', $start_date)
             ->whereDate('created_at', '<=', $end_date)
             ->get();
     
         $nasabah = Transaction::select('user_id', 'pay_total', 'information', 'created_at', DB::raw(" 'keluar' as origin"))
-            ->where('pay_status', 1)->orWhere('pay_status', 2)
             ->whereDate('created_at', '>=', $start_date)
             ->whereDate('created_at', '<=', $end_date)
             ->get();
