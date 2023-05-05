@@ -339,7 +339,7 @@ class ReportController extends Controller
         $kode = $request->input('type');
 
         $kategori = Category::find($kode);
-        $tran = Transaction::where('pay_status', 1)->orWhere('pay_status', 2)->with('user')
+        $tran = Transaction::with('user')
             ->whereHas('detailTransactions', function ($query) use ($kode) {
                 $query->where('category_id', $kode);
             })
