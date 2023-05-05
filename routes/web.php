@@ -70,6 +70,7 @@ Route::get('/dashboard/report/transaksi', [ReportController::class, 'transaksi']
 Route::get('/dashboard/report/transaksi/kategori', [ReportController::class, 'transaksi_kategori'])->name('print_transaction_category');
 Route::get('/dashboard/report/transaksi/item', [ReportController::class, 'transaksi_item'])->name('print_transaction_item');
 Route::get('/dashboard/report/konversi', [ReportController::class, 'konversi'])->name('print_convertion');
+Route::get('/dashboard/report/withdraw', [ReportController::class, 'withdraw'])->name('print_withdraw');
 Route::get('/dashboard/report/Pengeluaran', [ReportController::class, 'pengeluaran'])->name('print_expend');
 Route::get('/dashboard/report/emas', [ReportController::class, 'emas'])->name('print_gold');
 Route::get('/dashboard/report/pengurus', [ReportController::class, 'pengurus'])->name('print_manage');

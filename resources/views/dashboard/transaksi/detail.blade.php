@@ -161,6 +161,7 @@
                                             </div>
                                         </div>
                                         <input type="hidden" name="transaction_id" value="{{ $transaction->id }}">
+                                        <input type="hidden" name="created_at" value="{{ $transaction->created_at }}">
 
 
 

@@ -16,6 +16,7 @@ use App\Models\Manage;
 use App\Models\Payment;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Withdraw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -148,6 +149,33 @@ class ReportController extends Controller
             'end' => $end_date
         ]);
     }
+
+    public function withdraw(Request $request)
+    {
+
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+
+        // Mendapatkan saldo awal dari tanggal sebelumnya
+
+        // Memastikan end_date tidak lebih kecil dari start_date
+        if ($end_date < $start_date) {
+            Alert::warning('Gagal', 'Tanggal Akhir tidak boleh lebih dulu dari tanggal awal');
+            return back();
+        }
+
+        $withdraw = Withdraw::where('pay_status', 3)
+            ->whereBetween('created_at', [$start_date, $end_date])
+            ->get();
+
+
+        return view('dashboard.report.withdraw', [
+            'withdraws' => $withdraw,
+            'start' => $start_date,
+            'end' => $end_date
+        ]);
+    }
+
 
     public function pengeluaran(Request $request)
     {

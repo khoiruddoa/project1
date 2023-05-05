@@ -199,7 +199,8 @@ class TransactionController extends Controller
                     'administrator' => auth()->user()->name,
                     'pay_total' => $hasilangkut,
                     'pay_status' => 2,
-                    'information' => 2
+                    'information' => 2,
+                    'created_at'=> $jumlah->created_at
                 ]);
                 $transac->save();
 
