@@ -102,11 +102,10 @@ class ReportController extends Controller
         $kode = $request->input('type');
 
         if ($kode == null) {
-            $transaction = Transaction::where('pay_status', 1)->orWhere('pay_status', 2)->whereBetween('created_at', [$start_date, $end_date])
+            $transaction = Transaction::whereBetween('created_at', [$start_date, $end_date])
                 ->get();
         } else {
-            $transaction = Transaction::where('pay_status', 1)->orWhere('pay_status', 2)
-                ->whereHas('user', function ($query) use ($kode) {
+            $transaction = Transaction::whereHas('user', function ($query) use ($kode) {
                     $query->where('type', $kode);
                 })
                 ->whereBetween('created_at', [$start_date, $end_date])
