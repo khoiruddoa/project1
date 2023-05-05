@@ -29,24 +29,38 @@
             <table class="table-auto mb-4 w-full">
                 <thead>
                     <tr>
-                        <th class="px-4 py-2">Tgl</th>
+                        
                         <th class="px-4 py-2">Nama</th>
-                        <th class="px-4 py-2">Total Perolehan Emas</th>
+                        <th class="px-4 py-2">Total</th>
+                        <th class="px-4 py-2">Perolehan Emas</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
-                            <td class="border px-4 py-2">{{ $user->updated_at->format('d-m-Y') }}</td>
+                            
                             <td class="border px-4 py-2">
                                 
                                 {{$user->name}}
                              </td>
                             <td class="border px-4 py-2">
                                 
-                               {{$user->convertions->sum('information')}} Gram
+                               {{$user->convertions->sum('pay_total')}}
                             </td>
+                            <td class="border px-4 py-2">
+                                @php $a = 0;
+                                @endphp
+                                
+                                @foreach($user->convertions as $convertion)
+                                @foreach($convertion->detailConvertions as $detail)
+                                @php $a = $detail->sum('gram');
+                                @endphp
+                                @endforeach
+                            
+                            @endforeach
+                            {{$a}} Gram
+                             </td>
 
-                            </td>
+                            
                            
 
                         </tr>

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('convertion_id'); 
+            $table->foreignId('goldweight_id');
             $table->integer('price');
             $table->integer('buy');
             $table->integer('profit');

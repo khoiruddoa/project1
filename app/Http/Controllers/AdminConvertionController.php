@@ -28,12 +28,19 @@ class AdminConvertionController extends Controller
 
     public function store(Request $request, $id)
     {
-        
+
+        $detailkonversi = DetailConvertion::where('convertion_id', $id)->get();
+        if(count($detailkonversi) > 0){
         $convertions = Convertion::findOrFail($id);
-        
+
         $convertions->update($request->all());
         Alert::info('Berhasil', 'Berhasil dibayarkan');
-        return redirect()->back();
+        return redirect()->back();}
+        else{ 
+            Alert::warning('Gagal', 'belum ada konversi emas yang dipilih');
+            return redirect()->back();
+
+        }
     }
 
     public function tambahemas(Request $request)
@@ -85,12 +92,23 @@ class AdminConvertionController extends Controller
 
         //harga terendah 
         $minPrice = Goldweight::min('price');
+        if ($minPrice < 1) {
+            Alert::warning('Gagal', 'Harga Emas belum di update');
+            return redirect()->back();
+        }
 
+
+        $cekstatuskonversi = Convertion::where('pay_status', 1)->get();
+        if(count($cekstatuskonversi) > 0)
+        {
+            Alert::warning('Gagal', 'Proses Konversi tidak dapat dilakukan karena masih ada transaksi yang belum disetujui');
+            return redirect()->back();
+        }
 
         //cek saldo masing masing nasabah
         $users = User::with(['transactions' => function ($query) {
             $query->where('pay_status', 2);
-        },'adjustments' => function ($query) {
+        }, 'adjustments' => function ($query) {
             $query->where('pay_status', 2);
         }, 'withdraws' => function ($query) {
             $query->where('pay_status', 3);
@@ -119,49 +137,65 @@ class AdminConvertionController extends Controller
                 'pay_status' => 1,
                 'pay_total' => $s['saldo'],
                 'administrator' => Auth()->user()->name,
+                'created_at' => $request->created_at
             ]);
 
             // Menyimpan record konversi
             $conversion->save();
         }
-        
-        
+
+
 
         Alert::info('Berhasil', 'Silahkan Menunggu');
         return back();
     }
+
     public function saveemas(Request $request)
     {
 
         $id = $request->id_emas;
         $idkonversi = $request->id;
         $saldo = $request->saldo;
-        
-$gold = Goldweight::find($id);
+
+        $gold = Goldweight::find($id);
 
 
 
 
-//pengecekan
-if ($gold->price > $saldo) {
-    Alert::warning('Gagal', 'Saldo tidak cukup');
-    return redirect()->back();
-}
+        //pengecekan
+        if ($gold->price > $saldo) {
+            Alert::warning('Gagal', 'Saldo tidak cukup');
+            return redirect()->back();
+        }
 
-$detail = new DetailConvertion([
-    'convertion_id' => $idkonversi,
-    'price' => $gold->price,
-    'buy' => $gold->buy,
-    'profit' => $gold->price - $gold->buy,
-    'gram' => $gold->gram
-]);
+        $detail = new DetailConvertion([
+            'convertion_id' => $idkonversi,
+            'price' => $gold->price,
+            'buy' => $gold->buy,
+            'profit' => $gold->price - $gold->buy,
+            'gram' => $gold->gram,
+            'created_at' => $request->created_at,
+            'goldweight_id' => $id
+        ]);
 
-// Menyimpan record konversi
-$detail->save();
+        // Menyimpan record konversi
+        $detail->save();
 
-       
+
         Alert::info('Berhasil', 'Berhasil tambah item emas');
         return redirect()->back();
+    }
+
+    public function terimaemas(Request $request)
+    {
+
+        $id = $request->id;
+        $convertions = Convertion::findOrFail($id);
+
+        $convertions->update(['information' => 1]);
+        Alert::info('Berhasil', 'Berhasil diterima');
+        return redirect()->back();
+        
     }
 
 }

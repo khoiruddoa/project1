@@ -14,5 +14,9 @@ class DetailConvertion extends Model
     {
         return $this->belongsTo(Convertion::class);
     }
+    public function goldweight()
+    {
+        return $this->belongsTo(Goldweight::class);
+    }
 
 }

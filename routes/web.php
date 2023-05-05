@@ -170,6 +170,8 @@ Route::get('/dashboard/konversi', [AdminConvertionController::class, 'index'])->
 Route::post('/dashboard/konversi/tambah', [AdminConvertionController::class, 'tambahemas'])->name('tambahemas');
 Route::post('/dashboard/konversi/simpan', [AdminConvertionController::class, 'saveemas'])->name('save_emas');
 Route::post('/dashboard/konversi/konversi', [AdminConvertionController::class, 'konversiemas'])->name('konversiemas');
+Route::post('/dashboard/konversi/terima', [AdminConvertionController::class, 'terimaemas'])->name('terimaemas');
+
 Route::post('/dashboard/konversi/update', [AdminConvertionController::class, 'updateemas'])->name('updateemas');
 Route::post('/dashboard/konversi/update/{id}', [AdminConvertionController::class, 'store'])->name('store_konversi');
 Route::get('/dashboard/expend', [ExpendController::class, 'index'])->name('expend');

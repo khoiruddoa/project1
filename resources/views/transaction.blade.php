@@ -23,9 +23,14 @@
                         </div>
                     </div>
                     <div class="flex flex-col gap-2 max-h-60 overflow-y-auto">
-                        @foreach ($user->transactions->merge($user->manages)->sortByDesc('created_at') as $transaction)
-                            <a href="{{ route('detail_transaction', ['id' => $transaction->id]) }}"
-                                class="bg-[#15C972] hover:bg-[#016b38] font-mono text-md font-bold p-2 w-full text-white rounded-xl">
+                        @foreach ($user->transactions->merge($user->manages)->merge($user->adjustments)->sortByDesc('created_at') as $transaction)
+                            
+                            @if($user->transactions->contains($transaction))
+                            <a href="{{ route('detail_transaction', ['id' => $transaction->id]) }}"  class="bg-[#15C972] hover:bg-[#016b38] font-mono text-md font-bold p-2 w-full text-white rounded-xl">
+                            @else
+                            <a class="bg-[#15C972] hover:bg-[#016b38] font-mono text-md font-bold p-2 w-full text-white rounded-xl">
+                            @endif
+                               
                                 <div>
                                     <div>
                                         Transaksi Tanggal: {{ $transaction->created_at->format('d-m-Y') }} senilai
@@ -59,12 +64,17 @@
                                             Bagi Hasil Pengurus
                                         </span>
                                         @endif
+                                        @if($user->adjustments->contains($transaction))
+                                        <span
+                                            class="inline-flex items-center bg-orange-100 text-orange-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-orange-900 dark:text-orange-300">
+                                            <span class="w-2 h-2 mr-1 bg-orange-500 rounded-full"></span>
+                                            Penyelarasan Saldo
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                             </a>
                         @endforeach
-
-
                     </div>
 
 

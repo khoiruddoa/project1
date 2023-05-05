@@ -235,9 +235,21 @@ class ReportController extends Controller
         ]);
     }
 
-    public function emas()
+    public function emas(Request $request)
     {
-        $users = User::whereIn('role', [1, 2])->get();
+
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+
+        // Memastikan end_date tidak lebih kecil dari start_date
+        if ($end_date < $start_date) {
+            Alert::warning('Gagal', 'Tanggal Akhir tidak boleh lebih dulu dari tanggal awal');
+            return back();
+        }
+        $users = User::whereHas('convertions', function ($query) use ($start_date, $end_date) {
+            $query->whereBetween('created_at', [$start_date, $end_date]);
+        })->whereIn('role', [1])->get();
+        
         return view('dashboard.report.emas', ['users' => $users]);
     }
 

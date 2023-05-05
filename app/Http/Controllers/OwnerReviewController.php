@@ -125,7 +125,7 @@ class OwnerReviewController extends Controller
 
                     $transaction = Convertion::findOrFail($validatedData['id'][$key]);
 
-                    $transaction->update(['pay_status' => $data]);
+                    $transaction->delete();
 
                     Alert::info('Berhasil', 'Sukses ditolak');
                 }

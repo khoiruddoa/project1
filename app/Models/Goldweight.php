@@ -9,5 +9,8 @@ class Goldweight extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-
+    public function detailConvertions()
+    {
+        return $this->hasMany(DetailConvertion::class);
+    }
 }
