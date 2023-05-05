@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Adjustment;
 use App\Models\BankProfit;
 use App\Models\Category;
 use App\Models\CategoryPrice;
@@ -171,6 +172,58 @@ class ReportController extends Controller
 
         return view('dashboard.report.withdraw', [
             'withdraws' => $withdraw,
+            'start' => $start_date,
+            'end' => $end_date
+        ]);
+    }
+
+    public function adjustment(Request $request)
+    {
+
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+
+        // Mendapatkan saldo awal dari tanggal sebelumnya
+
+        // Memastikan end_date tidak lebih kecil dari start_date
+        if ($end_date < $start_date) {
+            Alert::warning('Gagal', 'Tanggal Akhir tidak boleh lebih dulu dari tanggal awal');
+            return back();
+        }
+
+        $adjustments = Adjustment::where('pay_status', 2)
+            ->whereBetween('created_at', [$start_date, $end_date])
+            ->get();
+
+
+        return view('dashboard.report.adjustment', [
+            'adjustments' => $adjustments,
+            'start' => $start_date,
+            'end' => $end_date
+        ]);
+    }
+
+    public function ongkir(Request $request)
+    {
+
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+
+        // Mendapatkan saldo awal dari tanggal sebelumnya
+
+        // Memastikan end_date tidak lebih kecil dari start_date
+        if ($end_date < $start_date) {
+            Alert::warning('Gagal', 'Tanggal Akhir tidak boleh lebih dulu dari tanggal awal');
+            return back();
+        }
+
+        $transaksi = Transaction::has('picks')
+            ->whereBetween('created_at', [$start_date, $end_date])
+            ->get();
+
+
+        return view('dashboard.report.ongkir', [
+            'transaksi' => $transaksi,
             'start' => $start_date,
             'end' => $end_date
         ]);
