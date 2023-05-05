@@ -22,10 +22,7 @@
                     <td class="font-bold">Periode</td>
                     <td>{{ date('d-m-Y', strtotime($start)) }} s/d {{ date('d-m-Y', strtotime($end)) }}</td>
                 </tr>
-                <tr>
-                    <td class="font-bold">Saldo Awal : @currency($saldo_awal)</td>
-                </tr>
-                
+               
 
 
             </table>
@@ -47,36 +44,26 @@
 
                             <td class="border px-4 py-2">
                                 @if ($transaction->origin == 'keluar')
-                                    @if ($transaction->information == 1)
-                                        Penyelarasan Saldo
-                                    @elseif($transaction->information == 2)
+                                    @if($transaction->information == 2)
                                         Jasa Angkut Sampah {{$transaction->user->name}}
                                     @else
                                         Setor Sampah {{$transaction->user->name}}
                                     @endif
                                 @elseif ($transaction->origin == 'masuk')
-                                @if ($transaction->information == 1)
-                                        Penyelarasan Saldo Nasabah
-                                    @else
-                                    Jual Ke Pengepul
-                                    @endif
-                                @else
-                                    Bagi Keuntungan
+                                
+                                    Jual Ke Pengepul                        
                                 @endif
                             </td>
                             <td class="border px-4 py-2">
                                 @if ($transaction->origin == 'masuk')
                                     @currency($transaction->pay_total)
                                 @endif
-
                             </td>
                             <td class="border px-4 py-2">
                                 @if ($transaction->origin == 'keluar')
                                     @currency($transaction->pay_total)
                                 @endif
-                                @if ($transaction->origin == 'profit')
-                                    @currency($transaction->pay_total)
-                                @endif
+                
                             </td>
 
                         </tr>
@@ -87,7 +74,15 @@
                         <td class=""></td>
 
                         <th class="border px-4 py-2">Total Setor Sampah :</th>
-                        <td class="border px-4 py-2">@currency($keluar)</td>
+                        <td class="border px-4 py-2">@currency($total_beli)</td>
+                    </tr>
+                    <tr>
+
+                        <td class=""></td>
+                        <td class=""></td>
+
+                        <th class="border px-4 py-2">Total Jual Ke Pengepul:</th>
+                        <td class="border px-4 py-2">@currency($total_jual)</td>
                     </tr>
                     <tr>
 
@@ -95,15 +90,7 @@
                         <td class=""></td>
 
                         <th class="border px-4 py-2">Pendapatan :</th>
-                        <td class="border px-4 py-2">@currency($pendapatan)</td>
-                    </tr>
-                    <tr>
-
-                        <td class=""></td>
-                        <td class=""></td>
-
-                        <th class="border px-4 py-2">Total Saldo :</th>
-                        <td class="border px-4 py-2">@currency($total_saldo)</td>
+                        <td class="border px-4 py-2">@currency($total_jual-$total_beli)</td>
                     </tr>
 
 

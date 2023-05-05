@@ -51,74 +51,44 @@ class ReportController extends Controller
     //     $transaksi = $pengepul->concat($nasabah)->concat($profit)->sortBy('created_at');
     //     return view('dashboard.report.transaksi', ['transactions' => $transaksi]);
     // }
-
     public function transaksi(Request $request)
     {
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
-
+    
         // Mendapatkan saldo awal dari tanggal sebelumnya
-
+    
         // Memastikan end_date tidak lebih kecil dari start_date
         if ($end_date < $start_date) {
             Alert::warning('Gagal', 'Tanggal Akhir tidak boleh lebih dulu dari tanggal awal');
             return back();
         }
-
-
-
-        $transaksiNasabah = Transaction::where('pay_status', 1)
-        ->orWhere('pay_status', 2)
-        ->get();
-
-        $transaksiPengepul = CollectorTransaction::where('pay_status', 3)->get();
-        $pengepul = CollectorTransaction::where('pay_status', 2)->get();
-        $income = Income::all();
-
-
+        
         $pengepul = CollectorTransaction::select('user_id', 'pay_total', 'information', 'created_at', DB::raw("'masuk' as origin"))
             ->where('pay_status', 3)
-            ->whereBetween('created_at', [$start_date, $end_date])
+            ->whereDate('created_at', '>=', $start_date)
+            ->whereDate('created_at', '<=', $end_date)
             ->get();
-
+    
         $nasabah = Transaction::select('user_id', 'pay_total', 'information', 'created_at', DB::raw(" 'keluar' as origin"))
             ->where('pay_status', 1)->orWhere('pay_status', 2)
-            ->whereBetween('created_at', [$start_date, $end_date])
+            ->whereDate('created_at', '>=', $start_date)
+            ->whereDate('created_at', '<=', $end_date)
             ->get();
-
-        $profit = Income::select('user_id', 'pay_total', 'information', 'created_at', DB::raw(" 'profit' as origin"))
-            ->whereBetween('created_at', [$start_date, $end_date])
-            ->get();
-
-        $transaksi = $pengepul->concat($nasabah)->concat($profit)->sortBy('created_at');
-
-        $keluar = $transaksi->where('origin', 'keluar')->sum('pay_total');
-        // Menghitung pendapatan dan total saldo
-        $pendapatan = 0;
-        foreach ($transaksi as $transaction) {
-            if ($transaction->origin == 'masuk') {
-                $pendapatan += $transaction->pay_total;
-            } else if ($transaction->origin == 'keluar' || $transaction->origin == 'profit') {
-                $pendapatan -= $transaction->pay_total;
-            }
-        }
-
-
-
-
-        $total_saldo = $transaksiPengepul->sum('pay_total') - $transaksiNasabah->sum('pay_total') - $income->sum('pay_total');
-        $saldo_awal = $total_saldo - $pendapatan;
-
+    
+        $transaksi = $pengepul->concat($nasabah)->sortBy('created_at');
+    
+      $total_jual = $pengepul->sum('pay_total');
+      $total_beli = $nasabah->sum('pay_total');
         return view('dashboard.report.transaksi', [
             'transactions' => $transaksi,
-            'saldo_awal' => $saldo_awal,
-            'pendapatan' => $pendapatan,
-            'total_saldo' => $total_saldo,
             'start' => $start_date,
             'end' => $end_date,
-            'keluar' => $keluar
+            'total_jual' => $total_jual,
+            'total_beli' => $total_beli
         ]);
     }
+    
 
     public function transaksi_kategori(Request $request)
     {
