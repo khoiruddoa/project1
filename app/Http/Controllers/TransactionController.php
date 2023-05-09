@@ -273,7 +273,9 @@ class TransactionController extends Controller
 
             foreach ($jumlahanggota as $jumlah) {
                 $trans = Transaction::find($jumlah['id_transaction']);
-                $trans->delete();
+
+                if($trans){
+                $trans->delete();}
 
 
 
