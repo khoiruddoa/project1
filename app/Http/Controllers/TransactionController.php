@@ -218,7 +218,6 @@ class TransactionController extends Controller
 
 
 
-
     public function finish(Request $request, $id)
     {
 

@@ -296,6 +296,14 @@
 
             <div class="mr-8 ">
                 @if (count($picks) > 0)
+                <h5 class="mb-2 text-md font-semibold text-gray-900">
+                    Barang Yang dibawa :</h5>
+                @foreach ($transaction->detailPicks as $pick)
+                    <h5 class="mb-2 text-sm font-semibold text-gray-900">
+
+                        {{ preg_replace('/\d+\./', '', $pick->category->category_name) }}
+                    </h5>
+                @endforeach
                     <h5 class="mb-2 text-md font-semibold text-gray-900">
                         Ongkos Angkut :</h5>
                     @foreach ($picks as $pick)
