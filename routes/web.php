@@ -177,6 +177,7 @@ Route::get('/dashboard/pengepul/detail/delete/{id}', [CollectorTransactionContro
 Route::get('/dashboard/pengepul/delete/{id}', [CollectorTransactionController::class, 'destroy'])->name('transaksipengepul_delete');
 Route::post('/dashboard/pengepul/finish/{id}', [CollectorTransactionController::class, 'finish'])->name('finishpengepul');
 Route::post('/dashboard/pengepul/payment', [CollectorTransactionController::class, 'payment'])->name('paymentpengepul');
+Route::post('/dashboard/pengepul/pelunasan', [CollectorTransactionController::class, 'pelunasan'])->name('paymentpelunasan');
 Route::get('/dashboard/konversi', [AdminConvertionController::class, 'index'])->name('pengajuan_konversi');
 Route::post('/dashboard/konversi/tambah', [AdminConvertionController::class, 'tambahemas'])->name('tambahemas');
 Route::post('/dashboard/konversi/simpan', [AdminConvertionController::class, 'saveemas'])->name('save_emas');

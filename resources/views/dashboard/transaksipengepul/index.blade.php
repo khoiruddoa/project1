@@ -5,165 +5,230 @@
         <div class="">
             <h1 class="text-3xl text-black pb-6">Transaksi Pengepul</h1>
         </div>
-<div class="flex flex-row justify-between">
-        <div>
+        <div class="flex flex-row justify-between">
+            <div>
+
+                <!-- Modal toggle -->
+                <button data-modal-target="authentication-modalPengepul" data-modal-toggle="authentication-modalPengepul"
+                    class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="button">
+                    Tambah Transaksi Pengepul
+                </button>
+
+                <!-- Main modal -->
+                <div id="authentication-modalPengepul" tabindex="-1" aria-hidden="true"
+                    class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
+                    <div class="relative w-full h-full max-w-md md:h-auto">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                            <button type="button"
+                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-sidebar dark:hover:text-white"
+                                data-modal-hide="authentication-modalPengepul">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="sr-only">Close</span>
+                            </button>
+                            <div x-data="{ searchText: '' }" class="px-6 py-6 lg:px-8">
+                                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Cari Data Pengepul</h3>
+                                <div>
+                                    <input type="text" id="simple-search" x-model="searchText"
+                                        class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="Search">
+
+
+                                </div>
+
+                                <div class="w-full mt-6">
+                                    <div class="overflow-x-auto">
+                                        <table class="w-full bg-white">
+                                            <thead class="bg-sidebar text-white w-full">
+                                                <tr>
+                                                    <th
+                                                        class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
+                                                        Nama</th>
+                                                    <th
+                                                        class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
+                                                        No.HP</th>
+                                                    <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-gray-700">
+                                                @foreach ($users as $user)
+                                                    <template
+                                                        x-if="searchText === '' || '{{ strtolower($user->name) }}'.includes(searchText.toLowerCase())">
+
+                                                        <tr>
+                                                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">
+                                                                {{ $user->name }}
+                                                            </td>
+                                                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">
+                                                                {{ $user->phone_number }}</td>
+                                                            <td class="sm:text-left py-3 px-4">
+
+                                                                <form action="{{ route('transaksipengepul_store') }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <div class="flex flex-col gap-1">
+                                                                        <div>
+                                                                            <input type="date" name="created_at"
+                                                                                value="{{ date('Y-m-d') }}">
+                                                                        </div>
+                                                                        <input type="hidden" name="user_id"
+                                                                            value="{{ $user->id }}">
+                                                                        <input type="hidden" name="administrator"
+                                                                            value="{{ auth()->user()->name }}">
+                                                                        <input type="hidden" name="pay_status"
+                                                                            value="0">
+
+
+                                                                        <div
+                                                                            class="text-sm font-medium text-gray-500 dark:text-gray-300">
+
+                                                                            <button type="submit"
+                                                                                onclick="this.disabled=true; this.form.submit();"
+                                                                                class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buat
+                                                                                Transaksi Pengepul</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+
+
+
+                                                            </td>
+                                                        </tr>
+                                                    </template>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
 
             <!-- Modal toggle -->
-            <button data-modal-target="authentication-modalPengepul" data-modal-toggle="authentication-modalPengepul"
+            <button data-modal-target="defaultModal" data-modal-toggle="defaultModal"
                 class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button">
-                Tambah Transaksi Pengepul
+                Akumulasi Pembayaran
             </button>
 
             <!-- Main modal -->
-            <div id="authentication-modalPengepul" tabindex="-1" aria-hidden="true"
-                class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
-                <div class="relative w-full h-full max-w-md md:h-auto">
+            <div id="defaultModal" tabindex="-1" aria-hidden="true"
+                class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div class="relative w-full max-w-2xl max-h-full">
                     <!-- Modal content -->
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        <button type="button"
-                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-sidebar dark:hover:text-white"
-                            data-modal-hide="authentication-modalPengepul">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="sr-only">Close</span>
-                        </button>
-                        <div x-data="{ searchText: '' }" class="px-6 py-6 lg:px-8">
-                            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Cari Data Pengepul</h3>
-                            <div>
-                                <input type="text" id="simple-search" x-model="searchText"
-                                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Search">
+                        <!-- Modal header -->
+                        <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                Akumulasi Pembayaran dari pengepul
+                            </h3>
+                            <button type="button"
+                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                data-modal-hide="defaultModal">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="p-6 space-y-6">
+                            @if ($status > 0)
+                                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                    Status : Kurang Bayar senilai @currency($status)
+                                </p>
+                            @endif
+                            @if ($status == 0)
+                                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                    Status : Lunas
+                                </p>
+                            @endif
+                            @if ($status < 0)
+                                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                    Status : Lebih Bayar senilai @currency($status)
+                                </p>
+                            @endif
+                        </div>
+                        <!-- Modal footer -->
+                        <div
+                            class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                            @if ($status > 0)
+                                <form class="space-y-6" action="{{ route('paymentpelunasan') }}" method="POST">
+                                    @csrf
+                                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
+                                        Pelunasan Kurang Bayar
+                                    </h3>
+                                    <div>
+                                        <input type="date" name="created_at" value="{{ date('Y-m-d') }}">
+                                    </div>
+
+                                    <div class="flex flex-row gap-2">
+                                        <div>
+                                            <label for="qty"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah : @currency($status)</label>
+                                                
+                                        </div>
+                                        
+                                        <div>
+                                            <div>
 
 
-                            </div>
+                                                <select id="information" name="information"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
-                            <div class="w-full mt-6">
-                                <div class="overflow-x-auto">
-                                    <table class="w-full bg-white">
-                                        <thead class="bg-sidebar text-white w-full">
-                                            <tr>
-                                                <th
-                                                    class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
-                                                    Nama</th>
-                                                <th
-                                                    class="w-1/3 sm:w-auto text-left py-3 px-4 uppercase font-semibold text-sm">
-                                                    No.HP</th>
-                                                <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="text-gray-700">
-                                            @foreach ($users as $user)
-                                                <template
-                                                    x-if="searchText === '' || '{{ strtolower($user->name) }}'.includes(searchText.toLowerCase())">
+                                                    <option value="tunai">Tunai
+                                                    </option>
+                                                    <option value="transfer">Transfer
+                                                    </option>
 
-                                                    <tr>
-                                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $user->name }}
-                                                        </td>
-                                                        <td class="w-1/3 sm:w-auto text-left py-3 px-4">
-                                                            {{ $user->phone_number }}</td>
-                                                        <td class="sm:text-left py-3 px-4">
-
-                                                            <form action="{{ route('transaksipengepul_store') }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                <div class="flex flex-col gap-1">
-                                                                    <div>
-                                                                        <input type="date" name="created_at"
-                                                                            value="{{ date('Y-m-d') }}">
-                                                                    </div>
-                                                                    <input type="hidden" name="user_id"
-                                                                        value="{{ $user->id }}">
-                                                                    <input type="hidden" name="administrator"
-                                                                        value="{{ auth()->user()->name }}">
-                                                                    <input type="hidden" name="pay_status" value="0">
+                                                </select>
+                                            </div>
 
 
-                                                                    <div
-                                                                        class="text-sm font-medium text-gray-500 dark:text-gray-300">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="qty"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bank</label>
 
-                                                                        <button type="submit"
-                                                                            onclick="this.disabled=true; this.form.submit();"
-                                                                            class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buat
-                                                                            Transaksi Pengepul</button>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
+                                        <input type="text" name="bank"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
-
-
-                                                        </td>
-                                                    </tr>
-                                                </template>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    </div>
 
 
-                            </div>
+                                    <button type="submit"
+                                        onclick="return confirm('Apakah Nominal Pembayaran yang anda masukkan sudah benar? Data Tidak bisa diubah setelah anda klik simpan')"
+                                        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Konfirmasi</button>
+                                    <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+
+                                    </div>
+                                </form>
+                            @endif
+
                         </div>
                     </div>
                 </div>
             </div>
 
-
-
-
         </div>
-
-<!-- Modal toggle -->
-<button data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-    Akumulasi Pembayaran
-  </button>
-  
-  <!-- Main modal -->
-  <div id="defaultModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-      <div class="relative w-full max-w-2xl max-h-full">
-          <!-- Modal content -->
-          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-              <!-- Modal header -->
-              <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                      Akumulasi Pembayaran dari pengepul
-                  </h3>
-                  <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal">
-                      <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                      <span class="sr-only">Close modal</span>
-                  </button>
-              </div>
-              <!-- Modal body -->
-              <div class="p-6 space-y-6">
-                 @if($status > 0)
-                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    Kurang Bayar senilai @currency($status)
-                </p>
-                @endif
-                @if($status == 0)
-                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    Lunas
-                </p>
-                @endif
-                @if($status < 0)
-                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    Lebih Bayar senilai @currency($status)
-                </p>
-                @endif
-              </div>
-              <!-- Modal footer -->
-              <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                  <button data-modal-hide="defaultModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I accept</button>
-                  <button data-modal-hide="defaultModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
-              </div>
-          </div>
-      </div>
-  </div>
-  
-</div>
 
     </div>
 
@@ -383,10 +448,11 @@
                                                                 </div>
                                                                 <div>
                                                                     <label for="qty"
-                                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bank</label>
-                                                                    
-                                                                    <input type="text" name="bank" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-  
+                                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bank</label>
+
+                                                                    <input type="text" name="bank"
+                                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
                                                                 </div>
 
 
@@ -409,14 +475,11 @@
                                                 class="block w-40 md:w-full focus:outline-none text-white text-center bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-900 mb-2">Print</a>
                                         </div>
                                         <div>
-                                            <form
-                                                action="{{ route('editpengepul', ['id' => $transaction->id]) }}"
+                                            <form action="{{ route('editpengepul', ['id' => $transaction->id]) }}"
                                                 method="post">
                                                 @csrf
-                                                <input type="hidden" name="pay_status"
-                                                    value="0">
+                                                <input type="hidden" name="pay_status" value="0">
                                                 <button type="submit"
-                                        
                                                     class="text-white bg-yellow-400 md:w-full hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900">Edit</button>
                                             </form>
                                         </div>

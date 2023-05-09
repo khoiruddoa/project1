@@ -293,6 +293,61 @@ class CollectorTransactionController extends Controller
         return redirect('/dashboard/pengepul');
     }
 
+
+    public function pelunasan(Request $request)
+    {
+      
+
+
+
+
+        $id = $request->collector_transaction_id;
+
+
+
+        $transactions = CollectorTransaction::where('pay_status', 3)->get();
+
+        foreach($transactions as $transaction){
+
+
+            if($transaction->pay_total > $transaction->payments->sum('pay_total')){
+
+                
+        $data = (['collector_transaction_id' => $transaction->id,
+                  'pay_total' =>  $transaction->pay_total - $transaction->payments->sum('pay_total'),
+                    'information' => $request->information,
+                    'bank' => $request->bank,
+                    'created_at' => $request->created_at
+                
+                ]);
+                Payment::create($data);
+
+            }
+
+            if($transaction->pay_total < $transaction->payments->sum('pay_total')){
+
+                
+                $data = (['collector_transaction_id' => $transaction->id,
+                          'pay_total' =>  $transaction->pay_total - $transaction->payments->sum('pay_total'),
+                            'information' => $request->information,
+                            'bank' => $request->bank,
+                            'created_at' => $request->created_at
+                        
+                        ]);
+                        Payment::create($data);
+        
+                    }
+        }
+
+
+       
+        Alert::info('Berhasil', 'Pembayaran sukses');
+        return redirect('/dashboard/pengepul');
+    }
+
+
+
+
     public function editpengepul(Request $request, $id)
     {
         $transaction = CollectorTransaction::find($id);
