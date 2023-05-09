@@ -73,4 +73,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Adjustment::class);
     }
+    public function minusAdjustments()
+    {
+        return $this->hasMany(MinusAdjustment::class);
+    }
 }

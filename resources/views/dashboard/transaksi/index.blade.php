@@ -33,6 +33,7 @@
                             <span class="sr-only">Close</span>
                         </button>
 
+                       
                         <div x-data="{ searchText: '' }" class="px-6 py-6 lg:px-8">
                             <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Cari Data Nasabah</h3>
                             <div>
@@ -277,6 +278,18 @@
                                                         <div class="flex flex-row gap-1 items-center justify-center">
                                                             <div><a href="{{ route('transaksi_detail', ['id' => $transaction->id]) }}"
                                                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+                                                            </div>
+                                                            <div>
+                                                                <form
+                                                                    action="{{ route('edit', ['id' => $transaction->id]) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    <input type="hidden" name="pay_status"
+                                                                        value="0">
+                                                                    <button type="submit"
+                                                            
+                                                                        class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900">Edit</button>
+                                                                </form>
                                                             </div>
 
 

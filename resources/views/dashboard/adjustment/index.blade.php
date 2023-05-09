@@ -66,6 +66,17 @@
 
                                 </div>
                                 <div>
+                                    <label for="type"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis Penyelarasan</label>
+                                    <select id="type" name="type"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        
+                                            <option value="1">Penambahan</option>
+                                            <option value="2">Pengurangan</option>
+                                       
+                                    </select>
+                                </div>
+                                <div>
                                     <label for="price"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan</label>
                                         <div>
@@ -110,15 +121,17 @@
 
                         <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Nasabah</th>
                         <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Saldo</th>
+                        <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Keterangan</th>
                         <th class="sm:text-left py-3 px-4 uppercase font-semibold text-sm">Action</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-700">
                     @foreach ($adjustments as $transaction)
                         <tr>
-                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $transaction->created_at }}</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ date('d-m-Y', strtotime($transaction->created_at)) }}</td>
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $transaction->user->name }}</td>
                             <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($transaction->pay_total)</td>
+                            <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $transaction->information }}</td>
                             <td class="sm:text-left py-3 px-4">
                                 <div class="flex flex-row justify-center items-center gap-2">
                                     <div>

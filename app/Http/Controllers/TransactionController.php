@@ -6,6 +6,7 @@ use App\Models\CancelTransaction;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\Category;
 use App\Models\CategoryPrice;
+use App\Models\DetailPick;
 use App\Models\DetailTransaction;
 use App\Models\Pick;
 use App\Models\Transaction;
@@ -58,6 +59,7 @@ class TransactionController extends Controller
         $picks = Pick::where('transaction_id', $id)->get();
         $detail_transactions = DetailTransaction::where('transaction_id', $id)->get();
         $cancel_transactions = CancelTransaction::where('transaction_id', $id)->get();
+        $detail_pick = DetailPick::where('transaction_id', $id)->get();
 
         return view('dashboard.transaksi.detail', [
             'transaction' => $transaction,
@@ -65,7 +67,8 @@ class TransactionController extends Controller
             'detail_transactions' => $detail_transactions,
             'users' => $users,
             'picks' => $picks,
-            'cancel_transactions' => $cancel_transactions
+            'cancel_transactions' => $cancel_transactions,
+            'detail_pick' => $detail_pick
 
         ]);
     }
@@ -159,6 +162,59 @@ class TransactionController extends Controller
         return back();
     }
 
+    public function detailpick(Request $request)
+    {
+        $validatedData = $request->validate([
+            'category_id.*' => 'required'
+        ]);
+
+        if (empty($validatedData['category_id'])) {
+            Alert::warning('Gagal', 'Tidak ada data yang dipilih');
+            return back();
+        }
+
+        // Menambahkan item baru ke dalam $detail_pick untuk setiap category_id yang baru
+        $created_at = $request->created_at;
+        $transaction_id = $request->transaction_id;
+
+        $detail_pick = new DetailPick;
+
+        foreach ($validatedData['category_id'] as $id) {
+
+            $detail_pick->create([
+                'category_id' => $id,
+                'created_at' => $created_at,
+                'transaction_id' => $transaction_id
+            ]);
+        }
+
+
+        Alert::info('Berhasil', 'Sukses menambahkan Item');
+        return back();
+    }
+
+
+    public function deletepick($id)
+    {
+
+        $pick = Pick::find($id);
+        $transaksi = Transaction::find($pick->id_transaction);
+        $transaksi->delete();
+        $pick->delete();
+        Alert::info('Berhasil', 'Berhasil dihapus');
+        return back();
+    }
+
+    public function deletedetailpick($id)
+    {
+
+        $pick = DetailPick::find($id);
+
+        $pick->delete();
+        Alert::info('Berhasil', 'Berhasil dihapus');
+        return back();
+    }
+
 
 
 
@@ -182,17 +238,44 @@ class TransactionController extends Controller
         $jumlahanggotanya = count($jumlahanggota);
 
         if ($jumlahanggotanya > 0) {
-            $paytotal = $transaction->pay_total;
 
-            $hasil = $paytotal -  ($paytotal * 0.1);
+            $detailpick = DetailPick::where('transaction_id', $id)->get();
+            if (count($detailpick) == 0) {
+                Alert::warning('Gagal', 'Belum pilih item yang dibawa');
+                return back();
+            }
+
+            // Ambil data detail transaction yang memiliki transaction_id = $id dan category_id ada di $detailpick
+            $detail_transactions = DetailTransaction::where('transaction_id', $id)
+                ->whereHas('category', function ($query) use ($detailpick) {
+                    $query->whereIn('id', $detailpick->pluck('category_id'));
+                })
+                ->get();
+
+            $detailbiasa = DetailTransaction::where('transaction_id', $id)->get();
+
+            // Looping data detail transaction yang didapatkan
+            $total_detail = 0;
+            foreach ($detail_transactions as $detail) {
+                $total_detail += $detail->price * $detail->qty;
+            }
+
+            $total_saldoawal = 0;
+            foreach ($detailbiasa as $detail) {
+                $total_saldoawal += $detail->price * $detail->qty;
+            }
+            $hasil10persen = $total_detail * 0.1;
 
 
-
-            $hasil10persen = $paytotal - $hasil;
+            $hasil = $total_saldoawal - $hasil10persen;
 
             $hasilangkut = $hasil10persen / $jumlahanggotanya;
 
             foreach ($jumlahanggota as $jumlah) {
+                $trans = Transaction::find($jumlah['id_transaction']);
+                $trans->delete();
+
+
 
                 $transac = new Transaction([
                     'user_id' => $jumlah->user_id,
@@ -200,7 +283,7 @@ class TransactionController extends Controller
                     'pay_total' => $hasilangkut,
                     'pay_status' => 2,
                     'information' => 2,
-                    'created_at'=> $jumlah->created_at
+                    'created_at' => $jumlah->created_at
                 ]);
                 $transac->save();
 
@@ -221,6 +304,12 @@ class TransactionController extends Controller
             );
             $transaction->save();
         } else {
+
+            $detailpick = DetailPick::where('transaction_id', $id)->get();
+            if (count($detailpick) > 0) {
+                Alert::warning('Gagal', 'Belum pilih pengangkut');
+                return back();
+            }
             $transaction->fill($request->all());
             $transaction->save();
         }
@@ -286,107 +375,148 @@ class TransactionController extends Controller
 
     public function canceldetail(Request $request, $id)
     {
+        //cek detail transaksinya
 
         $detail = DetailTransaction::findOrFail($id);
+
+        //cek transaksinya
         $transaction = Transaction::find($detail->transaction_id);
 
 
-        $debet = $detail->price * $detail->qty;
-        $kredit = $detail->sell * $detail->qty;
-        $category = Category::find($detail->category_id);
-        $stock = $detail->qty;
+        //cek apakah transaksi ini ada kurirnya atau tidak 
+        $check_transaction = Pick::where('transaction_id', $transaction->id)->get();
+        if (count($check_transaction) == null) {
+            $debet = $detail->price * $detail->qty;
+            $kredit = $detail->sell * $detail->qty;
+            $category = Category::find($detail->category_id);
+            $stock = $detail->qty;
+
+            $payloadtransaction = [
+                'pay_total' => $transaction['pay_total'] - $debet,
+                'sell_total' => $transaction['sell_total'] - $kredit
+            ];
+            $transaction->fill($payloadtransaction);
+            $transaction->save();
+
+            $payloadcategory = ['stock' => $category['stock'] - $stock];
+            $category->fill($payloadcategory);
+            $category->save();
+
+            $validatedData = $request->validate([
+                'transaction_id' => 'required',
+                'category_id' => 'required',
+                'qty' => 'required',
+                'created_at' => 'required',
+                'price' => 'required',
+                'sell' => 'required',
+                'information' => 'required'
+            ]);
+
+            CancelTransaction::create($validatedData);
+            $detail->delete();
+        } else {
+
+            //cek kategori dulu
+            $category = Category::find($detail->category_id);
+            $stock = $detail->qty;
+
+            $payloadcategory = ['stock' => $category['stock'] - $stock];
+            $category->fill($payloadcategory);
+            $category->save();
+
+            $data = ([
+                'transaction_id' => $detail->transaction_id,
+                'category_id' => $detail->category_id,
+                'qty' => $detail->qty,
+                'created_at' => $detail->created_at,
+                'price' => $detail->price,
+                'sell' => $detail->sell,
+            ]);
+            CancelTransaction::create($data);
+            $detail->delete();
 
 
-        $payloadtransaction = [
-            'pay_total' => $transaction['pay_total'] - $debet,
-            'sell_total' => $transaction['sell_total'] - $kredit
-        ];
-        $transaction->fill($payloadtransaction);
-        $transaction->save();
 
-        $payloadcategory = ['stock' => $category['stock'] - $stock];
-        $category->fill($payloadcategory);
-        $category->save();
-
-        $validatedData = $request->validate([
-            'transaction_id' => 'required',
-            'category_id' => 'required',
-            'qty' => 'required',
-            'created_at' => 'required',
-            'price' => 'required',
-            'sell' => 'required',
-            'information' => 'required'
-        ]);
-
-        CancelTransaction::create($validatedData);
-        $detail->delete();
+            //menghapus detailpick yang tidak ada di transaksi
+            $datatransaksi = DetailTransaction::where('transaction_id', $transaction->id)->get();
+            DetailPick::where('transaction_id', $transaction->id)
+                ->whereDoesntHave('category', function ($query) use ($datatransaksi) {
+                    $query->whereIn('id', $datatransaksi->pluck('category_id'));
+                })
+                ->delete();
 
 
+            $jumlahanggota = $check_transaction;
 
-
-
-        // batas
-        $check_transaction = Pick::where('transaction_id', $transaction->id)->first();
-
-        if ($check_transaction) {
-
-            $transaksi = Transaction::find($detail->transaction_id);
-
-
-
-
-            $jumlahanggota = Pick::where('transaction_id', $transaksi->id)->get();
 
             $jumlahanggotanya = count($jumlahanggota);
-//jumlahkan saldo seluruhnya
+            $detailpick = DetailPick::where('transaction_id', $transaction->id)->get();
 
+            $detail_transactions = DetailTransaction::where('transaction_id', $detail->transaction_id)
+            ->whereHas('category', function ($query) use ($detailpick) {
+                $query->whereIn('id', $detailpick->pluck('category_id'));
+            })
+            ->get();
 
-            
-               
+        $detailbiasa = DetailTransaction::where('transaction_id', $transaction->id)->get();
 
-                $detailtransaksinya = DetailTransaction::where('transaction_id', $transaksi->id)->get();
-                $paytotal = 0;
-
-                foreach($detailtransaksinya as $detail){
-
-                    $paytotal += $detail->price * $detail->qty;
-                }
-                $hasil = $paytotal -  ($paytotal * 0.1);
-
-
-
-                $hasil10persen = $paytotal - $hasil;
-
-                $hasilangkut = $hasil10persen / $jumlahanggotanya;
-
-                foreach ($jumlahanggota as $jumlah) {
-
-
-
-                 
-                    $transac = Transaction::find($jumlah['transaction_id']);
-                    $transac->update(['pay_total' => $hasilangkut]);
-
-
-                    $pick = Pick::findOrFail($jumlah['id']);
-
-                    $pick->update([
-                        'pay' => $hasilangkut,
-                        'id_transaction' => $transac->id
-                    ]);
-                }
-
-
-                $transaksi->fill(
-                    [
-                        'pay_total' => $hasil
-                    ]
-                );
-                $transaksi->save();
-            
+        // Looping data detail transaction yang didapatkan
+        $total_detail = 0;
+        foreach ($detail_transactions as $detail) {
+            $total_detail += $detail->price * $detail->qty;
         }
 
+        $total_saldoawal = 0;
+        foreach ($detailbiasa as $detail) {
+            $total_saldoawal += $detail->price * $detail->qty;
+        }
+        $hasil10persen = $total_detail * 0.1;
+
+
+        $hasil = $total_saldoawal - $hasil10persen;
+
+        $hasilangkut = $hasil10persen / $jumlahanggotanya;
+            foreach ($jumlahanggota as $jumlah) {
+
+
+                $transac = Transaction::find($jumlah['id_transaction']);
+                $transac->update(['pay_total' => $hasilangkut]);
+
+
+                $pick = Pick::findOrFail($jumlah['id']);
+
+                $pick->update([
+                    'pay' => $hasilangkut,
+                    'id_transaction' => $transac->id
+                ]);
+            }
+
+
+            $transaction->fill(
+                [
+                    'pay_total' => $hasil,
+                    
+                ]
+            );
+            $transaction->save();
+        }
         Alert::info('Berhasil', 'Pembatalan Berhasil');
         return back();
     }
+
+
+    public function edit(Request $request, $id)
+    {
+        $transaction = Transaction::find($id);
+
+        $transaction->fill(
+            [
+                'pay_status' => $request->pay_status
+            ]
+        );
+        $transaction->save();
+        Alert::info('Berhasil', 'Edit Berhasil');
+        return back();
+    }
+
 }

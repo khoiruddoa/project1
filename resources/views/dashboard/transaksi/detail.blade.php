@@ -111,7 +111,7 @@
                         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
                         <div class="relative w-full h-full max-w-md md:h-auto">
                             <!-- Modal content -->
-                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 max-h-screen overflow-y-scroll">
                                 <button type="button"
                                     class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover "bg-sidebar
                                     dark:hover:text-white" data-modal-hide="authentication-modal2">
@@ -141,36 +141,119 @@
                                                 </select>
                                             </div>
 
-                                            <div>
-                                                <table>
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Nama</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($picks as $pick)
-                                                            <tr>
-                                                                <td>{{ $pick->user->name }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
 
-
-                                            </div>
                                         </div>
                                         <input type="hidden" name="transaction_id" value="{{ $transaction->id }}">
                                         <input type="hidden" name="created_at" value="{{ $transaction->created_at }}">
 
-
-
                                         <button type="submit" onclick="this.disabled=true; this.form.submit();"
                                             class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Simpan</button>
-                                        <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-
-                                        </div>
                                     </form>
+                                </div>
+                                <div class="px-6 py-1 lg:px-8">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nama</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($picks as $pick)
+                                                <tr>
+                                                    <td>{{ $pick->user->name }}</td>
+                                                    <td>-</td>
+                                                    <td><a href="{{ route('delete_pick', ['id' => $pick->id]) }}"
+                                                            class="inline-block bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded">Hapus</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div x-data="{ allChecked: false }" class="max-h-48 overflow-y-scroll px-6 py-6 lg:px-8">
+                                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Masukkan item yang dibawa</h3>
+                                    <form action="{{ route('detail_pick') }}" method="post">
+                                        @csrf
+                                        <div class="flex flex-row items-center justify-center gap-2 text-sm">
+                                            <div class="mb-2 border border-gray-300 p-2 rounded-lg flex items-center bg-[#15C972] hover:bg-[#016b38]">
+                                                <input type="checkbox" class="form-checkbox h-4 w-4 text-green-500" x-model="allChecked" x-on:click="allChecked ? uncheckAll() : checkAll()">
+                                                <div class="ml-2 font-mono">
+                                                    Pilih Semua
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm">Simpan</button>
+                                            </div>
+                                        </div>
+                                        @foreach ($detail_transactions as $index => $item)
+                                        @if (!in_array($item->category_id, $detail_pick->pluck('category_id')->toArray()))
+                                            
+                                                <input type="hidden" name="transaction_id" value="{{ $transaction->id }}">
+                                                <input type="hidden" name="created_at" value="{{ $transaction->created_at }}">
+                                                <div class="border border-gray-300 p-2 rounded-lg flex items-center mb-2 bg-[#15C972] hover:bg-[#016b38]">
+                                                    <input type="checkbox" name="category_id[]" value="{{ $item->category_id }}" class="form-checkbox h-4 w-4 text-green-500" x-model="checkedItems[{{ $index }}]">
+                                                    <div>
+                                                        <div class="ml-2 font-mono">
+                                                            {{ preg_replace('/\d+\./', '', $item->category->category_name) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                        @endif
+                                        @endforeach
+                                    </form>
+                                </div>
+                                
+                                <script>
+                                    const checkedItems = @json(array_fill(0, count($categories), false));
+                                    const inputs = document.querySelectorAll('.form-checkbox');
+                                    const submitBtn = document.querySelector('button[type="submit"]');
+
+                                    inputs.forEach(input => {
+                                        input.addEventListener('input', () => {
+                                            const hasValue = Array.from(inputs).some(input => input.value);
+                                            submitBtn.disabled = !hasValue;
+                                        });
+                                    });
+
+                                    function checkAll() {
+                                        checkedItems.forEach((item, i) => {
+                                            checkedItems[i] = true;
+                                        });
+                                    }
+
+                                    function uncheckAll() {
+                                        checkedItems.forEach((item, i) => {
+                                            checkedItems[i] = false;
+                                        });
+                                    }
+                                </script>
+                                 <div class="px-6 py-3 lg:px-8">
+                                    <h3 class="my-4 text-xl font-medium text-gray-900 dark:text-white">Item yang dibawa</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nama Item</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($detail_pick as $pick)
+                                                <tr>
+                                                    <td>{{ preg_replace('/\d+\./', '', $pick->category->category_name) }}</td>
+                                                    <td>-</td>
+                                                    <td><a href="{{ route('deletedetail_pick', ['id' => $pick->id]) }}"
+                                                            class="inline-block bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded">Hapus</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -224,8 +307,8 @@
                     <h5 class="mb-2 text-sm font-semibold text-gray-900">
                         Total Ongkos: @currency($picks->sum('pay'))</h5>
                 @endif
-                
-               
+
+
                 <h5 class="mb-2 text-md font-semibold text-gray-900">
                     Saldo :</h5>
                 <h5 class="mb-2 text-lg font-semibold text-gray-900">

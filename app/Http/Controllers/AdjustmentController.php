@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Adjustment;
 use App\Models\Category;
 use App\Models\CollectorTransaction;
+use App\Models\MinusAdjustment;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,12 +29,25 @@ class AdjustmentController extends Controller
             'pay_total' => str_replace('.', '', $request->pay_total)
         ]);
 
-        $adjustment = Adjustment::create($request->all());
-
         
-        Alert::info('Berhasil', 'Adjustment dibuat');
-        return redirect('/dashboard/adjustment');
+
+
+        if ($request->type == 2) {
+            $request->merge([
+                'pay_total' => -1 * str_replace('.', '', $request->pay_total)
+            ]);
+            
+        }
+        
+            Adjustment::create($request->all());
+            Alert::info('Berhasil', 'Adjustment dibuat');
+            return redirect('/dashboard/adjustment');
+        
     }
+
+
+
+
 
     // public function update(Request $request, $id)
     // {
@@ -56,14 +70,12 @@ class AdjustmentController extends Controller
     //     return redirect('/dashboard/adjustment');
     // }
 
+
+
     public function delete($id)
     {
 
-
-
         $adjustment = Adjustment::find($id);
-       
-
         $adjustment->delete();
         Alert::info('Berhasil', 'Hapus Data Berhasil');
         return back();

@@ -39,6 +39,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+Route::get('/contact', function () {
+    return view('contact');
+});
 
 Route::get('/fluktuasi', function () {
     return view('dashboard.graphic.fluktuasiharga');
@@ -160,7 +163,12 @@ Route::get('/dashboard/transaksi/detail/delete/{id}', [TransactionController::cl
 Route::post('/dashboard/transaksi/detail/cancel/{id}', [TransactionController::class, 'canceldetail'])->name('cancel_detail');
 Route::get('/dashboard/transaksi/delete/{id}', [TransactionController::class, 'destroy'])->name('transaksi_delete');
 Route::post('/dashboard/transaksi/finish/{id}', [TransactionController::class, 'finish'])->name('finish');
+Route::post('/dashboard/transaksi/edit/{id}', [TransactionController::class, 'edit'])->name('edit');
+Route::post('/dashboard/transaksipengepul/edit/{id}', [CollectorTransactionController::class, 'editpengepul'])->name('editpengepul');
 Route::post('/dashboard/transaksi/pick', [TransactionController::class, 'storepick'])->name('store_pick');
+Route::get('/dashboard/transaksi/pick/delete/{id}', [TransactionController::class, 'deletepick'])->name('delete_pick');
+Route::get('/dashboard/transaksi/pickdetail/delete/{id}', [TransactionController::class, 'deletedetailpick'])->name('deletedetail_pick');
+Route::post('/dashboard/transaksi/pick/detail', [TransactionController::class, 'detailpick'])->name('detail_pick');
 Route::get('/dashboard/pengepul', [CollectorTransactionController::class, 'index'])->name('transaksipengepul');
 Route::post('/dashboard/pengepul', [CollectorTransactionController::class, 'store'])->name('transaksipengepul_store');
 Route::get('/dashboard/pengepul/{id}', [CollectorTransactionController::class, 'detail'])->name('transaksipengepul_detail');

@@ -19,10 +19,19 @@ class CollectorTransactionController extends Controller
 {
     public function index()
     {
+
+
+        $kolektor =  CollectorTransaction::where('pay_status', 3)->get();
+        $total_tagihan = $kolektor->sum('pay_total');
+        $pembayaran = Payment::all();
+        $total_pembayaran = $pembayaran->sum('pay_total');
+
+        $status = $total_tagihan - $total_pembayaran; 
         return view('dashboard.transaksipengepul.index', [
             'categories' => Category::all(),
             'users' => User::where('role', 2)->get(),
             'collectortransactions' => CollectorTransaction::orderBy('id', 'desc')->get(),
+            'status' => $status
 
         ]);
     }
@@ -283,4 +292,22 @@ class CollectorTransactionController extends Controller
         Alert::info('Berhasil', 'Pembayaran sukses');
         return redirect('/dashboard/pengepul');
     }
+
+    public function editpengepul(Request $request, $id)
+    {
+        $transaction = CollectorTransaction::find($id);
+
+        $transaction->fill(
+            [
+                'pay_status' => $request->pay_status
+            ]
+        );
+        $transaction->save();
+        Alert::info('Berhasil', 'Edit Berhasil');
+        return back();
+    }
+
+
+
+
 }
