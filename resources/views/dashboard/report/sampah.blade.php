@@ -41,7 +41,7 @@
                     @foreach ($categoryprices as $category)
                         <tr>
                             <td class="border px-4 py-2">{{ $loop->iteration }}</td>
-                            <td class="border px-4 py-2">{{ preg_replace('/\d+\./', '', $category->category->category_name) }}</td>
+                            <td class="border px-4 py-2">{{ preg_replace('/\d+\./', '', $category->category->category_name ?? null) }}</td>
                            
                             
                             <td class="border px-4 py-2">
