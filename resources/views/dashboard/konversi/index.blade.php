@@ -592,7 +592,7 @@
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4">{{ $convertion->user->name }}</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4">@currency($convertion->pay_total)</td>
                                 <td class="w-1/3 sm:w-auto text-left py-3 px-4">@foreach($convertion->detailConvertions as $detail)
-                                   {{$detail->goldweight->information}} {{$detail->gram}} gram <br>
+                                   {{$detail->goldweight->information ?? null}} {{$detail->gram}} gram <br>
                                 @endforeach
                                 <br>
                             

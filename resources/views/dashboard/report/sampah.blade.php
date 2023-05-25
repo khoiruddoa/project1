@@ -23,7 +23,7 @@
                     <td>{{ date('d-m-Y', strtotime($start)) }} s/d {{ date('d-m-Y', strtotime($end)) }}</td>
                 </tr>
                 
-                
+            
 
 
             </table>
