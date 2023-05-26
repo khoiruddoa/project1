@@ -344,7 +344,7 @@
                                             <br>
                                             {{ date('d-m-Y', strtotime($payment->created_at)) }}
                                             <br> {{ $payment->information }} {{ $payment->bank }} @currency($payment->pay_total)
-                                            <br><span><a href="#" class="hover:bg-red-800">Hapus</a></span>
+                                            <br><span><a href="{{route('delete_pay',['id' => $payment->id])}}" class="hover:bg-red-800">Hapus</a></span>
                                         @endforeach
 
 

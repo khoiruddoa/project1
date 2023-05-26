@@ -26,7 +26,7 @@ class CollectorTransactionController extends Controller
         $pembayaran = Payment::all();
         $total_pembayaran = $pembayaran->sum('pay_total');
 
-        $status = $total_tagihan - $total_pembayaran; 
+        $status = $total_tagihan - $total_pembayaran;
         return view('dashboard.transaksipengepul.index', [
             'categories' => Category::all(),
             'users' => User::where('role', 2)->get(),
@@ -134,7 +134,6 @@ class CollectorTransactionController extends Controller
         if (empty($request->input('category_id'))) {
             Alert::warning('Gagal', 'Belum ada transaksi yang diisi');
             return back();
-            
         }
         $detail_ids = [];
         // Loop through the selected categories
@@ -162,7 +161,7 @@ class CollectorTransactionController extends Controller
             }
 
 
-           
+
 
             $price = $category_prices->sell;
 
@@ -177,7 +176,7 @@ class CollectorTransactionController extends Controller
             $payloadcategory = ['stock' => $category->stock - $stok];
             $category->fill($payloadcategory);
             $category->save();
-            $detail_ids[] = $detail->id; 
+            $detail_ids[] = $detail->id;
         }
 
 
@@ -296,7 +295,7 @@ class CollectorTransactionController extends Controller
 
     public function pelunasan(Request $request)
     {
-      
+
 
 
 
@@ -307,47 +306,52 @@ class CollectorTransactionController extends Controller
 
         $transactions = CollectorTransaction::where('pay_status', 3)->get();
 
-        foreach($transactions as $transaction){
+        foreach ($transactions as $transaction) {
 
 
-            if($transaction->pay_total > $transaction->payments->sum('pay_total')){
+            if ($transaction->pay_total > $transaction->payments->sum('pay_total')) {
 
-                
-        $data = (['collector_transaction_id' => $transaction->id,
-                  'pay_total' =>  $transaction->pay_total - $transaction->payments->sum('pay_total'),
+
+                $data = ([
+                    'collector_transaction_id' => $transaction->id,
+                    'pay_total' =>  $transaction->pay_total - $transaction->payments->sum('pay_total'),
                     'information' => $request->information,
                     'bank' => $request->bank,
                     'created_at' => $request->created_at
-                
+
                 ]);
                 Payment::create($data);
-
             }
 
-            if($transaction->pay_total < $transaction->payments->sum('pay_total')){
+            if ($transaction->pay_total < $transaction->payments->sum('pay_total')) {
 
-                
-                $data = (['collector_transaction_id' => $transaction->id,
-                          'pay_total' =>  $transaction->pay_total - $transaction->payments->sum('pay_total'),
-                            'information' => $request->information,
-                            'bank' => $request->bank,
-                            'created_at' => $request->created_at
-                        
-                        ]);
-                        Payment::create($data);
-        
-                    }
+
+                $data = ([
+                    'collector_transaction_id' => $transaction->id,
+                    'pay_total' =>  $transaction->pay_total - $transaction->payments->sum('pay_total'),
+                    'information' => $request->information,
+                    'bank' => $request->bank,
+                    'created_at' => $request->created_at
+
+                ]);
+                Payment::create($data);
+            }
         }
 
 
-       
+
         Alert::info('Berhasil', 'Pembayaran sukses');
         return redirect('/dashboard/pengepul');
     }
 
 
-
-
+    public function hapus_pelunasan($id)
+    {
+        $data = Payment::find($id);
+        $data->delete();
+        Alert::info('Berhasil', 'data dihapus');
+        return back();
+    }
     public function editpengepul(Request $request, $id)
     {
         $transaction = CollectorTransaction::find($id);
@@ -361,8 +365,4 @@ class CollectorTransactionController extends Controller
         Alert::info('Berhasil', 'Edit Berhasil');
         return back();
     }
-
-
-
-
 }
