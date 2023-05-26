@@ -343,7 +343,7 @@
                                         @foreach ($transaction->payments as $payment)
                                             <br>
                                             {{ date('d-m-Y', strtotime($payment->created_at)) }}
-                                            <br> {{ $payment->information }} {{ $payment->bank }} @currency($payment->pay_total)
+                                            <br> {{ $payment->information }} {{ $payment->bank }} @currency($payment->pay_total) <span><a href="#">Hapus</a></span>
                                         @endforeach
 
 
