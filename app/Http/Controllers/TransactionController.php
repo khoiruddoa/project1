@@ -199,7 +199,10 @@ class TransactionController extends Controller
 
         $pick = Pick::find($id);
         $transaksi = Transaction::find($pick->id_transaction);
+        if($transaksi)
+       {
         $transaksi->delete();
+       }
         $pick->delete();
         Alert::info('Berhasil', 'Berhasil dihapus');
         return back();
