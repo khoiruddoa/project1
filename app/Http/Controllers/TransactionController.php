@@ -199,10 +199,9 @@ class TransactionController extends Controller
 
         $pick = Pick::find($id);
         $transaksi = Transaction::find($pick->id_transaction);
-        if($transaksi)
-       {
-        $transaksi->delete();
-       }
+        if ($transaksi) {
+            $transaksi->delete();
+        }
         $pick->delete();
         Alert::info('Berhasil', 'Berhasil dihapus');
         return back();
@@ -230,9 +229,8 @@ class TransactionController extends Controller
             return back();
         }
 
+        $detailsemua = $detail_transactions->sum('price');
         $transaction = Transaction::find($id);
-
-
 
 
         $jumlahanggota = Pick::where('transaction_id', $id)->get();
@@ -276,8 +274,9 @@ class TransactionController extends Controller
             foreach ($jumlahanggota as $jumlah) {
                 $trans = Transaction::find($jumlah['id_transaction']);
 
-                if($trans){
-                $trans->delete();}
+                if ($trans) {
+                    $trans->delete();
+                }
 
 
 
@@ -314,7 +313,12 @@ class TransactionController extends Controller
                 Alert::warning('Gagal', 'Belum pilih pengangkut');
                 return back();
             }
-            $transaction->fill($request->all());
+            $transaction->fill(
+                [
+                    'pay_total' => $detailsemua,
+                    'pay_status' => $request->pay_status
+                ]
+            );
             $transaction->save();
         }
 
@@ -457,29 +461,29 @@ class TransactionController extends Controller
             $detailpick = DetailPick::where('transaction_id', $transaction->id)->get();
 
             $detail_transactions = DetailTransaction::where('transaction_id', $detail->transaction_id)
-            ->whereHas('category', function ($query) use ($detailpick) {
-                $query->whereIn('id', $detailpick->pluck('category_id'));
-            })
-            ->get();
+                ->whereHas('category', function ($query) use ($detailpick) {
+                    $query->whereIn('id', $detailpick->pluck('category_id'));
+                })
+                ->get();
 
-        $detailbiasa = DetailTransaction::where('transaction_id', $transaction->id)->get();
+            $detailbiasa = DetailTransaction::where('transaction_id', $transaction->id)->get();
 
-        // Looping data detail transaction yang didapatkan
-        $total_detail = 0;
-        foreach ($detail_transactions as $detail) {
-            $total_detail += $detail->price * $detail->qty;
-        }
+            // Looping data detail transaction yang didapatkan
+            $total_detail = 0;
+            foreach ($detail_transactions as $detail) {
+                $total_detail += $detail->price * $detail->qty;
+            }
 
-        $total_saldoawal = 0;
-        foreach ($detailbiasa as $detail) {
-            $total_saldoawal += $detail->price * $detail->qty;
-        }
-        $hasil10persen = $total_detail * 0.1;
+            $total_saldoawal = 0;
+            foreach ($detailbiasa as $detail) {
+                $total_saldoawal += $detail->price * $detail->qty;
+            }
+            $hasil10persen = $total_detail * 0.1;
 
 
-        $hasil = $total_saldoawal - $hasil10persen;
+            $hasil = $total_saldoawal - $hasil10persen;
 
-        $hasilangkut = $hasil10persen / $jumlahanggotanya;
+            $hasilangkut = $hasil10persen / $jumlahanggotanya;
             foreach ($jumlahanggota as $jumlah) {
 
 
@@ -499,7 +503,7 @@ class TransactionController extends Controller
             $transaction->fill(
                 [
                     'pay_total' => $hasil,
-                    
+
                 ]
             );
             $transaction->save();
@@ -522,5 +526,4 @@ class TransactionController extends Controller
         Alert::info('Berhasil', 'Edit Berhasil');
         return back();
     }
-
 }
