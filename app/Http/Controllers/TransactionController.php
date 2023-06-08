@@ -229,7 +229,9 @@ class TransactionController extends Controller
             return back();
         }
 
-        $detailsemua = $detail_transactions->sum('price');
+        $detailsemua = $detail_transactions->sum(function ($detail) {
+            return $detail->price * $detail->qty;
+        });
         $transaction = Transaction::find($id);
 
 
