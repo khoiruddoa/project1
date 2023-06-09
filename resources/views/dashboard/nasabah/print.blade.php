@@ -32,6 +32,9 @@
                         <th class="px-4 py-2">No</th>
                         <th class="px-4 py-2">Nama</th>
                         <th class="px-4 py-2">No HP</th>
+                        <th class="px-4 py-2">Saldo</th>
+
+
                     </tr>
                 </thead>
                 <tbody>
@@ -50,6 +53,8 @@
                                 {{$user->phone_number}}
                             </td>
 
+                            <td>
+                                @currency($user->transactions->where('pay_status', 2)->sum('pay_total') + $user->adjustments->where('pay_status', 2)->sum('pay_total') + $user->manages->sum('pay_total') - $user->convertions->where('pay_status', 3)->sum('pay_total') - $user->withdraws->where('pay_status', 2)->sum('pay_total'))
                             </td>
                            
 
