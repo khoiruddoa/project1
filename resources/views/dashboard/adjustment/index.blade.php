@@ -37,14 +37,21 @@
                             </h3>
                             <form class="space-y-6" action="{{ route('adjustment_store') }}" method="POST">
                                 @csrf
-                                <div>
+                                <div x-data="{ searchText: '' }">
                                     <label for="user"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
                                         User</label>
+                                        <input type="text" id="simple-search" x-model="searchText"
+                                        class="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="Search">
+
                                     <select id="user_id" name="user_id"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         @foreach ($users as $user)
+                                        <template
+                                                            x-if="searchText === '' || '{{ strtolower($user->name) }}'.includes(searchText.toLowerCase())">
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        </template>
                                         @endforeach
 
                                     </select>
