@@ -53,7 +53,7 @@
                                 {{$user->phone_number}}
                             </td>
 
-                            <td>
+                            <td class="border px-4 py-2">
                                 @currency($user->transactions->where('pay_status', 2)->sum('pay_total') + $user->adjustments->where('pay_status', 2)->sum('pay_total') + $user->manages->sum('pay_total') - $user->convertions->where('pay_status', 3)->sum('pay_total') - $user->withdraws->where('pay_status', 2)->sum('pay_total'))
                             </td>
                            
