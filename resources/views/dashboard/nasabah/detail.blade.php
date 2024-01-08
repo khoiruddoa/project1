@@ -48,6 +48,13 @@
                                 method="POST">
                                 @csrf
                                 <div class="flex flex-row gap-4">
+                                <div>
+                                        <label for="id_member"
+                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">ID Member</label>
+                                        <input type="text" name="id_member" id="id_member" value="{{ $user->id_member }}"
+                                            class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            required>
+                                    </div>
                                     <div>
                                         <label for="name"
                                             class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
@@ -110,9 +117,9 @@
 
 
     <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-sidebar dark:border-gray-700">
+    <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">ID Member : {{ $user->id_member }}</h5>
 
         <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Nama : {{ $user->name }}</h5>
-        </a>
         <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Alamat : {{ $user->address }}</p>
         <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Email : {{ $user->email }}</p>
         <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">No Telephone : {{ $user->phone_number }}</p>

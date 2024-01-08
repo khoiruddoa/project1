@@ -40,6 +40,7 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => ['required', 'unique:users'],
@@ -50,14 +51,58 @@ class RegisterController extends Controller
         ]);
 
         $validatedData['password'] = Hash::make($validatedData['password']);
+        if($request->wargaCurug === true){
+            $noUrutPendaftaran = $this->generateNoUrutPendaftaran();
+
+            $validatedData['id_member'] = 'M' . $noUrutPendaftaran;
+        }
+        else{
+
+            $noUrutPendaftaran = $this->generateNoUrutPendaftaranFalse();
+
+            $validatedData['id_member'] = 'G' . $noUrutPendaftaran;
+        }
         User::create($validatedData);
         Alert::info('Berhasil', 'Input Nasabah Berhasil');
         return redirect('/dashboard/nasabah');
     }
 
+    private function generateNoUrutPendaftaran()
+{
+    // Mendapatkan nomor urut dari jumlah member yang sudah ada + 1
+    $nomorUrut = User::where('id_member', 'like', 'M%')->count() + 1;
+
+    // Format nomor urut dengan "000" (tiga digit)
+    $formattedNomorUrut = str_pad($nomorUrut, 3, '0', STR_PAD_LEFT);
+
+    // Mendapatkan bulan dan tahun daftar
+    $bulanTahunDaftar = now()->format('mY');
+
+    // Gabungkan nomor urut, bulan, dan tahun daftar
+    $noUrutPendaftaran = $formattedNomorUrut . $bulanTahunDaftar;
+
+    return $noUrutPendaftaran;
+}
+private function generateNoUrutPendaftaranFalse()
+{
+    // Mendapatkan nomor urut dari jumlah member yang sudah ada + 1
+    $nomorUrut = User::where('id_member', 'like', 'G%')->count() + 1;
+
+    // Format nomor urut dengan "000" (tiga digit)
+    $formattedNomorUrut = str_pad($nomorUrut, 3, '0', STR_PAD_LEFT);
+
+    // Mendapatkan bulan dan tahun daftar
+    $bulanTahunDaftar = now()->format('mY');
+
+    // Gabungkan nomor urut, bulan, dan tahun daftar
+    $noUrutPendaftaran = $formattedNomorUrut . $bulanTahunDaftar;
+
+    return $noUrutPendaftaran;
+}
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
+            'id_member' => ['required', Rule::unique('users')->ignore($id)],
             'name' => 'required|max:255',
             'email' => ['required', Rule::unique('users')->ignore($id)],
             'phone_number' => ['required', Rule::unique('users')->ignore($id)],
@@ -67,6 +112,7 @@ class RegisterController extends Controller
 
         $user = User::findOrFail($id);
 
+        $user->id_member =  strtoupper(str_replace(' ', '',$validatedData['id_member']));
         $user->name = $validatedData['name'];
         $user->email = $validatedData['email'];
         $user->phone_number = $validatedData['phone_number'];
@@ -84,7 +130,7 @@ class RegisterController extends Controller
     }
 
     public function destroy($id){
-        
+
         $user = User::findOrFail($id);
         $transaksi = Transaction::where('user_id', $id)->first();
         if($transaksi){
